@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp" 
+    android:background="@drawable/common_card_background"
+    android:orientation="vertical" >
+    <TextView android:id="@+id/daily_subject" style="@style/mylabel1" android:padding="0dp" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+   
+    <TextView android:id="@+id/daily_time" android:visibility="gone" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    
+    <LinearLayout android:id="@+id/daily_project_area" android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:id="@+id/daily_project_icon" android:src="@drawable/ic_project" android:layout_width="24dp" android:layout_height="24dp"/>
+        <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:id="@+id/daily_code" style="@style/info_item_othertext"  android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="5dp" />
+    		<TextView android:id="@+id/daily_name" style="@style/info_item_othertext"  android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingBottom="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout android:id="@+id/daily_begintime_area" android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:id="@+id/daily_begintime_icon" android:src="@drawable/ic_begintime" android:layout_width="24dp" android:layout_height="24dp"/>
+        <TextView android:id="@+id/daily_begintime" style="@style/info_item_othertext" android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingTop="5dp" android:paddingBottom="5dp"/>
+    </LinearLayout>
+    
+     <LinearLayout android:id="@+id/daily_endtime_area" android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:id="@+id/daily_endtime_icon" android:src="@drawable/ic_endtime" android:layout_width="24dp" android:layout_height="24dp"/>
+        <TextView android:id="@+id/daily_endtime" style="@style/info_item_othertext" android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingTop="5dp" android:paddingBottom="5dp"/>
+    </LinearLayout>
+    
+    <LinearLayout android:id="@+id/daily_desc_area" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"> 
+    	<TextView style="@style/smallnote_item_content" android:paddingTop="10dp" android:id="@+id/daily_desc"  android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </LinearLayout>
+    
+    
+    
+  
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp" 
+    android:background="@color/ultra_gray2"
+    android:orientation="vertical" >
+    
+    <LinearLayout android:id="@+id/newdaily_firststep"
+        android:orientation="vertical" 
+        android:visibility="visible"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+    
+	    <TextView style="@style/mylabel1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="项目" />
+	    <LinearLayout 
+	        style="@style/myitem"
+	        android:layout_width="match_parent"
+	    	android:layout_height="wrap_content"
+	    	android:orientation="vertical">
+	    	<LinearLayout  style="@style/mychilditem" android:id="@+id/newdaily_pro_area" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+	    	    <TextView style="@style/mychilditem_textview" android:id="@+id/newdaily_pro_code" android:layout_weight="1" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="没有项目编号"/>
+	    	    <ImageView android:src="@drawable/ic_listitem_arrow_right" android:layout_weight="0"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="right|center_vertical"/>
+	    	</LinearLayout>
+	    	<TextView style="@style/mychilditem" android:id="@+id/newdaily_pro_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="没有项目名称"/>
+	    </LinearLayout>
+	    
+	    <TextView style="@style/mylabel1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="基本信息" />
+	    <LinearLayout 
+	        style="@style/myitem"
+	        android:layout_width="match_parent"
+	    	android:layout_height="wrap_content"
+	    	android:orientation="vertical">
+	    	
+	        <LinearLayout android:id="@+id/newdaily_begintime_area" style="@style/mychilditem" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+	    	    <TextView style="@style/mychilditem_textview" android:id="@+id/newdaily_begintime" android:layout_weight="1" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="请选择开始时间"/>
+	    	    <ImageView android:src="@drawable/ic_listitem_arrow_right" android:layout_weight="0"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="right|center_vertical"/>
+	    	</LinearLayout>
+	    	<LinearLayout android:id="@+id/newdaily_endtime_area" style="@style/mychilditem" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+	    	    <TextView style="@style/mychilditem_textview" android:id="@+id/newdaily_endtime" android:layout_weight="1" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="请选择结束时间"/>
+	    	    <ImageView android:src="@drawable/ic_listitem_arrow_right" android:layout_weight="0"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="right|center_vertical"/>
+	    	</LinearLayout>
+	    	<LinearLayout android:id="@+id/newdaily_type_area" style="@style/mychilditem" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+	    	    <TextView style="@style/mychilditem_textview" android:id="@+id/newdaily_type" android:layout_weight="1" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="请选择任务类型"/>
+	    	    <ImageView android:src="@drawable/ic_listitem_arrow_right" android:layout_weight="0"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="right|center_vertical"/>
+	    	</LinearLayout>
+	    	<LinearLayout android:id="@+id/newdaily_position_area" style="@style/mychilditem" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+	    	    <TextView style="@style/mychilditem_textview" android:id="@+id/newdaily_position" android:layout_weight="1" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="请选择工作地点"/>
+	    	    <ImageView android:src="@drawable/ic_listitem_arrow_right" android:layout_weight="0"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="right|center_vertical"/>
+	    	</LinearLayout>
+	    </LinearLayout>
+	    
+	    
+		<Button android:layout_marginTop="5dp" android:id="@+id/newdaily_next_btn" style="@style/myButton1" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="下一步"/>
+	</LinearLayout>
+	
+    <LinearLayout android:id="@+id/newdaily_secondstep"
+        android:orientation="vertical" 
+        android:visibility="gone"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+		
+        <TextView style="@style/mylabel1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="描述信息" />
+	    <LinearLayout 
+	        style="@style/myitem"
+	        android:layout_width="match_parent"
+	    	android:layout_height="wrap_content"
+	    	android:orientation="vertical">
+	        <EditText style="@style/mylastchilditem" android:id="@+id/newdaily_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="请输入日志主题" />
+			<EditText style="@style/mylastchilditem" android:id="@+id/newdaily_desc" android:lines="4" android:gravity="top" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="请输入日志描述"/>
+	   		<TextView android:id="@+id/newdaily_desc_tip"  android:textColor="@color/ultra_gray4" android:text="1200/1200" android:paddingTop="5dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical|right" />
+		</LinearLayout>
+	    
+	    <LinearLayout 
+	        android:layout_marginTop="5dp"
+	        android:layout_width="match_parent"
+	    	android:layout_height="wrap_content"
+	    	android:orientation="horizontal">
+	        <Button  android:id="@+id/newdaily_back_btn" style="@style/myButton1"  android:layout_marginRight="5dp" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="上一步"/>
+			<Button  android:id="@+id/newdaily_post_btn" style="@style/myButton1" android:layout_marginLeft="5dp" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="提交"/>
+	    </LinearLayout>
+	    
+    </LinearLayout>
+
+</LinearLayout>

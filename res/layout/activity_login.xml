@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="112dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:addStatesFromChildren="true"
+            android:background="@drawable/jo_login_edittext_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.7"
+                android:gravity="right" >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/login_user" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/set_login_username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ems="10"
+                android:hint="请输入用户名"
+                android:paddingLeft="12dp"
+                android:singleLine="true"
+                android:textColor="#FF000000"
+                android:textColorHint="#FF888888"
+                android:textSize="16dp" >
+            </EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.8"
+                android:gravity="left" >
+
+                <ImageView
+                    android:id="@+id/set_login_delete_username"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/login_clear"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:addStatesFromChildren="true"
+            android:background="@drawable/jo_login_edittext_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.7"
+                android:gravity="right" >
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/login_pass" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/set_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ems="10"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:paddingLeft="12dp"
+                android:singleLine="true"
+                android:textColor="#FF000000"
+                android:textColorHint="#FF888888"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.8"
+                android:gravity="left" >
+
+                <ImageView
+                    android:id="@+id/set_login_delete_password"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/login_clear"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+       
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/set_login_bto_login"
+                style="@style/myButton1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="登   录"
+                android:onClick="LoginBtnOnClick"
+                 />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

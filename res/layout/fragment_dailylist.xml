@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.hjin.upoa.ui.view.PullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dailylist_pull_refresh_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:background="@color/ultra_gray2"
+    android:padding="5dp"
+    android:orientation="vertical">
+    <include layout="@layout/fragment_load_animator" android:id="@+id/dailylist_load"/>
+    <ListView 
+        android:id="@+id/dailyList"
+        android:divider="#00000000"
+        android:dividerHeight="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/ultra_gray2"
+        />
+    
+
+</org.hjin.upoa.ui.view.PullToRefreshView>

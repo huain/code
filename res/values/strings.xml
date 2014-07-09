@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">泰岳OA</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">设置</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_main">首页</string>
+    <string name="title_activity_login">泰岳OA</string>
+    <string name="action_search">搜索</string>
+    <string name="about_content1">
+        	泰岳OA（Version 1.0 Beta）采用了http请求解析方式，和web端的pmo直连，可以随时查看pmo相关信息；
+    </string>
+    <string name="about_content2">
+        	本app不会私自往公司pmo以外服务器上传任何用户信息，请大家放心使用；
+    </string>
+    <string name="about_content3">
+        	本app属于个人学习作品，在使用本app过程中，如有问题，欢迎与app开发者联系，谢谢大家！
+    </string>
+    
+    <string name="about_version">Version 1.0 Beta</string>
+    
+    <string-array name="planets_array">
+        <item>首页</item>
+        <item>公告</item>
+        <item>新闻</item>
+        <item>小字报</item>
+        <item>填写日报</item>
+        <item>历史日报</item>
+        <item>通讯录</item>
+        <item>设置</item>
+        <item>关于</item>
+    </string-array>
+    
+    <string-array name="daily_type_array">
+        <item>日常任务</item>
+        <item>售前任务</item>
+        <item>实施任务</item>
+        <item>开发任务</item>
+        <item>测试任务</item>
+    </string-array>
+    
+    <string-array name="daily_typevalue_array">
+        <item>WF:UL_DA_CTK</item>
+        <item>WF:UL_DA_PAT</item>
+        <item>WF:UL_DA_IFT</item>
+        <item>WF:UL_DA_DLPS</item>
+        <item>WF:UL_DA_TEPS</item>
+    </string-array>
+    
+    <string-array name="daily_position_array">
+        <item>公司</item>
+        <item>现场</item>
+    </string-array>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    
+    
+    <string name="pull_to_refresh_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_release_label">松开后刷新</string>
+    <string name="pull_to_refresh_refreshing_label">刷新\u2026</string>
+    
+    <string name="pull_to_refresh_footer_release_label">松开后加载</string>
+    <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
+    <string name="pull_to_refresh_footer_refreshing_label">加载中\u2026</string>
+    
+    
+    
+    <!-- 设置页面相关 -->
+    <string name="setting_category_login">登录</string>
+    <string name="setting_item_usernamesaveauto">保存用户名</string>
+    <string name="setting_item_usernamesaveauto_desc">设置自动保存用户名</string>
+    <string name="setting_item_passwordsaveauto">保存密码</string>
+    <string name="setting_item_passwordsaveauto_desc">设置自动保存密码</string>
+    
+    <string name="setting_category_daily">日志填写</string>
+    <string name="setting_item_begintimedefault">默认开始时间</string>
+    <string name="setting_item_begintimedefault_desc">设置日志的默认开始时间为当天09:00</string>
+    <string name="setting_item_endtimedefault">默认结束时间</string>
+    <string name="setting_item_endtimedefault_desc">设置日志的默认结束时间为当天18：00</string>
+    <string name="setting_item_typedefault">默认任务类型</string>
+    <string name="setting_item_typedefault_desc">设置默认任务类型</string>
+    <string name="setting_item_positiondefault">默认工作地点</string>
+    <string name="setting_item_positiondefault_desc">设置默认工作地点</string>
+    
+    <string name="setting_category_mode">软件模式</string>
+    <string name="setting_item_nonepic">无图省流量模式</string>
+    <string name="setting_item_nonepic_desc">2G/3G网络下默认不传输图片，WLAN不受影响</string>
+
+</resources>

@@ -1,0 +1,225 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+    
+    <!-- general styles for the action bar -->
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+        <!-- <item name="android:titleTextStyle">@style/TitleTextStyle</item>-->
+        <!-- <item name="android:background">@drawable/actionbar_background</item>-->
+        <item name="android:background">@color/ultra_blue</item>
+        <item name="android:titleTextStyle">@style/myactionbarTitle</item>
+        <!-- <item name="android:backgroundStacked">@drawable/actionbar_background</item>-->
+        <!-- <item name="android:backgroundSplit">@drawable/actionbar_background</item>-->
+    </style>
+    
+     <style name="myactionbarTitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/txt_white</item>
+    </style>
+    
+	<style name="myListview">
+	    <item name="android:paddingLeft">5dp</item>
+	    <item name="android:paddingRight">5dp</item>
+	</style>
+	
+    <style name="mylabel1">
+        <item name="android:textColor">@color/ultra_blue</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="mylabel2">
+        <item name="android:textColor">@color/ultra_gray</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">bottom</item>
+    </style>
+    
+    <style name="mylabel3">
+        <item name="android:textColor">@color/ultra_blue</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    
+   <style name="mylabel4">
+        <item name="android:textColor">@color/ultra_blue</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+    
+    <style name="mylabel5">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+    
+    <style name="mylabel6">
+        <item name="android:textColor">@color/ultra_gray4</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+    
+   
+    
+    <!-- 首页样式 -->
+    <style name="index_dailyinfoarea">
+        
+    </style>
+    
+    <style name="index_dailyinfoarea_item_right">
+        <item name="android:background">@drawable/green</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+    
+   	<style name="index_dailyinfoarea_item_error">
+   	    <item name="android:background">@drawable/red</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+    
+   	<style name="index_dailyinfoarea_item_wait">
+   	    <item name="android:background">@drawable/gray</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+    
+   	<style name="index_dailyinfoarea_item_half">
+   	    <item name="android:background">@drawable/yellow</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+   
+    
+    <!--  日报样式start  -->
+
+    
+    <!--input样式1：日报填写的input样式  -->
+    <style name="myitem">
+        <item name="android:background">@drawable/common_card_background</item>
+    </style>
+    
+   	<style name="mychilditem">
+   	    <item name="android:clickable">true</item>
+   	    <item name="android:background">@drawable/jo_listitem_enable_bg</item>
+   	    <item name="android:padding">16dp</item>
+   	    <item name="android:textSize">16sp</item>
+   	    <item name="android:gravity">center_vertical</item>
+    </style>
+    
+   	<style name="mylastchilditem">
+   	    <item name="android:padding">16dp</item>
+   	    <item name="android:textSize">16sp</item>
+   	    <item name="android:gravity">center_vertical</item>
+    </style>
+    
+   	<style name="mychilditem_textview">
+   	    <item name="android:textSize">16sp</item>
+   	    <item name="android:gravity">center_vertical</item>
+    </style>
+    
+    <!--input样式1：日报填写的input样式  -->
+    <style name="myInput1">
+        
+    </style>
+    
+    
+    <!--input样式1：日报填写的input样式  -->
+    <style name="myButton1">
+   	    <item name="android:textSize">18sp</item>
+   	    <item name="android:background">@drawable/jo_button_green_square</item>
+   	    <item name="android:textColor">@color/txt_white</item>
+   	    <item name="android:gravity">center_vertical|center_horizontal</item>
+   	</style>
+   	
+    <style name="myButton2">
+   	    <item name="android:textSize">16sp</item>
+   	    <item name="android:background">@drawable/jo_button_green_square</item>
+   	    <item name="android:textColor">@color/txt_white</item>
+   	    <item name="android:gravity">center_vertical|center_horizontal</item>
+   	</style>
+   	<!--  日报样式end  -->
+   	
+   	<!-- 小字报样式 start-->
+    <style name="mydialog" parent="@android:style/Theme.Dialog">  
+        <item name="android:windowFrame">@null</item>  
+        <item name="android:windowIsFloating">true</item>  
+        <item name="android:windowIsTranslucent">true</item>  
+        <item name="android:windowFullscreen">true</item>  
+        <item name="android:windowNoTitle">true</item><!-- 无标题 -->  
+        <item name="android:windowBackground">@drawable/toast_frame</item><!-- 自己想要的背景 -->  
+        <item name="android:backgroundDimEnabled">true</item><!-- 模糊 -->  
+    </style>
+    
+    
+    <style name="smallnote_item">
+        <item name="android:padding">5dp</item>
+    </style>
+    
+    <style name="smallnote_item_content">
+        <item name="android:background">@drawable/content_bg</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:textColor">@color/ultra_gray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+    </style>
+    
+    <style name="smallnote_reply">
+        <item name="android:background">@color/txt_white</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    
+    
+    <!-- 小字报样式 end-->
+    
+    <!-- 通讯录样式 start-->
+    <style name="info_item">
+        <item name="android:padding">5dp</item>
+        <item name="android:background">@drawable/common_card_background</item>
+    </style>
+    
+    <style name="info_item_username">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/ultra_blue</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="info_item_othertext">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/ultra_gray3</item>
+    </style>
+    
+    
+    
+    <color name="ultra_green">#5faa32</color>
+    <color name="ultra_light_green">#5faa32</color>
+    <color name="ultra_blue">#1076be</color>
+    <color name="ultra_blue2">#e01076be</color>
+    <color name="ultra_light_blue">#6DBDF2</color>
+
+    <color name="txt_white">#ffffff</color>
+    <color name="ultra_gray">#595959</color>
+    <color name="ultra_gray2">#eeeeee</color>
+    <color name="ultra_gray3">#111111</color>
+    <color name="ultra_gray4">#aaaaaa</color>
+    <color name="ultra_gray5">#eeeeee</color>
+    <color name="ultra_black">#000000</color>
+    
+    <color name="ultra_red">#f05b72</color>
+
+</resources>

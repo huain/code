@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="450dp"
+    style="@style/smallnote_reply"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/smallnote_reply_progress"
+        layout="@layout/fragment_progress"
+        android:visibility="gone" />
+
+    <LinearLayout android:id="@+id/smallnote_reply_content_area" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/smallnote_reply_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+        <TextView android:id="@+id/smallnote_reply_title_error" android:layout_width="match_parent" android:layout_height="48dp" android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/smallnote_reply_content"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="top"
+            android:hint="输入内容..." />
+        
+        <TextView android:id="@+id/smallnote_reply_content_error" android:layout_width="match_parent" android:layout_height="48dp" android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/smallnote_reply_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            
+            <Button style="@style/myButton1" android:layout_marginRight="5dp" android:id="@+id/smallnote_reply_back" android:text="返回" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+            <Button style="@style/myButton1" android:layout_marginRight="5dp" android:layout_marginLeft="5dp" android:id="@+id/smallnote_reply_clear" android:text="重写" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+            <Button style="@style/myButton1" android:layout_marginLeft="5dp" android:id="@+id/smallnote_reply_reply" android:text="发送" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+            
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

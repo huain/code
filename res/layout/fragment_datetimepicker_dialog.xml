@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@color/txt_white"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:orientation="vertical" >
+
+    <TextView android:id="@+id/datetimepicker_title" style="@style/mylabel1" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+        <DatePicker android:id="@+id/datepicker" android:layout_weight="3" android:layout_width="0dp" android:calendarViewShown="false"  android:layout_height="wrap_content"/>
+        <TimePicker android:id="@+id/timepicker" android:layout_weight="2" android:layout_width="0dp" android:layout_height="wrap_content"/>
+    </LinearLayout>
+    
+    <LinearLayout
+            android:id="@+id/datetimepicker_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            
+            <Button style="@style/myButton1" android:layout_marginRight="5dp" android:id="@+id/datetimepicker_back" android:text="返回" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+            <Button style="@style/myButton1" android:layout_marginLeft="5dp" android:id="@+id/datetimepicker_submit" android:text="确定" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+            
+        </LinearLayout>
+
+
+</LinearLayout>
