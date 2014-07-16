@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hjin.upoa.constants.AppConstants;
-import org.hjin.upoa.model.Calendar;
+import org.hjin.upoa.model.CalendarInfo;
 import org.hjin.upoa.model.NewsInfo;
 import org.hjin.upoa.util.Utility;
 import org.hjin.upoa.util.net.MyParameters;
@@ -61,15 +61,15 @@ public class CalendarBusi extends BaseBusi {
 			Bundle data = new Bundle();
 			try {
 				JSONObject jo = new JSONObject(response);
-				Calendar c = new Calendar();
+				CalendarInfo c = new CalendarInfo();
 				if(jo != null){
 					JSONArray prevList = jo.getJSONArray("prev");
 					JSONArray currentList = jo.getJSONArray("current");
 					JSONArray nextList = jo.getJSONArray("next");
 					if(prevList != null && prevList.length()>0){
-						List<Calendar.Date> prev = new ArrayList<Calendar.Date>();
+						List<CalendarInfo.Date> prev = new ArrayList<CalendarInfo.Date>();
 						for(int i=0;i<prevList.length();i++){
-							Calendar.Date date = c.new Date(
+							CalendarInfo.Date date = c.new Date(
 									prevList.getJSONObject(i).getString("isholiday"),
 									prevList.getJSONObject(i).getString("isdaily"),
 									prevList.getJSONObject(i).getString("iscard"),
@@ -83,9 +83,9 @@ public class CalendarBusi extends BaseBusi {
 					}
 					
 					if(currentList != null && currentList.length()>0){
-						List<Calendar.Date> current = new ArrayList<Calendar.Date>();
+						List<CalendarInfo.Date> current = new ArrayList<CalendarInfo.Date>();
 						for(int i=0;i<currentList.length();i++){
-							Calendar.Date date = c.new Date(
+							CalendarInfo.Date date = c.new Date(
 									currentList.getJSONObject(i).getString("isholiday"),
 									currentList.getJSONObject(i).getString("isdaily"),
 									currentList.getJSONObject(i).getString("iscard"),
@@ -99,9 +99,9 @@ public class CalendarBusi extends BaseBusi {
 					}
 					
 					if(nextList != null && nextList.length()>0){
-						List<Calendar.Date> next = new ArrayList<Calendar.Date>();
+						List<CalendarInfo.Date> next = new ArrayList<CalendarInfo.Date>();
 						for(int i=0;i<prevList.length();i++){
-							Calendar.Date date = c.new Date(
+							CalendarInfo.Date date = c.new Date(
 									nextList.getJSONObject(i).getString("isholiday"),
 									nextList.getJSONObject(i).getString("isdaily"),
 									nextList.getJSONObject(i).getString("iscard"),

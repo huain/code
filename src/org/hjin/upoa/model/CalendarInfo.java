@@ -8,7 +8,7 @@ import java.util.List;
  * @author hjin1987
  *
  */
-public class Calendar {
+public class CalendarInfo {
 	
 	private List<Date> prev;
 	
