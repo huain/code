@@ -110,6 +110,7 @@ public class LoginBusi extends BaseBusi {
 				} catch(Exception e){
 					if(e.getClass() != IOException.class && e.getClass() != ClientProtocolException.class){
 						Log.d(TAG, "===Exception");
+						e.printStackTrace();
 						listener.onServerException();
 					}
 					

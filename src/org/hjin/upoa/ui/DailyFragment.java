@@ -100,7 +100,7 @@ public class DailyFragment extends BaseFragment {
 					    	FragmentTransaction ft = fragmentManager.beginTransaction();
 					    	ft.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_right); 
 					    	Fragment fragment = new DailyFragment();
-							ft.replace(R.id.content_frame, fragment).commit();
+//							ft.replace(R.id.content_frame, fragment).commit();
 						}
 					}break;
 					default:break;

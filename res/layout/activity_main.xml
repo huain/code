@@ -1,44 +1,45 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="5dp" 
+    android:background="@color/ultra_gray2"
+    android:orientation="vertical" >
     
-
-    <!-- As the main content view, the view below consumes the entire
-         space available using match_parent in both dimensions. -->
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <LinearLayout android:id="@+id/index_info_area"
+        android:padding="5dp"
+        android:orientation="vertical" 
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!-- android:layout_gravity="start" tells DrawerLayout to treat
-         this as a sliding drawer on the left side for left-to-right
-         languages and on the right side for right-to-left languages.
-         The drawer is given a fixed width in dp and extends the full height of
-         the container. A solid background is used for contrast
-         with the content view. -->
-    <LinearLayout 
-        android:id="@+id/drawer_linear"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#eee"
-        android:orientation="vertical">
-        <TextView android:id="@+id/drawer_text" style="@style/mylabel1"  android:layout_gravity="start" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        
-       
-         <ListView android:id="@+id/left_drawer"
+    	android:layout_height="wrap_content">
+	    <LinearLayout 
+	        android:orientation="horizontal" 
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="start"
-	        android:choiceMode="singleChoice"
-	        android:divider="@android:color/transparent"
-	        android:dividerHeight="5dp"
-	        android:background="#eee"/>
-         
-          
-        
+	    	android:layout_height="wrap_content">
+	        <ImageView android:id="@+id/index_header" android:contentDescription="" android:src="@drawable/userheadpic_default"  android:layout_width="64dp" android:layout_height="64dp"/>
+	        <LinearLayout android:orientation="vertical" android:gravity="top|left" 
+	            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+	            <LinearLayout android:orientation="horizontal" android:gravity="left|center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content" >
+		            <TextView android:id="@+id/index_fullname" style="@style/mylabel1" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+		            <TextView android:id="@+id/index_post" android:paddingLeft="16dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+	            </LinearLayout>
+	            <TextView android:id="@+id/index_dep" android:paddingLeft="8dp"  android:layout_width="match_parent" android:layout_height="wrap_content"/>
+	        </LinearLayout>
+	    </LinearLayout>
+	</LinearLayout>
+	
+   <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
+       <Button android:id="@+id/index_daily_btn" android:onClick="indexOnClick" android:text="日报" android:layout_width="0dp" android:layout_height="96dp" android:layout_weight="1"/>
+       <Button android:id="@+id/index_smallnote_btn" android:onClick="indexOnClick" android:text="小字报" android:layout_width="0dp" android:layout_height="96dp" android:layout_weight="1"/>
+       <Button android:id="@+id/index_info_btn" android:onClick="indexOnClick" android:text="通讯录" android:layout_width="0dp" android:layout_height="96dp" android:layout_weight="1"/>
+       <Button android:id="@+id/index_secretary_btn" android:onClick="indexOnClick" android:text="小秘书" android:layout_width="0dp" android:layout_height="96dp" android:layout_weight="1"/>
+   </LinearLayout>
+    
+    <TextView style="@style/mylabel1" android:paddingTop="16dp" android:text="最新待办" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    
+    <LinearLayout android:orientation="vertical" android:padding="5dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <ListView android:id="@+id/index_waitdeallist" android:layout_width="match_parent" android:layout_height="wrap_content"></ListView>
+    <TextView android:id="@+id/index_waitdeallist_none" android:visibility="gone" android:text="当前没有待办！" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    
     </LinearLayout>
-   
-</android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

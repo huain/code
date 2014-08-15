@@ -37,7 +37,7 @@ import android.util.Log;
  * @author Administrator
  *
  */
-public class IndexBusi extends BaseBusi {
+public class MainBusi extends BaseBusi {
 	
 	private final String TAG = "IndexBusi";
 	/**取得用户信息flag*/
@@ -55,11 +55,11 @@ public class IndexBusi extends BaseBusi {
 	/**取得最新待办flag*/
 	public static final int GETWAITDEALINFO = 6;
 	
-	public IndexBusi(Handler handler){
+	public MainBusi(Handler handler){
 		super(handler);
 	}
 	
-	public IndexBusi(Activity actiity,Handler handler){
+	public MainBusi(Activity actiity,Handler handler){
 		super(actiity,handler);
 	}
 	

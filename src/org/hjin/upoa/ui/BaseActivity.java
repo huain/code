@@ -1,7 +1,6 @@
 package org.hjin.upoa.ui;
 
 import org.hjin.upoa.R;
-import org.hjin.upoa.push.Utils;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -49,7 +48,6 @@ public class BaseActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_base, menu);
 		return true;
 	}

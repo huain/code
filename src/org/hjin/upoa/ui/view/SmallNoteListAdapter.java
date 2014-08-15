@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -77,26 +78,33 @@ public class SmallNoteListAdapter extends BaseAdapter {
 		vh.username.setText(sn.getUsername());
 		vh.userdep.setText(sn.getUserdep());
 		if(!Utility.isBlank(sn.getContent())){
+			vh.content.setVisibility(View.VISIBLE);
 			vh.content.setText(sn.getContent());
 		}else{
-			vh.content.setText("ÈçÌâ¡ü¡ü¡ü");
+			vh.content.setVisibility(View.GONE);
 		}
 //		vh.userheadpic.setText(sn.getTitle());
 		convertView.setTag(SMALLNOTEID, sn.getId());
 		convertView.setTag(SMALLNOTEUSERID, sn.getUserid());
 		
-		TextView content = (TextView)convertView.findViewById(R.id.smallnoteList_content);
+		//TextView content = (TextView)convertView.findViewById(R.id.smallnoteList_content);
 		//Button replyBtn = (Button)convertView.findViewById(R.id.mallnoteList_replybtn);
-		content.setTag(-1, sn.getUsername());
-		content.setTag(-2,sn.getUserid());
-		content.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mOnReplyClickListener.onClick(v.getTag(-1)+"",v.getTag(-2)+"");
-			}
+		convertView.setTag(-1, sn.getUsername());
+		convertView.setTag(-2,sn.getUserid());
+		convertView.setOnLongClickListener(new OnLongClickListener() {
 			
-
+			@Override
+			public boolean onLongClick(View v) {
+				mOnReplyClickListener.onClick(v.getTag(-1)+"",v.getTag(-2)+"");
+				return true;
+			}
 		});
+//		convertView.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				mOnReplyClickListener.onClick(v.getTag(-1)+"",v.getTag(-2)+"");
+//			}
+//		});
 		return convertView;
 	}
 	

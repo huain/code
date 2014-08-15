@@ -49,6 +49,7 @@ public class CalendarView extends LinearLayout {
 	    public CalendarView(Context context) {
 	        super(context);
 	        CalendarView.context = context;
+	        setTheDay(new Date());
 	    }
 
 	    /**
@@ -58,6 +59,7 @@ public class CalendarView extends LinearLayout {
 	    public CalendarView(Context context, AttributeSet attrs) {
 	        super(context, attrs);
 	        CalendarView.context = context;
+	        setTheDay(new Date());
 	    }
 	    
 	    public void setInDay(String inday){
@@ -167,7 +169,7 @@ public class CalendarView extends LinearLayout {
 	     *
 	     */
 	    static class GrideViewHolder {
-	        TextView tvDay,tv;
+	        TextView tvDay;
 	    }
 
 	    /**
@@ -208,22 +210,23 @@ public class CalendarView extends LinearLayout {
 	            if (convertView == null) {
 	                holder = new GrideViewHolder();
 	                convertView = inflate(context,R.layout.calendar_gridview_item, null);
-	                holder.tv = (TextView) convertView.findViewById(R.id.tv_calendar);
 	                holder.tvDay = (TextView) convertView.findViewById(R.id.tv_calendar_day);
 	                convertView.setTag(holder);
 	            } else {
 	                holder = (GrideViewHolder) convertView.getTag();
 	            }
 	            String[] date=getItem(position).split(",");
-	            holder.tvDay.setText(date[1]);
 	            if((position+1)%7==0||(position)%7==0){
 	            	holder.tvDay.setTextColor(Color.parseColor("#339900"));
+	            }else{
+	            	
 	            }
 	            if(!date[1].equals(" ")){
 	            	 String day=date[1];
 	                 if(Integer.parseInt(date[1])<10){
 	                 	day="0"+date[1];
 	                 }
+	                 holder.tvDay.setText(day);
 	                 if((date[0]+"-"+day).equals(nowday)){
 	                 	holder.tvDay.setTextColor(Color.parseColor("#FF6600"));
 	                 	holder.tvDay.setTextSize(15);

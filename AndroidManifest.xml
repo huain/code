@@ -76,6 +76,20 @@
             </intent-filter>
         </activity>
         
+        <activity android:name="org.hjin.upoa.ui.SmallNoteActivity"
+            android:parentActivityName="org.hjin.upoa.ui.MainActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="org.hjin.upoa.ui.MainActivity"/>
+        </activity>
+        
+        <activity android:name="org.hjin.upoa.ui.DailyActivity"
+            android:parentActivityName="org.hjin.upoa.ui.MainActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="org.hjin.upoa.ui.MainActivity"/>
+        </activity>
+        
         <service android:name="org.hjin.upoa.service.OnLineService"></service>
         
         <!-- push富媒体，不使用富媒体推送不需要 -->
