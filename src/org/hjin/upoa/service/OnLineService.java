@@ -43,7 +43,7 @@ public class OnLineService extends IntentService implements RequestListener {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		timer.schedule(tt,0,120000);
+		//timer.schedule(tt,0,120000);
 		
 	}
 	

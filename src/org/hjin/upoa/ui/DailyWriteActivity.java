@@ -17,11 +17,10 @@ import org.hjin.upoa.ui.view.ProgressDialogFragment;
 import org.hjin.upoa.ui.view.SelectionDialogFragment;
 import org.hjin.upoa.util.Utility;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,21 +29,19 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class DailyFragment extends BaseFragment {
+public class DailyWriteActivity extends BaseActivity {
 	
 	private final String TAG = "DailyFragment"; 
 	
-	private Activity mActivity;
+//	private Activity mActivity;
 	
 	private TextView mProCode;
 	
@@ -66,81 +63,87 @@ public class DailyFragment extends BaseFragment {
 	
 	private Daily mDaily;
 	
-	private Handler mHandler;
 	/**获取项目列表期间的loading*/
 	private DialogFragment mPdf;
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		mActivity = activity;
-		
-		mHandler = new BaseHandler(activity.getApplicationContext()){
-			@Override
-			public void handleMessage(Message msg) {
-				try {
-					super.handleMessage(msg);
-					switch(msg.what){
-					case DailyBusi.GETPROLIST:{
-						//显示消息
-						Bundle data = msg.getData();
-						if(null != data){
-							List<Map<String,String>> proList = (List<Map<String,String>>)data.getSerializable("listContent");
-							onClickPro(proList);
-						}
-					}break;
-					case DailyBusi.POSTDAILY:{
-						//显示消息
-						Bundle data = msg.getData();
-						if(null != data && !Utility.isBlank(data.getString("message"))){
-							String message = data.getString("message");
-							Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-							//mActivity.getFragmentManager().beginTransaction().replace(containerViewId, fragment)
-							FragmentManager fragmentManager = getFragmentManager();
-					    	FragmentTransaction ft = fragmentManager.beginTransaction();
-					    	ft.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_right); 
-					    	Fragment fragment = new DailyFragment();
-//							ft.replace(R.id.content_frame, fragment).commit();
-						}
-					}break;
-					default:break;
+	
+	private Handler mHandler = new BaseHandler(this){
+		@Override
+		public void handleMessage(Message msg) {
+			try {
+				super.handleMessage(msg);
+				switch(msg.what){
+				case DailyBusi.GETPROLIST:{
+					//显示消息
+					Bundle data = msg.getData();
+					if(null != data){
+						List<Map<String,String>> proList = (List<Map<String,String>>)data.getSerializable("listContent");
+						onClickPro(proList);
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				}break;
+				case DailyBusi.POSTDAILY:{
+					//显示消息
+					Bundle data = msg.getData();
+					if(null != data && !Utility.isBlank(data.getString("message"))){
+						String message = data.getString("message");
+						Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+						finish();
+						//mActivity.getFragmentManager().beginTransaction().replace(containerViewId, fragment)
+//						FragmentManager fragmentManager = getFragmentManager();
+//				    	FragmentTransaction ft = fragmentManager.beginTransaction();
+//				    	ft.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_right); 
+//				    	Fragment fragment = new DailyFragment();
+//						ft.replace(R.id.content_frame, fragment).commit();
+					}
+				}break;
+				default:break;
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-		};
-	}
-	
+		}
+		
+	};
 	
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
-		View v = inflater.inflate(R.layout.fragment_daily, container, false);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_daily);
+		mDailyBusi = new DailyBusi(mHandler);
 		
-		mProCode = (TextView)v.findViewById(R.id.newdaily_pro_code);
-		mProName = (TextView)v.findViewById(R.id.newdaily_pro_name);
-		mBegintime = (TextView)v.findViewById(R.id.newdaily_begintime);
-		mEndtime = (TextView)v.findViewById(R.id.newdaily_endtime);
-		mType = (TextView)v.findViewById(R.id.newdaily_type);
-		mPosition = (TextView)v.findViewById(R.id.newdaily_position);
-		mTitle = (EditText)v.findViewById(R.id.newdaily_title);
-		mDesc = (EditText)v.findViewById(R.id.newdaily_desc);
+		// 取得intent中设置的默认日期
+		Intent intent = getIntent();
+		int[] date = intent.getIntArrayExtra("date");
+		
+		mProCode = (TextView)findViewById(R.id.newdaily_pro_code);
+		mProName = (TextView)findViewById(R.id.newdaily_pro_name);
+		mBegintime = (TextView)findViewById(R.id.newdaily_begintime);
+		mEndtime = (TextView)findViewById(R.id.newdaily_endtime);
+		mType = (TextView)findViewById(R.id.newdaily_type);
+		mPosition = (TextView)findViewById(R.id.newdaily_position);
+		mTitle = (EditText)findViewById(R.id.newdaily_title);
+		mDesc = (EditText)findViewById(R.id.newdaily_desc);
 		mDaily = new Daily();
-		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mActivity);
-		final boolean begintimeSetting = sp.getBoolean("setting_item_begintimedefault", false);
-		final boolean endtimeSetting = sp.getBoolean("setting_item_endtimedefault", false);
-		Date d = Calendar.getInstance().getTime();
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.SIMPLIFIED_CHINESE);
-		if(begintimeSetting){
+		if(intent != null && date!= null && date.length == 3){
+			@SuppressWarnings("deprecation")
+			Date d = new Date(date[0]-1900,date[1]-1,date[2]);
+			Log.d(TAG,"==="+date[0]+"-"+date[1]+"-"+date[2]);
 			mBegintime.setText(sdf.format(d)+" 09:00");
-		}
-		if(endtimeSetting){
 			mEndtime.setText(sdf.format(d)+" 18:00");
+		}else{
+			final boolean begintimeSetting = sp.getBoolean("setting_item_begintimedefault", false);
+			final boolean endtimeSetting = sp.getBoolean("setting_item_endtimedefault", false);
+			Date d = Calendar.getInstance().getTime();
+			if(begintimeSetting){
+				mBegintime.setText(sdf.format(d)+" 09:00");
+			}
+			if(endtimeSetting){
+				mEndtime.setText(sdf.format(d)+" 18:00");
+			}
 		}
+		
 		String typeSetting = sp.getString("setting_item_typedefault", "");
 		String positionSetting = sp.getString("setting_item_positiondefault", "");
 		
@@ -148,13 +151,13 @@ public class DailyFragment extends BaseFragment {
 		mPosition.setText(positionSetting);
 		
 		// 项目列表选择框弹出设置
-		View proView = (View)v.findViewById(R.id.newdaily_pro_area);
+		View proView = (View)findViewById(R.id.newdaily_pro_area);
 		proView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				//onClickPro(null);
 				mPdf = ProgressDialogFragment.newInstance("正在加载项目列表……");
-			    FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+			    FragmentTransaction ft = getFragmentManager().beginTransaction();
 			    Fragment prev = getFragmentManager().findFragmentByTag("proloading");
 			    if (prev != null) {
 			    	ft.remove(prev);
@@ -167,8 +170,8 @@ public class DailyFragment extends BaseFragment {
 		});
 		
 		// 开始结束时间弹出设置
-		View begintimeView = (View)v.findViewById(R.id.newdaily_begintime_area);
-		View endtimeView = (View)v.findViewById(R.id.newdaily_endtime_area);
+		View begintimeView = (View)findViewById(R.id.newdaily_begintime_area);
+		View endtimeView = (View)findViewById(R.id.newdaily_endtime_area);
 		Calendar maxTime_temp = Calendar.getInstance();
 		maxTime_temp.set(Calendar.HOUR_OF_DAY, 23);
 		maxTime_temp.set(Calendar.MINUTE, 59);
@@ -204,8 +207,8 @@ public class DailyFragment extends BaseFragment {
 		});
 		
 		// 项目类型和工作地点弹出设置
-		View typeView = (View)v.findViewById(R.id.newdaily_type_area);
-		View positionView = (View)v.findViewById(R.id.newdaily_position_area);
+		View typeView = (View)findViewById(R.id.newdaily_type_area);
+		View positionView = (View)findViewById(R.id.newdaily_position_area);
 		
 		typeView.setOnClickListener(new OnClickListener() {
 			@Override
@@ -221,7 +224,7 @@ public class DailyFragment extends BaseFragment {
 			}
 		});
 		
-		final TextView descTip =  (TextView)v.findViewById(R.id.newdaily_desc_tip);
+		final TextView descTip =  (TextView)findViewById(R.id.newdaily_desc_tip);
 		mDesc.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -242,9 +245,9 @@ public class DailyFragment extends BaseFragment {
 		});
 		
 		// button事件
-		Button nextBtn = (Button)v.findViewById(R.id.newdaily_next_btn);
-		final View firststep = v.findViewById(R.id.newdaily_firststep);
-		final View second = v.findViewById(R.id.newdaily_secondstep);
+		Button nextBtn = (Button)findViewById(R.id.newdaily_next_btn);
+		final View firststep = findViewById(R.id.newdaily_firststep);
+		final View second = findViewById(R.id.newdaily_secondstep);
 		nextBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -263,7 +266,7 @@ public class DailyFragment extends BaseFragment {
 			}
 		});
 		
-		Button backBtn = (Button)v.findViewById(R.id.newdaily_back_btn);
+		Button backBtn = (Button)findViewById(R.id.newdaily_back_btn);
 		backBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -272,7 +275,7 @@ public class DailyFragment extends BaseFragment {
 			}
 		});
 		
-		Button postBtn = (Button)v.findViewById(R.id.newdaily_post_btn);
+		Button postBtn = (Button)findViewById(R.id.newdaily_post_btn);
 		postBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -284,19 +287,15 @@ public class DailyFragment extends BaseFragment {
 			}
 		});
 		
-		
-		
-		return v;
 	}
+	
+
+	
+	
 	
 	
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		mDailyBusi = new DailyBusi(mHandler);
-	}
-	
+
 	// 项目选择框弹出
 	/**
 	 * 项目列表选择框弹出
@@ -307,7 +306,7 @@ public class DailyFragment extends BaseFragment {
 		TextView[] tvs = new TextView[]{mProCode,mProName};
 		int[] totvs = new int[]{0,1};
 		SelectionDialogFragment df = SelectionDialogFragment.newInstance("请选择项目",data,R.layout.selection_list_item_2,new String[]{"code","name"},new int[]{R.id.selection_item2_text1,R.id.selection_item2_text2},tvs,totvs);
-	    FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+	    FragmentTransaction ft = this.getFragmentManager().beginTransaction();
 	    Fragment prev = getFragmentManager().findFragmentByTag("datetimepicker");
 //	    Fragment prev2 = getFragmentManager().findFragmentByTag("proloading");
 	    if (prev != null) {
@@ -331,7 +330,7 @@ public class DailyFragment extends BaseFragment {
 	// datetime选择框弹出
 	public void onClickDateTime(String title,Calendar defaultTime,Calendar maxTime,Calendar minTime,TextView v) {
 		DateTimePickerDialogFragment df = DateTimePickerDialogFragment.newInstance(title,defaultTime,maxTime,minTime,v);
-	    FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+	    FragmentTransaction ft = getFragmentManager().beginTransaction();
 	    Fragment prev = getFragmentManager().findFragmentByTag("datetimepicker");
 	    if (prev != null) {
 	    	ft.remove(prev);
@@ -353,7 +352,7 @@ public class DailyFragment extends BaseFragment {
 			}
 		}
 		SelectionDialogFragment df = SelectionDialogFragment.newInstance(title,data,R.layout.selection_list_item_1,new String[]{"text1"},new int[]{R.id.selection_item1_text},v);
-	    FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+	    FragmentTransaction ft = getFragmentManager().beginTransaction();
 	    Fragment prev = getFragmentManager().findFragmentByTag("datetimepicker");
 	    if (prev != null) {
 	    	ft.remove(prev);
@@ -377,7 +376,7 @@ public class DailyFragment extends BaseFragment {
 		}
 		
 		SelectionDialogFragment df = SelectionDialogFragment.newInstance(title,data,R.layout.selection_list_item_1,new String[]{"text1"},new int[]{R.id.selection_item1_text},v);
-	    FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+	    FragmentTransaction ft = getFragmentManager().beginTransaction();
 	    Fragment prev = getFragmentManager().findFragmentByTag("datetimepicker");
 	    if (prev != null) {
 	    	ft.remove(prev);

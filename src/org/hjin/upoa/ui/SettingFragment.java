@@ -1,22 +1,18 @@
 package org.hjin.upoa.ui;
 
 import org.hjin.upoa.R;
-import org.hjin.upoa.constants.AppConstants;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
-import android.preference.SwitchPreference;
 import android.util.Log;
 
 public class SettingFragment extends PreferenceFragment {
 	
 	private final String TAG = "SettingFragment";
 	
-	
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

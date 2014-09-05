@@ -89,4 +89,7 @@
     <string name="setting_item_nonepic">无图省流量模式</string>
     <string name="setting_item_nonepic_desc">2G/3G网络下默认不传输图片，WLAN不受影响</string>
 
+    
+    
+    <item type="id" name="tag_first"></item>
 </resources>

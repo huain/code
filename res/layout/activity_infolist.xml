@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"/>
     
-    <TextView android:id="@+id/infoLoad" android:text="请点击搜索按钮，输入相应搜索信息……！" android:layout_width="match_parent" 
+    <TextView android:id="@+id/infoLoad" android:text="请点击搜索按钮，输入相应搜索信息……！\ntips:长按搜索结果可以发送邮件和拨打电话" android:layout_width="match_parent" 
      android:textSize="16sp" android:textColor="@color/ultra_blue" android:paddingTop="48dp"   android:gravity="top|center_horizontal"    android:layout_height="match_parent" android:visibility="visible" />
     
     

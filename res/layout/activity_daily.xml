@@ -4,6 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <include android:id="@+id/daily_calendar_include" layout="@layout/calendar"/>
+    <org.hjin.upoa.ui.view.calendar.CalendarPagerView android:id="@+id/ca"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    
+    <!-- <include android:id="@+id/daily_calendar_include" layout="@layout/calendar"/> -->
     
 </LinearLayout>

@@ -1,6 +1,5 @@
 package org.hjin.upoa.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

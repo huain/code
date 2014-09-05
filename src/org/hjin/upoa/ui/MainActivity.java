@@ -7,7 +7,9 @@ import java.util.TimerTask;
 
 import org.hjin.upoa.R;
 import org.hjin.upoa.busi.MainBusi;
+import org.hjin.upoa.busi.SecretaryBusi;
 import org.hjin.upoa.constants.AppConstants;
+import org.hjin.upoa.model.Secretary;
 import org.hjin.upoa.service.OnLineService;
 import org.hjin.upoa.util.Utility;
 
@@ -43,9 +45,9 @@ public class MainActivity extends BaseActivity {
 	
 	private TextView mDep;
 	
-	private ListView mWaitDealList;
-	
-	private TextView mWaitDealList_None;
+//	private ListView mWaitDealList;
+//	
+//	private TextView mWaitDealList_None;
 
     private Handler mHandler = new BaseHandler(this){
     	public void handleMessage(Message msg) {
@@ -69,19 +71,25 @@ public class MainActivity extends BaseActivity {
 					mDep.setText(data.getString("userdep"));
 				}
     		}break;
-    		case MainBusi.GETWAITDEALINFO:{
-    			@SuppressWarnings("unchecked")
-				List<Map<String,String>> list = (List<Map<String,String>>)data.getSerializable("result");
-				if(null != list && list.size()>0){
-					mWaitDealList_None.setVisibility(View.GONE);
-					ListAdapter aa = new SimpleAdapter(getApplicationContext(), list, R.layout.index_waitdeallist_item, new String[]{"index","dealName","dealTime","dealStatus"}, new int[]{R.id.index_waitdeallist_index,R.id.index_waitdeallist_title,R.id.index_waitdeallist_time,R.id.index_waitdeallist_status});
-					mWaitDealList.setAdapter(aa);
-				}else{
-					mWaitDealList_None.setVisibility(View.VISIBLE);
-				}
-    		}break;
+//    		case MainBusi.GETWAITDEALINFO:{
+//    			@SuppressWarnings("unchecked")
+//				List<Map<String,String>> list = (List<Map<String,String>>)data.getSerializable("result");
+//				if(null != list && list.size()>0){
+//					mWaitDealList_None.setVisibility(View.GONE);
+//					ListAdapter aa = new SimpleAdapter(getApplicationContext(), list, R.layout.index_waitdeallist_item, new String[]{"index","dealName","dealTime","dealStatus"}, new int[]{R.id.index_waitdeallist_index,R.id.index_waitdeallist_title,R.id.index_waitdeallist_time,R.id.index_waitdeallist_status});
+//					mWaitDealList.setAdapter(aa);
+//				}else{
+//					mWaitDealList_None.setVisibility(View.VISIBLE);
+//				}
+//    		}break;
     		case MainBusi.GETWAITDEALSUM:{}break;
-    		}
+	    	case SecretaryBusi.GET_TASK_COUNT:{
+	    		Log.d(TAG, "======GET_TASK_COUNT");
+	    		if(msg.arg1 == 1){
+	    			AppConstants.sSecretary = (Secretary)data.getSerializable("data");
+	    		}
+	    	}break;
+			}
     	};
     };
     
@@ -93,15 +101,15 @@ public class MainActivity extends BaseActivity {
 //        intent.setClass(getApplicationContext(), OnLineService.class);
 //        startService(intent);
         
-        getActionBar().setDisplayHomeAsUpEnabled(false);
-        getActionBar().setTitle("111");
+//        getActionBar().setDisplayHomeAsUpEnabled(false);
+//        getActionBar().setTitle("111");
         
         mHeader = (ImageView)findViewById(R.id.index_header);
 		mFullname = (TextView)findViewById(R.id.index_fullname);
 		mPost = (TextView)findViewById(R.id.index_post);
 		mDep = (TextView)findViewById(R.id.index_dep);
-		mWaitDealList = (ListView)findViewById(R.id.index_waitdeallist);
-		mWaitDealList_None = (TextView)findViewById(R.id.index_waitdeallist_none);
+//		mWaitDealList = (ListView)findViewById(R.id.index_waitdeallist);
+//		mWaitDealList_None = (TextView)findViewById(R.id.index_waitdeallist_none);
 		
 		mIndexBusi = new MainBusi(this, mHandler);
 		mIndexBusi.getUserInfo();
@@ -113,9 +121,10 @@ public class MainActivity extends BaseActivity {
 		}else{
 			mIndexBusi.getUserHeaderInfo();
 		}
-		mIndexBusi.getWaitDealSum();
-		mIndexBusi.getDailyInfo();
-		mIndexBusi.getWaitDealInfo();
+//		mIndexBusi.getWaitDealSum();
+//		mIndexBusi.getDailyInfo();
+//		mIndexBusi.getWaitDealInfo();
+		new SecretaryBusi(mHandler).getTaskCount();
     }
     
     /**
@@ -135,10 +144,14 @@ public class MainActivity extends BaseActivity {
     		startActivity(intent);
     	}break;
     	case R.id.index_info_btn:{
-    		
+    		Intent intent = new Intent();
+    		intent.setClass(getApplicationContext(), InfoListActivity.class);
+    		startActivity(intent);
     	}break;
     	case R.id.index_secretary_btn:{
-    		
+    		Intent intent = new Intent();
+    		intent.setClass(getApplicationContext(), SecretaryActivity.class);
+    		startActivity(intent);
     	}break;
     	}
     }

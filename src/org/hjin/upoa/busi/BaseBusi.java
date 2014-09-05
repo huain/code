@@ -3,6 +3,7 @@ package org.hjin.upoa.busi;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.hjin.upoa.constants.AppConstants;
 import org.hjin.upoa.util.net.AsyncRunner;
 import org.hjin.upoa.util.net.MyHttpException;
 import org.hjin.upoa.util.net.MyParameters;
@@ -13,11 +14,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+/**
+ * 业务处理基类
+ * @author Administrator
+ *
+ */
 public class BaseBusi implements RequestListener{
 	
 	protected final String TAG = "BaseBusi";
 	
 	public final static int SHOWMESSAGE = 0;
+	
 	/**
 	 * post请求方式
 	 */
@@ -48,14 +55,39 @@ public class BaseBusi implements RequestListener{
 		this.mActivity = activity;
 	}
 	
-	protected void request( final int flag, final String url, final MyParameters params,
-			final String httpMethod,RequestListener listener) {
+	/**
+	 * 异步请求
+	 * @param flag
+	 * @param url
+	 * @param params
+	 * @param httpMethod
+	 * @param listener
+	 */
+	protected void request( int flag, String url, MyParameters params,
+			String httpMethod,RequestListener listener) {
+		if(params == null){
+			params = new MyParameters();
+		}
+		params.add("token", AppConstants.token);
 		AsyncRunner.request(flag,url, params, httpMethod, listener);
 	}
 	
-	protected void request4Binary( final int flag, final String url, final MyParameters params,
-			final String httpMethod,RequestListener listener) {
+	/**
+	 * 异步请求
+	 * @param flag
+	 * @param url
+	 * @param params
+	 * @param httpMethod
+	 * @param listener
+	 */
+	protected void request4Binary( int flag, String url, MyParameters params,
+			String httpMethod,RequestListener listener) {
+		if(params == null){
+			params = new MyParameters();
+		}
+		params.add("token", AppConstants.token);
 		AsyncRunner.request4Binary(flag,url, params, httpMethod, listener);
+		
 	}
 
 	@Override
@@ -91,6 +123,4 @@ public class BaseBusi implements RequestListener{
 		msg.getData().putString("message", "没有数据！");
 	}
 	
-	
-
 }

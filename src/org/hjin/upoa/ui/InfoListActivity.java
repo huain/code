@@ -10,18 +10,14 @@ import org.hjin.upoa.model.Info;
 import org.hjin.upoa.ui.view.InfoListAdapter;
 import org.hjin.upoa.util.Utility;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,7 +28,7 @@ import android.widget.TextView;
  * @author Administrator
  *
  */
-public class InfoListFragment extends BaseFragment {
+public class InfoListActivity extends BaseActivity {
 	
 	private final String TAG = "InfoListFragment";
 	
@@ -46,18 +42,23 @@ public class InfoListFragment extends BaseFragment {
 	
 	private InfoBusi mInfoBusi;
 	
-	private View mV;
-	
-	private Handler mHandler;
-	
-
+	private Handler mHandler = null;
 	
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		mActivity = activity;
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_infolist);
 		
-		mHandler = new BaseHandler(activity.getApplicationContext()){
+		mAdapter = new InfoListAdapter(this,new ArrayList<Info>());
+		mInfoList = (ListView)findViewById(R.id.infoList);
+		mInfoList.setAdapter(mAdapter);
+		
+		//mInfoBusi.getInfoList("huangjin");
+		mTv = (TextView)findViewById(R.id.infoNoResult);
+		mTv2 = (TextView)findViewById(R.id.infoLoad);
+		
+		
+		mHandler = new BaseHandler(this){
 			@Override
 			public void handleMessage(Message msg) {
 				try {
@@ -90,10 +91,6 @@ public class InfoListFragment extends BaseFragment {
 								mTv.setVisibility(View.VISIBLE);
 							}
 						}
-//						if(mV.findViewById(R.id.infolist_load).VISIBLE == View.VISIBLE){
-//							mV.findViewById(R.id.infolist_load).setVisibility(View.GONE);
-//						}
-						
 					}break;
 					default:break;
 					}
@@ -102,26 +99,15 @@ public class InfoListFragment extends BaseFragment {
 				}
 			}
 		};
-	}
-	
-	
-	
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		setHasOptionsMenu(true);
-		super.onCreate(savedInstanceState);
-	}
-
-
-
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		Log.d(TAG, "===infolist:onCreateOptionsMenu");
 		
-		inflater.inflate(R.menu.fragment_info, menu);
+		mInfoBusi = new InfoBusi(mHandler);
+	}
+
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.fragment_info, menu);
 		MenuItem i = menu.findItem(R.id.action_search);
 		Button btn = (Button)(i.getActionView().findViewById(R.id.actionbar_search_btn));
 		final EditText text = (EditText)i.getActionView().findViewById(R.id.actionbar_search);
@@ -136,33 +122,7 @@ public class InfoListFragment extends BaseFragment {
 				
 			}
 		});
-		
+		return true;
 	}
-	
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		mV = inflater.inflate(R.layout.fragment_infolist, container, false);
-		//loadingAnimatorActive(mV.findViewById(R.id.infolist_load));
-		return mV;
-	}
-	
-	
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
-		mAdapter = new InfoListAdapter(getActivity().getApplicationContext(),new ArrayList<Info>());
-		mInfoList = (ListView)mActivity.findViewById(R.id.infoList);
-		mInfoList.setAdapter(mAdapter);
-		mInfoBusi = new InfoBusi(mHandler);
-		//mInfoBusi.getInfoList("huangjin");
-		mTv = (TextView)mActivity.findViewById(R.id.infoNoResult);
-		mTv2 = (TextView)mActivity.findViewById(R.id.infoLoad);
-		
-	}
-	
 	
 }

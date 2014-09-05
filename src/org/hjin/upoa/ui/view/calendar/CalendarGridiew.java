@@ -1,20 +1,20 @@
-package org.hjin.upoa.ui.view;
+package org.hjin.upoa.ui.view.calendar;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-public class CalendarGridView extends GridView { 
-
-    public CalendarGridView(Context context, AttributeSet attrs) { 
+public class CalendarGridiew extends GridView {
+	
+    public CalendarGridiew(Context context, AttributeSet attrs) { 
         super(context, attrs); 
     } 
 
-    public CalendarGridView(Context context) { 
+    public CalendarGridiew(Context context) { 
         super(context); 
     } 
 
-    public CalendarGridView(Context context, AttributeSet attrs, int defStyle) { 
+    public CalendarGridiew(Context context, AttributeSet attrs, int defStyle) { 
         super(context, attrs, defStyle); 
     } 
 

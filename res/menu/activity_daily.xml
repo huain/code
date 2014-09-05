@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/action_dailylist"
+          android:title="历史日报"
+          android:icon="@drawable/ic_action_person"
+          android:showAsAction="always|collapseActionView"
+         />
+
+</menu>

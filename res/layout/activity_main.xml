@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp" 
     android:background="@color/ultra_gray2"
     android:orientation="vertical" >
     
     <LinearLayout android:id="@+id/index_info_area"
-        android:padding="5dp"
-        android:orientation="vertical" 
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:gravity="bottom"
+        android:background="@drawable/main"
         android:layout_width="match_parent"
-    	android:layout_height="wrap_content">
+    	android:layout_height="0dp">
 	    <LinearLayout 
 	        android:orientation="horizontal" 
+	        android:padding="5dp"
 	        android:layout_width="match_parent"
 	    	android:layout_height="wrap_content">
 	        <ImageView android:id="@+id/index_header" android:contentDescription="" android:src="@drawable/userheadpic_default"  android:layout_width="64dp" android:layout_height="64dp"/>
@@ -27,19 +29,24 @@
 	    </LinearLayout>
 	</LinearLayout>
 	
-   <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
+   <LinearLayout android:layout_weight="3" android:orientation="horizontal" android:layout_height="0dp" android:layout_width="match_parent">
        <Button android:id="@+id/index_daily_btn" android:onClick="indexOnClick" android:text="日报" android:layout_width="0dp" android:layout_height="96dp" android:layout_weight="1"/>
        <Button android:id="@+id/index_smallnote_btn" android:onClick="indexOnClick" android:text="小字报" android:layout_width="0dp" android:layout_height="96dp" android:layout_weight="1"/>
        <Button android:id="@+id/index_info_btn" android:onClick="indexOnClick" android:text="通讯录" android:layout_width="0dp" android:layout_height="96dp" android:layout_weight="1"/>
        <Button android:id="@+id/index_secretary_btn" android:onClick="indexOnClick" android:text="小秘书" android:layout_width="0dp" android:layout_height="96dp" android:layout_weight="1"/>
    </LinearLayout>
+   
+   <LinearLayout android:orientation="horizontal" android:layout_height="48dp" android:layout_width="match_parent">
+   </LinearLayout>
+   
+   
     
-    <TextView style="@style/mylabel1" android:paddingTop="16dp" android:text="最新待办" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+   <!--  <TextView style="@style/mylabel1" android:paddingTop="16dp" android:text="最新待办" android:layout_width="match_parent" android:layout_height="wrap_content"/>
     
     <LinearLayout android:orientation="vertical" android:padding="5dp" android:layout_width="match_parent" android:layout_height="wrap_content">
     <ListView android:id="@+id/index_waitdeallist" android:layout_width="match_parent" android:layout_height="wrap_content"></ListView>
     <TextView android:id="@+id/index_waitdeallist_none" android:visibility="gone" android:text="当前没有待办！" android:layout_width="match_parent" android:layout_height="wrap_content"/>
     
-    </LinearLayout>
+    </LinearLayout> -->
 
 </LinearLayout>

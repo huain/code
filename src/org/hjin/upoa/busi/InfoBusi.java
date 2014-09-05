@@ -1,6 +1,5 @@
 package org.hjin.upoa.busi;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,8 @@ public class InfoBusi extends BaseBusi {
 	
 	private final String TAG = "InfoBusi";
 	
-	public static final int GETINFOLIST = 1;
+	/** flag标识：取得人员信息列表*/
+	public static final int GETINFOLIST = 0x0601;
 	
 	public InfoBusi(Handler handler){
 		super(handler);
@@ -49,7 +49,6 @@ public class InfoBusi extends BaseBusi {
 		Message msg = mHandler.obtainMessage();
 		switch(flag){
 		case GETINFOLIST:{
-//			Log.v(TAG, "===GETNEWSLIST_response:"+response);
 			msg.what = GETINFOLIST;
 			Bundle data = new Bundle();
 			Document doc = Jsoup.parse(response);
@@ -97,13 +96,6 @@ public class InfoBusi extends BaseBusi {
 		default:break;
 		}
 		msg.sendToTarget();
-		//mHandler.sendMessage(msg);
-	}
-
-	@Override
-	public void onComplete4binary(ByteArrayOutputStream responseOS,int flag) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

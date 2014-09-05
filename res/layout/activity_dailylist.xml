@@ -6,7 +6,7 @@
     android:background="@color/ultra_gray2"
     android:padding="5dp"
     android:orientation="vertical">
-    <include layout="@layout/fragment_load_animator" android:id="@+id/dailylist_load"/>
+    <!-- <include layout="@layout/fragment_load_animator" android:id="@+id/dailylist_load"/> -->
     <ListView 
         android:id="@+id/dailyList"
         android:divider="#00000000"

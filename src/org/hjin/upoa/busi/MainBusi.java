@@ -41,19 +41,19 @@ public class MainBusi extends BaseBusi {
 	
 	private final String TAG = "IndexBusi";
 	/**取得用户信息flag*/
-	public static final int GETUSERINFO = 1;
+	public static final int GETUSERINFO = 0x0201;
 	/**取得用户头像flag*/
-	public static final int GETUSERHEADERINFO = 2;
+	public static final int GETUSERHEADERINFO = 0x0202;
 	/**取得用户头像flag失败*/
-	public static final int GETUSERHEADERINFO_F = 21;
+	public static final int GETUSERHEADERINFO_F = 0x0203;
 	/**取得当前在线人数flag*/
-	public static final int GETONLINESUM = 3;
+	public static final int GETONLINESUM = 0x0204;
 	/**取得当前待办数量flag*/
-	public static final int GETWAITDEALSUM = 4;
+	public static final int GETWAITDEALSUM = 0x0205;
 	/**取得最近日报信息flag*/
-	public static final int GETDAILYINFO = 5;
+	public static final int GETDAILYINFO = 0x0206;
 	/**取得最新待办flag*/
-	public static final int GETWAITDEALINFO = 6;
+	public static final int GETWAITDEALINFO = 0x0207;
 	
 	public MainBusi(Handler handler){
 		super(handler);

@@ -1,6 +1,8 @@
 package org.hjin.upoa.constants;
 
 import org.apache.http.client.CookieStore;
+import org.hjin.upoa.model.Secretary;
+import org.hjin.upoa.ui.view.calendar.MyDate;
 
 public class AppConstants {
 	
@@ -9,6 +11,10 @@ public class AppConstants {
 	public static String onlinesum = "0";
 	
 	public static String loginname = "";
+	
+	public static Secretary sSecretary;
+	
+	public static MyDate sToday;
 	
 	public static String sHost_pmo = "http://60.247.77.194";
 	
@@ -39,6 +45,14 @@ public class AppConstants {
 	public static String sLt;
 	/**登录后的cookie保持*/
 	public static CookieStore sCookieStore = null;
+	
+	public static String token = null;
+	
+	public static String sReq_Secretary =  "http://60.247.77.194/ultrapmo/portal/getTaskCountTimer.action";
+	
+	public static String sReq_Calendar =  "http://60.247.77.194/ultrapmo/portal/getCalendarInfo.action";
+	
+	public static String sReq_Calendar_Referer = "http://60.247.77.194/ultrapmo/portal/pmo_qiandao.action";
 	
 	/**新闻中心地址*/
 	public static String sReq_NewsList = "http://60.247.77.194/ultrapmo/news/newsDetailList.action";

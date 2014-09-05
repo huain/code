@@ -22,6 +22,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.StatusLine;
@@ -31,6 +32,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.params.ConnRouteParams;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -45,6 +47,7 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.hjin.upoa.constants.AppConstants;
 import org.hjin.upoa.util.Utility;
+import org.hjin.upoa.util.net.NetStateManager.NetState;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -81,13 +84,6 @@ public class HttpManager {
         	DefaultHttpClient client = getNewHttpClient();
             HttpUriRequest request = null;
             ByteArrayOutputStream bos = null;
-            client.getParams()
-                    .setParameter(ConnRoutePNames.DEFAULT_PROXY, NetStateManager.getAPN());
-            String referer = "";
-            if(params.contains("header_referer")){
-            	referer = params.getValue("header_referer");
-            	params.remove("header_referer");
-            }
             if (method.equals(HTTPMETHOD_GET)) {
                 url = url + "?" + Utility.encodeUrl(params);
                 HttpGet get = new HttpGet(url);
@@ -129,14 +125,11 @@ public class HttpManager {
             if(AppConstants.sCookieStore != null){
             	client.setCookieStore(AppConstants.sCookieStore);
             }
-            if(!Utility.isBlank(referer)){
-            	request.addHeader("Referer", referer);
-            }
-            //项目改造，需要加入cookie
+            Log.d("cookie:",  "===cookie:"+client.getCookieStore().getCookies());
             HttpResponse response = client.execute(request);
             StatusLine status = response.getStatusLine();
             int statusCode = status.getStatusCode();
-
+            AppConstants.sCookieStore = client.getCookieStore();
             if (statusCode != 200) {
                 result = readHttpResponse(response);
                 throw new MyHttpException(result, statusCode);
@@ -231,6 +224,7 @@ public class HttpManager {
             throw e;
         }
     }
+    
     
     private static void paramToUpload(OutputStream baos, MyParameters params)
             throws IOException {
@@ -376,7 +370,7 @@ public class HttpManager {
 
             HttpParams params = new BasicHttpParams();
 
-            HttpConnectionParams.setConnectionTimeout(params, 10000);
+            HttpConnectionParams.setConnectionTimeout(params, 20000);
             HttpConnectionParams.setSoTimeout(params, 10000);
 
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
@@ -391,14 +385,14 @@ public class HttpManager {
             HttpConnectionParams.setConnectionTimeout(params, SET_CONNECTION_TIMEOUT);
             HttpConnectionParams.setSoTimeout(params, SET_SOCKET_TIMEOUT);
             DefaultHttpClient client = new DefaultHttpClient(ccm, params);
-            // if (NetState.Mobile == NetStateManager.CUR_NETSTATE) {
-            // // 获取当前正在使用的APN接入点
-            // HttpHost proxy = NetStateManager.getAPN();
-            // if (null != proxy) {
-            // client.getParams().setParameter(ConnRouteParams.DEFAULT_PROXY,
-            // proxy);
-            // }
-            // }
+	        if (NetState.Mobile == NetStateManager.CUR_NETSTATE) {
+	            // 获取当前正在使用的APN接入点
+	            HttpHost proxy = NetStateManager.getAPN();
+	            if (null != proxy) {
+	            client.getParams().setParameter(ConnRouteParams.DEFAULT_PROXY,
+	            proxy);
+	            }
+	        }
             return client;
         } catch (Exception e) {
             return new DefaultHttpClient();

@@ -48,7 +48,7 @@ public class DailyListAdapter extends BaseAdapter {
 		if(convertView != null){
 			vh = (ViewHolder)convertView.getTag();
 		}else{
-			convertView = mLayoutInflater.inflate(R.layout.fragment_dailylist_item, null);
+			convertView = mLayoutInflater.inflate(R.layout.activity_dailylist_item, null);
 			vh = new ViewHolder();
 			vh.subject = (TextView)convertView.findViewById(R.id.daily_subject);
 			vh.code = (TextView)convertView.findViewById(R.id.daily_code);

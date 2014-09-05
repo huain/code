@@ -1,6 +1,5 @@
 package org.hjin.upoa.busi;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +27,11 @@ public class SmallNoteBusi extends BaseBusi {
 	
 	private final String TAG = "SmallNoteBusi";
 	
-	public static final int GETSMALLNOTELIST = 1;
+	public static final int GETSMALLNOTELIST = 0x0501;
 	
-	public static final int GETSMALLNOTEINFO = 2;
+	public static final int GETSMALLNOTEINFO = 0x0502;
 	
-	public static final int SAVESMALLNOTE = 3;
+	public static final int SAVESMALLNOTE = 0x0503;
 	
 	public SmallNoteBusi(Handler handler){
 		super(handler);
@@ -81,9 +80,9 @@ public class SmallNoteBusi extends BaseBusi {
 	@Override
 	public void onComplete(String response,int flag) {
 		Message msg = mHandler.obtainMessage();
+		Log.d(TAG, response);
 		switch(flag){
 		case GETSMALLNOTELIST:{
-//			Log.v(TAG, "===GETNEWSLIST_response:"+response);
 			msg.what = GETSMALLNOTELIST;
 			Bundle data = new Bundle();
 			Document doc = Jsoup.parse(response);
@@ -148,16 +147,13 @@ public class SmallNoteBusi extends BaseBusi {
 			
 		}break;
 		case GETSMALLNOTEINFO:{
-//			Log.v(TAG, "===GETNEWSLIST_response:"+response);
 			msg.what = GETSMALLNOTEINFO;
 			Bundle data = new Bundle();
 			Document doc = Jsoup.parse(response);
-			//Element content = doc.select("div").first();
 			Element title1 = doc.select("h2").first();
 			Element title2 = doc.select("H3").first();
 			Element title3 = doc.select("H4").first();
 			Element content = doc.select("DD").first();
-//			Elements contents = content.select("span");
 			Element read = doc.select("div[class=read]").first();
 			StringBuffer sb = new StringBuffer("<div><p>");
 			if(null != title1){
@@ -194,13 +190,6 @@ public class SmallNoteBusi extends BaseBusi {
 		default:break;
 		}
 		msg.sendToTarget();
-		//mHandler.sendMessage(msg);
-	}
-
-	@Override
-	public void onComplete4binary(ByteArrayOutputStream responseOS,int flag) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

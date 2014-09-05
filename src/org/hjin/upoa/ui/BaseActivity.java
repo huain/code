@@ -4,11 +4,7 @@ import org.hjin.upoa.R;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.Menu;
-
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 
 public class BaseActivity extends Activity {
 	
@@ -21,24 +17,24 @@ public class BaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
 		
-		if(mDebugable){
-			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-			.detectDiskReads()
-			.detectDiskWrites()
-			.detectNetwork()
-			.penaltyLog()
-			.build());
-			
-			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-			.detectLeakedSqlLiteObjects()
-			.penaltyLog()
-			.build());
-		}
+//		if(mDebugable){
+//			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//			.detectDiskReads()
+//			.detectDiskWrites()
+//			.detectNetwork()
+//			.penaltyLog()
+//			.build());
+//			
+//			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//			.detectLeakedSqlLiteObjects()
+//			.penaltyLog()
+//			.build());
+//		}
 		
 //		if (!Utils.hasBind(getApplicationContext())) {
-        PushManager.startWork(getApplicationContext(),
-                PushConstants.LOGIN_TYPE_API_KEY,
-                apikey);
+//        PushManager.startWork(getApplicationContext(),
+//                PushConstants.LOGIN_TYPE_API_KEY,
+//                apikey);
             // Push: 如果想基于地理位置推送，可以打开支持地理位置的推送的开关
             // PushManager.enableLbs(getApplicationContext());
 //        }
@@ -51,6 +47,5 @@ public class BaseActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_base, menu);
 		return true;
 	}
-	
 
 }

@@ -1,22 +1,13 @@
 package org.hjin.upoa.busi;
 
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hjin.upoa.constants.AppConstants;
-import org.hjin.upoa.model.CalendarInfo;
-import org.hjin.upoa.model.NewsInfo;
-import org.hjin.upoa.util.Utility;
+import org.hjin.upoa.ui.view.calendar.MyDate;
+import org.hjin.upoa.ui.view.calendar.MyDate.DateStatus;
+import org.hjin.upoa.util.DateUtil;
 import org.hjin.upoa.util.net.MyParameters;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,10 +23,23 @@ public class CalendarBusi extends BaseBusi {
 	
 	private final String TAG = "CalendarBusi";
 	
-	public static final int GET_CARLENDAR_INFO = 1;
+	/**
+	 * flag标识：取得日历信息
+	 */
+	public static final int GET_CARLENDAR_INFO = 0x0401;
 	
-	public CalendarBusi(Handler handler){
-		super(handler);
+	/**
+	 * 初始条件date
+	 */
+	private MyDate[] mDates;
+	
+	public CalendarBusi(MyDate[] dates,Handler handler){
+		mDates = dates;
+		mHandler = handler;
+	}
+	
+	public void setDates(MyDate[] dates){
+		mDates = dates;
 	}
 	
 	
@@ -43,92 +47,169 @@ public class CalendarBusi extends BaseBusi {
 	 * 获取日历信息
 	 * @param dateJson
 	 */
-	public void getCalendarInfo(String dateJson){
-		MyParameters params = new MyParameters();
-		params.add("dateJson", dateJson);
-		params.add("header_referer", AppConstants.sReq_NewsInfo_Referer);
-		request(GET_CARLENDAR_INFO, AppConstants.sReq_NewsInfo, params, HTTPMETHOD_GET, this);
-		
+	public void getCalendarInfo(){
+		/*
+		 * {"prev":{"y":2014,"m":5,"s":26,"e":31},
+		 * "current":{"y":2014,"m":6,"s":1,"e":30},
+		 * "next":{"y":2014,"m":7,"s":1,"e":6}}
+		 */
+		if(mDates.length>0){
+			MyParameters params = new MyParameters();
+			params.add("dateJson", date2Json(mDates));
+			Log.d(TAG, "===获取日历信息：初始条件JSON："+ params.getValue("dateJson"));
+			params.add("header_referer", AppConstants.sReq_Calendar_Referer);
+			request(GET_CARLENDAR_INFO, AppConstants.sReq_Calendar, params, HTTPMETHOD_POST, this);
+		}
 	};
 	
-
 	@Override
 	public void onComplete(String response,int flag) {
-		Message msg = mHandler.obtainMessage();
 		switch(flag){
 		case GET_CARLENDAR_INFO:{
-			msg.what = GET_CARLENDAR_INFO;
-			Bundle data = new Bundle();
+			Log.d(TAG, response);
+			JSONObject jo = null;
 			try {
-				JSONObject jo = new JSONObject(response);
-				CalendarInfo c = new CalendarInfo();
-				if(jo != null){
-					JSONArray prevList = jo.getJSONArray("prev");
-					JSONArray currentList = jo.getJSONArray("current");
-					JSONArray nextList = jo.getJSONArray("next");
-					if(prevList != null && prevList.length()>0){
-						List<CalendarInfo.Date> prev = new ArrayList<CalendarInfo.Date>();
-						for(int i=0;i<prevList.length();i++){
-							CalendarInfo.Date date = c.new Date(
-									prevList.getJSONObject(i).getString("isholiday"),
-									prevList.getJSONObject(i).getString("isdaily"),
-									prevList.getJSONObject(i).getString("iscard"),
-									prevList.getJSONObject(i).getString("cardtime"),
-									prevList.getJSONObject(i).getString("isleave"),
-									prevList.getJSONObject(i).getString("isevection"));
- 							prev.add(date);
-							
-						}
-						c.setPrev(prev);
-					}
-					
-					if(currentList != null && currentList.length()>0){
-						List<CalendarInfo.Date> current = new ArrayList<CalendarInfo.Date>();
-						for(int i=0;i<currentList.length();i++){
-							CalendarInfo.Date date = c.new Date(
-									currentList.getJSONObject(i).getString("isholiday"),
-									currentList.getJSONObject(i).getString("isdaily"),
-									currentList.getJSONObject(i).getString("iscard"),
-									currentList.getJSONObject(i).getString("cardtime"),
-									currentList.getJSONObject(i).getString("isleave"),
-									currentList.getJSONObject(i).getString("isevection"));
- 							current.add(date);
-							
-						}
-						c.setCurrent(current);
-					}
-					
-					if(nextList != null && nextList.length()>0){
-						List<CalendarInfo.Date> next = new ArrayList<CalendarInfo.Date>();
-						for(int i=0;i<prevList.length();i++){
-							CalendarInfo.Date date = c.new Date(
-									nextList.getJSONObject(i).getString("isholiday"),
-									nextList.getJSONObject(i).getString("isdaily"),
-									nextList.getJSONObject(i).getString("iscard"),
-									nextList.getJSONObject(i).getString("cardtime"),
-									nextList.getJSONObject(i).getString("isleave"),
-									nextList.getJSONObject(i).getString("isevection"));
- 							next.add(date);
-						}
-						c.setNext(next);
-					}
-					
-					data.putSerializable("data", (Serializable)c);
-					msg.setData(data);
-					
-				}
+				jo = new JSONObject(response);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			if(jo != null){
+				JSONArray prevList = null;
+				JSONArray currentList = null;
+				JSONArray nextList = null;
+				try {
+					prevList = jo.getJSONArray("prev");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				try {
+					currentList = jo.getJSONArray("current");
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					nextList = jo.getJSONArray("next");
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+				int prevLength = prevList==null?0:prevList.length();
+				int currentLength = currentList==null?0:currentList.length();
+				int nextLength = nextList==null?0:nextList.length();
+				int i=0;
+				try {
+					if((prevLength+currentLength+nextLength) == mDates.length){
+						Message msg = mHandler.obtainMessage();
+						msg.what = GET_CARLENDAR_INFO;
+						Bundle data = msg.getData();
+						if(prevLength>0){
+							for(;i<prevLength;i++){
+								MyDate date = mDates[i];
+								date.setIsholiday(prevList.getJSONObject(i).getString("isholiday"));
+								date.setIsdaily(prevList.getJSONObject(i).getString("isdaily"));
+								date.setIscard(prevList.getJSONObject(i).getString("iscard"));
+								date.setCardtime(prevList.getJSONObject(i).getString("cardtime"));
+								date.setIsleave(prevList.getJSONObject(i).getString("isleave"));
+								date.setIsevection(prevList.getJSONObject(i).getString("isevection"));
+								date.updateStatus();
+							}
+						}
+						
+						if(currentLength>0){
+							for(;i<prevLength+currentLength;i++){
+								MyDate date = mDates[i];
+								int j = i-prevLength;
+								date.setIsholiday(currentList.getJSONObject(j).getString("isholiday"));
+								date.setIsdaily(currentList.getJSONObject(j).getString("isdaily"));
+								date.setIscard(currentList.getJSONObject(j).getString("iscard"));
+								date.setCardtime(currentList.getJSONObject(j).getString("cardtime"));
+								date.setIsleave(currentList.getJSONObject(j).getString("isleave"));
+								date.setIsevection(currentList.getJSONObject(j).getString("isevection"));
+								date.updateStatus();
+							}
+						}
+						
+						if(nextLength>0){
+							for(;i<prevLength+currentLength+nextLength;i++){
+								MyDate date = mDates[i];
+								int k = i - prevLength-currentLength;
+								date.setIsholiday(nextList.getJSONObject(k).getString("isholiday"));
+								date.setIsdaily(nextList.getJSONObject(k).getString("isdaily"));
+								date.setIscard(nextList.getJSONObject(k).getString("iscard"));
+								date.setCardtime(nextList.getJSONObject(k).getString("cardtime"));
+								date.setIsleave(nextList.getJSONObject(k).getString("isleave"));
+								date.setIsevection(nextList.getJSONObject(k).getString("isevection"));
+								date.updateStatus();
+							}
+						}
+						
+						data.putSerializable("dates", mDates);
+						msg.sendToTarget();
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			
 		}break;
 		default:break;
 		}
-		msg.sendToTarget();
 	}
 
-	@Override
-	public void onComplete4binary(ByteArrayOutputStream responseOS,int flag) {
-
+	/**
+	 * MyDate转换为Json
+	 * @param dates
+	 * @return
+	 */
+	private String date2Json(MyDate[] dates){
+		if(dates == null || dates.length == 0){
+			return "";
+		}
+		/*
+		 * {"prev":{"y":2014,"m":5,"s":26,"e":31},
+		 * "current":{"y":2014,"m":6,"s":1,"e":30},
+		 * "next":{"y":2014,"m":7,"s":1,"e":6}}
+		 */
+		StringBuffer sb = new StringBuffer("");
+		sb.append("{\"prev\":{\"y\":");
+		int lastNum = 0;
+		int currNum = 0;
+		//int nextNum = 0;
+		int length = dates.length;		
+		if(dates[0].getStatus() == DateStatus.CurrentMonthDay){
+			currNum = DateUtil.getMonthDays(dates[0].getmYear(), dates[0].getmMonth());
+			sb.append("\"\",\"m\":\"\",\"s\":\"\",\"e\":\"\"},");
+		}else{
+			lastNum = DateUtil.getMonthDays(dates[0].getmYear(), dates[0].getmMonth());
+			currNum = DateUtil.getMonthDays(dates[length/2].getmYear(), dates[length/2].getmMonth());
+			sb.append(dates[0].getmYear());
+			sb.append(",\"m\":");
+			sb.append(dates[0].getmMonth());
+			sb.append(",\"s\":");
+			sb.append(dates[0].getmDay());
+			sb.append(",\"e\":");
+			sb.append(lastNum);
+			sb.append("},");
+		}
+		sb.append("\"current\":{\"y\":");
+		sb.append(dates[length/2].getmYear());
+		sb.append(",\"m\":");
+		sb.append(dates[length/2].getmMonth());
+		sb.append(",\"s\":1,\"e\":");
+		sb.append(currNum);
+		sb.append("},");
+		
+		if(dates[length-1].getStatus() == DateStatus.CurrentMonthDay){
+			sb.append("{\"next\":{\"y\":\"\",\"m\":\"\",\"s\":\"\",\"e\":\"\"}}");
+		}else{
+			sb.append("\"next\":{\"y\":");
+			sb.append(dates[length-1].getmYear());
+			sb.append(",\"m\":");
+			sb.append(dates[length-1].getmMonth());
+			sb.append(",\"s\":1,\"e\":");
+			sb.append(dates[length-1].getmDay());
+			sb.append("}}");
+		}
+		return sb.toString();
 	}
 
 }

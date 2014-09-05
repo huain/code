@@ -8,6 +8,8 @@ import java.io.Serializable;
  */
 public class Daily implements Serializable {
 	
+	private static final long serialVersionUID = 5242247679567764092L;
+
 	private String id;
 	
 	private String code;

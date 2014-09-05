@@ -3,8 +3,6 @@ package org.hjin.upoa.util.net;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import android.content.Context;
-
 public class AsyncRunner {
 	
 	/**
@@ -90,5 +88,6 @@ public class AsyncRunner {
             }
         }.start();
     }
+    
 
 }

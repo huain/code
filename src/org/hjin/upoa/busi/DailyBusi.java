@@ -1,6 +1,5 @@
 package org.hjin.upoa.busi;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -14,7 +13,6 @@ import java.util.Map;
 
 import org.hjin.upoa.constants.AppConstants;
 import org.hjin.upoa.model.Daily;
-import org.hjin.upoa.ui.DailyFragment;
 import org.hjin.upoa.util.Utility;
 import org.hjin.upoa.util.net.MyParameters;
 import org.json.JSONException;
@@ -38,17 +36,18 @@ public class DailyBusi extends BaseBusi {
 	
 	private final String TAG = "DailyBusi";
 	
-	public static final int GETDAILYLIST = 1;
-	
-	public static final int GETPROLIST = 2;
-	
-	public static final int CHECKPRONO = 3;
-	
-	public static final int CHECKHOUR = 4;
-	
-	public static final int POSTDAILY = 5;
-	
-	public static final int CHECKCREATEDATE = 6;
+	/** flag标识：取得历史日报列表*/
+	public static final int GETDAILYLIST = 0x0301;
+	/** flag标识：取得项目列表*/
+	public static final int GETPROLIST = 0x0302;
+	/** flag标识：检查项目权限*/
+	public static final int CHECKPRONO = 0x0303;
+	/** flag标识：检查日报时间*/
+	public static final int CHECKHOUR = 0x0304;
+	/** flag标识：提交日报填写信息*/
+	public static final int POSTDAILY = 0x0305;
+	/** flag标识：检查日报填写日期*/
+	public static final int CHECKCREATEDATE = 0x0306;
 	
 	private Daily mDaily;
 	
@@ -69,7 +68,6 @@ public class DailyBusi extends BaseBusi {
 			params.add("var_selectvalues", "");
 			params.add("var_istranfer", "1");
 			params.add("var_sorttype", "0");
-			params.add("header_referer", AppConstants.sReq_DailyList_Referer);
 			request(GETDAILYLIST, AppConstants.sReq_DailyList, params, HTTPMETHOD_POST, this);
 		}else{
 			params.add("header_referer", AppConstants.sReq_DailyList_Referer);
@@ -180,6 +178,10 @@ public class DailyBusi extends BaseBusi {
 		return result;
 	}
 	
+	/**
+	 * 检查日志填写日期
+	 * @param daily
+	 */
 	public void checkCreateDate(Daily daily){
 		mDaily = daily;
 		MyParameters params = new MyParameters();
@@ -438,12 +440,6 @@ public class DailyBusi extends BaseBusi {
 		}
 		
 		msg.sendToTarget();
-	}
-
-	@Override
-	public void onComplete4binary(ByteArrayOutputStream responseOS,int flag) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

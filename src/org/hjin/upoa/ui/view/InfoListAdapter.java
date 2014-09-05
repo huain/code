@@ -5,10 +5,16 @@ import java.util.List;
 import org.hjin.upoa.R;
 import org.hjin.upoa.model.Info;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -21,9 +27,12 @@ public class InfoListAdapter extends BaseAdapter {
 	
 	private List<Info> mList;
 	
+	private Context mContext;
+	
 	
 	public InfoListAdapter(Context context,List<Info> list){
 		mLayoutInflater = LayoutInflater.from(context);
+		mContext = context;
 		this.mList = list;
 	}
 
@@ -48,7 +57,7 @@ public class InfoListAdapter extends BaseAdapter {
 		if(convertView != null){
 			vh = (ViewHolder)convertView.getTag();
 		}else{
-			convertView = mLayoutInflater.inflate(R.layout.fragment_infolist_item, null);
+			convertView = mLayoutInflater.inflate(R.layout.activity_infolist_item, null);
 			vh = new ViewHolder();
 			vh.username = (TextView)convertView.findViewById(R.id.info_username);
 			vh.dep = (TextView)convertView.findViewById(R.id.info_dep);
@@ -63,7 +72,31 @@ public class InfoListAdapter extends BaseAdapter {
 		vh.post.setText(info.getPost());
 		vh.tel.setText(info.getTel());
 		vh.email.setText(info.getEmail());
-		
+		convertView.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				final ViewHolder vhdialog = (ViewHolder)v.getTag();
+				new AlertDialog.Builder(mContext).setTitle(vhdialog.username.getText())
+				.setMessage(vhdialog.dep.getText())
+				.setPositiveButton("拨打电话", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+vhdialog.tel.getText())); 
+						mContext.startActivity(intent);
+					}
+				})
+				.setNegativeButton("发送邮件", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(Intent.ACTION_SENDTO);
+						intent.setData(Uri.parse("mailto:"+vhdialog.email.getText())); 
+						mContext.startActivity(intent);
+					}
+				})
+				.show();
+				return true;
+			}
+		});
 		return convertView;
 	}
 	
