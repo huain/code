@@ -81,7 +81,7 @@ public class InfoListAdapter extends BaseAdapter {
 				.setPositiveButton("²¦´òµç»°", new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+vhdialog.tel.getText())); 
+						Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+vhdialog.tel.getText())); 
 						mContext.startActivity(intent);
 					}
 				})
