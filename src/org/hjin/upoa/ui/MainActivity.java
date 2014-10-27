@@ -1,7 +1,5 @@
 package org.hjin.upoa.ui;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,10 +11,8 @@ import org.hjin.upoa.model.Secretary;
 import org.hjin.upoa.service.OnLineService;
 import org.hjin.upoa.util.Utility;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo.State;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,9 +21,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +28,7 @@ public class MainActivity extends BaseActivity {
 	
 	private final String TAG = "MainActivity";
 	
-	private MainBusi mIndexBusi;
+	private SecretaryBusi mSecretaryBusi;
 	
 	private ImageView mHeader;
 	
@@ -55,22 +48,7 @@ public class MainActivity extends BaseActivity {
     		super.handleMessage(msg);
 			Bundle data = msg.getData();
     		switch(msg.what){
-    		case MainBusi.GETUSERHEADERINFO:{
-    			mHeader.setImageDrawable(Utility.getDrawableFromSD(
-						AppConstants.sReq_IndexUserHeaderInfo+AppConstants.loginname+"_head_160.jpg"));
-    		}break;
     		case MainBusi.GETUSERHEADERINFO_F:{}break;
-    		case MainBusi.GETUSERINFO:{
-    			if(!Utility.isBlank(data.getString("fullname"))){
-					mFullname.setText(data.getString("fullname"));
-				}
-				if(!Utility.isBlank(data.getString("userpost"))){
-					mPost.setText(data.getString("userpost"));
-				}
-				if(!Utility.isBlank(data.getString("userdep"))){
-					mDep.setText(data.getString("userdep"));
-				}
-    		}break;
 //    		case MainBusi.GETWAITDEALINFO:{
 //    			@SuppressWarnings("unchecked")
 //				List<Map<String,String>> list = (List<Map<String,String>>)data.getSerializable("result");
@@ -87,6 +65,7 @@ public class MainActivity extends BaseActivity {
 	    		Log.d(TAG, "======GET_TASK_COUNT");
 	    		if(msg.arg1 == 1){
 	    			AppConstants.sSecretary = (Secretary)data.getSerializable("data");
+	    			
 	    		}
 	    	}break;
 			}
@@ -111,21 +90,24 @@ public class MainActivity extends BaseActivity {
 //		mWaitDealList = (ListView)findViewById(R.id.index_waitdeallist);
 //		mWaitDealList_None = (TextView)findViewById(R.id.index_waitdeallist_none);
 		
-		mIndexBusi = new MainBusi(this, mHandler);
-		mIndexBusi.getUserInfo();
-		boolean isnonepic = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("setting_item_nonepic", false);
-		ConnectivityManager conMan = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-		State mobile = conMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
-		if(isnonepic && (mobile==State.CONNECTED||mobile==State.CONNECTING)){
-			
-		}else{
-			mIndexBusi.getUserHeaderInfo();
-		}
+		mHeader.setImageDrawable(Utility.getDrawableFromSD(
+				AppConstants.sReq_IndexUserHeaderInfo+AppConstants.loginname+"_head_160.jpg"));
+		
+		SharedPreferences sp =  PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		mFullname.setText(sp.getString("fullname", "未知姓名"));
+		mPost.setText(sp.getString("userpost", ""));
+		mDep.setText(sp.getString("userdep", ""));
+		
+		
+		
+		mSecretaryBusi = new SecretaryBusi(mHandler);
 //		mIndexBusi.getWaitDealSum();
 //		mIndexBusi.getDailyInfo();
 //		mIndexBusi.getWaitDealInfo();
-		new SecretaryBusi(mHandler).getTaskCount();
+		mSecretaryBusi.getTaskCount();
     }
+    
+    
     
     /**
      * 按钮点击
@@ -151,6 +133,11 @@ public class MainActivity extends BaseActivity {
     	case R.id.index_secretary_btn:{
     		Intent intent = new Intent();
     		intent.setClass(getApplicationContext(), SecretaryActivity.class);
+    		startActivity(intent);
+    	}break;
+    	case R.id.index_setting_btn:{
+    		Intent intent = new Intent();
+    		intent.setClass(getApplicationContext(), SettingActivity.class);
     		startActivity(intent);
     	}break;
     	}

@@ -23,7 +23,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -55,14 +55,11 @@ public class MainBusi extends BaseBusi {
 	/**取得最新待办flag*/
 	public static final int GETWAITDEALINFO = 0x0207;
 	
-	public MainBusi(Handler handler){
-		super(handler);
-	}
 	
-	public MainBusi(Activity actiity,Handler handler){
-		super(actiity,handler);
+	public MainBusi(Context context, Handler handler) {
+		super(context,handler);
 	}
-	
+
 	/**
 	 * 取得用户的基本信息
 	 */
@@ -138,7 +135,7 @@ public class MainBusi extends BaseBusi {
 					data.putString("fullname", jo.getString("F_USERNAME"));
 					data.putString("userdep", jo.getString("F_DEPTNAME"));
 					data.putString("userpost", jo.getString("F_DICNAME"));
-					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
+					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
 					Editor e = sp.edit();
 					e.putString("index_fullname", jo.getString("F_USERNAME"));
 					e.putString("index_userdep", jo.getString("F_DEPTNAME"));

@@ -4,12 +4,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.hjin.upoa.constants.AppConstants;
+import org.hjin.upoa.ui.BaseActivity;
 import org.hjin.upoa.util.net.AsyncRunner;
 import org.hjin.upoa.util.net.MyHttpException;
 import org.hjin.upoa.util.net.MyParameters;
 import org.hjin.upoa.util.net.RequestListener;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -36,7 +38,7 @@ public class BaseBusi implements RequestListener{
 	
 	protected Handler mHandler;
 	
-	protected Activity mActivity;
+	protected Context mContext;
 	
 	protected BaseBusi(){
 		
@@ -50,9 +52,9 @@ public class BaseBusi implements RequestListener{
 		this.mHandler = handler;
 	}
 	
-	public BaseBusi(Activity activity,Handler handler){
+	public BaseBusi(Context context,Handler handler){
 		this.mHandler = handler;
-		this.mActivity = activity;
+		this.mContext = context;
 	}
 	
 	/**

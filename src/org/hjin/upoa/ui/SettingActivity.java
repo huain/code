@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.ListPreference;
-import android.preference.PreferenceFragment;
+import android.preference.PreferenceActivity;
 import android.util.Log;
 
-public class SettingFragment extends PreferenceFragment {
+public class SettingActivity extends PreferenceActivity {
 	
 	private final String TAG = "SettingFragment";
 	
@@ -17,14 +17,7 @@ public class SettingFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.setting);
-	}
-
-
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
+		
 		final ListPreference typePreference = (ListPreference)findPreference("setting_item_typedefault");
 		final ListPreference positionPreference = (ListPreference)findPreference("setting_item_positiondefault");
 //		final SwitchPreference nonepicPreference = (SwitchPreference)findPreference("setting_item_nonepic");
@@ -45,17 +38,8 @@ public class SettingFragment extends PreferenceFragment {
 				}
 			}
 		});
-		
-		
-		
-		
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
 
 }

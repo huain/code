@@ -118,8 +118,10 @@ public class SmallNoteActivity extends BaseActivity implements OnHeaderRefreshLi
 		case R.id.action_newsmallnote:{
 			onClick("","");
 		}break;
-		default:break;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
+		
 		return true;
 	}
 	

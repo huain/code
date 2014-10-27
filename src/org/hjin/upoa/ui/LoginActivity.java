@@ -122,7 +122,7 @@ public class LoginActivity extends BaseActivity {
 		
 		AppConstants.loginname = mUsername;
 		
-		LoginBusi lbs = new LoginBusi(mHandler);
+		LoginBusi lbs = new LoginBusi(getApplicationContext(),mHandler);
 		lbs.login(mUsername, mPassword);
 	}
 	

@@ -90,13 +90,40 @@
 	            android:value="org.hjin.upoa.ui.MainActivity"/>
         </activity>
         
-        <activity android:name="org.hjin.upoa.ui.DailyWriteActivity"></activity>
+        <activity android:name="org.hjin.upoa.ui.DailyWriteActivity"
+            android:parentActivityName="org.hjin.upoa.ui.DailyActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="org.hjin.upoa.ui.DailyActivity"/>
+        </activity>
         
-        <activity android:name="org.hjin.upoa.ui.DailyListActivity"></activity>
+        <activity android:name="org.hjin.upoa.ui.DailyListActivity"
+             android:parentActivityName="org.hjin.upoa.ui.DailyActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="org.hjin.upoa.ui.DailyActivity"/>
+        </activity>
         
-        <activity android:name="org.hjin.upoa.ui.InfoListActivity"></activity>
+        <activity android:name="org.hjin.upoa.ui.InfoListActivity"
+            android:parentActivityName="org.hjin.upoa.ui.MainActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="org.hjin.upoa.ui.MainActivity"/>
+        </activity>
         
-        <activity android:name="org.hjin.upoa.ui.SecretaryActivity"></activity>
+        <activity android:name="org.hjin.upoa.ui.SecretaryActivity"
+            android:parentActivityName="org.hjin.upoa.ui.MainActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="org.hjin.upoa.ui.MainActivity"/>
+        </activity>
+        
+        <activity android:name="org.hjin.upoa.ui.SettingActivity"
+            android:parentActivityName="org.hjin.upoa.ui.MainActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="org.hjin.upoa.ui.MainActivity"/>
+        </activity>
         
         <service android:name="org.hjin.upoa.service.OnLineService"></service>
         

@@ -44,7 +44,8 @@ public class DailyActivity extends BaseActivity {
 			i.setClass(this, DailyListActivity.class);
 			startActivity(i);
 		}break;
-		default:break;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 		return true;
 	}
