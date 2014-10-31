@@ -31,23 +31,56 @@
 	</LinearLayout>
 	<LinearLayout android:padding="20dp" android:dividerPadding="10dp" android:orientation="vertical" android:layout_weight="3" android:layout_height="0dp" android:layout_width="match_parent">
 		<LinearLayout  android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
-		    <Button android:id="@+id/index_daily_btn" android:onClick="indexOnClick" android:text="日报" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-		    <Button android:id="@+id/index_smallnote_btn" android:onClick="indexOnClick" android:text="小字报" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-		    <Button android:id="@+id/index_info_btn" android:onClick="indexOnClick" android:text="通讯录" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-		    <Button android:id="@+id/index_secretary_btn" android:onClick="indexOnClick" android:text="小秘书" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+		    <Button android:id="@+id/index_daily_btn" android:background="@color/ultra_blue"  android:onClick="indexOnClick" android:text="日报" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+		    <Button android:id="@+id/index_smallnote_btn" android:background="@color/ultra_green"  android:onClick="indexOnClick" android:text="小字报" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+		    <Button android:id="@+id/index_info_btn" android:background="@color/ultra_blue"  android:onClick="indexOnClick" android:text="通讯录" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+		    
+		    <FrameLayout  
+                android:layout_width="80dp"  
+                android:layout_height="80dp"  
+                android:layout_weight="1"  
+                android:background="@null" >
+	            
+		        <LinearLayout  
+                    android:layout_width="fill_parent"  
+                    android:layout_height="fill_parent"  
+                    android:gravity="bottom|center" >
+		        	<Button android:id="@+id/index_secretary_btn" android:background="@color/ultra_green" android:onClick="indexOnClick" android:text="小秘书" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+				</LinearLayout>
+				
+		        <LinearLayout  
+                    android:layout_width="fill_parent"  
+                    android:layout_height="fill_parent"  
+                    android:gravity="top|right|center" 
+                    android:padding="10dp" >  
+  
+                    <TextView  
+                        android:id="@+id/index_secretary_num_tv"  
+                        android:layout_width="wrap_content"  
+                        android:layout_height="wrap_content"  
+                        android:background="@drawable/bg_red"  
+                        android:gravity="center"  
+                        android:text="0"  
+                        android:textColor="@android:color/white"  
+                        android:visibility="invisible" />  
+                </LinearLayout> 
+		        
+		        
+	        </FrameLayout>
 		</LinearLayout>
 		
 		<LinearLayout  android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
-			<Button android:id="@+id/index_setting_btn" android:onClick="indexOnClick" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-			<Button android:id="@+id/index_default_btn1" android:onClick="indexOnClick" android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-			<Button android:id="@+id/index_default_btn2" android:onClick="indexOnClick" android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-			<Button android:id="@+id/index_default_btn3" android:onClick="indexOnClick" android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+			<Button android:id="@+id/index_setting_btn" android:background="@color/ultra_green" android:onClick="indexOnClick" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+			<Button android:id="@+id/index_default_btn1" android:onClick="indexOnClick"  android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+			<Button android:id="@+id/index_default_btn2" android:onClick="indexOnClick"  android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
+			<Button android:id="@+id/index_default_btn3" android:onClick="indexOnClick"  android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
 		</LinearLayout>
 	</LinearLayout>
    
-	<LinearLayout android:orientation="horizontal" android:padding="10dp" android:gravity="center" android:layout_height="64dp" android:layout_width="match_parent">
-		<Button android:id="@+id/index_refresh_btn" android:onClick="indexOnClick" android:text="刷新" android:layout_width="48dp" android:layout_height="48dp" android:layout_weight="0"/>
-		<TextView android:layout_width="0dp" android:layout_height="48dp" android:gravity="right|center_vertical"  android:layout_weight="1" android:text="当前在线：1024人"/>
+	<LinearLayout android:background="@color/ultra_blue2" android:layout_width="match_parent" android:layout_height="10dp" />
+	<LinearLayout android:orientation="horizontal" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingBottom="10dp" android:gravity="center" android:layout_height="64dp" android:layout_width="match_parent">
+		<Button android:id="@+id/index_refresh_btn" android:background="@drawable/ic_action_reply" android:onClick="indexOnClick" android:layout_width="48dp" android:layout_height="48dp" android:layout_weight="0"/>
+		<TextView android:textColor="@color/ultra_gray" android:layout_width="0dp"  android:layout_height="48dp" android:gravity="right|center_vertical"  android:layout_weight="1" android:text="当前在线：1024人"/>
 	</LinearLayout>
    
    

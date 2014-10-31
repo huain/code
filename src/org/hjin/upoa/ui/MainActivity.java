@@ -38,6 +38,8 @@ public class MainActivity extends BaseActivity {
 	
 	private TextView mDep;
 	
+	private TextView mSecretaryNum;
+	
 //	private ListView mWaitDealList;
 //	
 //	private TextView mWaitDealList_None;
@@ -66,6 +68,12 @@ public class MainActivity extends BaseActivity {
 	    		if(msg.arg1 == 1){
 	    			AppConstants.sSecretary = (Secretary)data.getSerializable("data");
 	    			
+	    			if(AppConstants.sSecretary != null && AppConstants.sSecretary.getAllCount()>0){
+	    				mSecretaryNum.setText(AppConstants.sSecretary.getAllCount()+"");
+	    				mSecretaryNum.setVisibility(View.VISIBLE);
+	    			}else{
+	    				mSecretaryNum.setVisibility(View.INVISIBLE);
+	    			}
 	    		}
 	    	}break;
 			}
@@ -87,6 +95,9 @@ public class MainActivity extends BaseActivity {
 		mFullname = (TextView)findViewById(R.id.index_fullname);
 		mPost = (TextView)findViewById(R.id.index_post);
 		mDep = (TextView)findViewById(R.id.index_dep);
+		
+		mSecretaryNum = (TextView)findViewById(R.id.index_secretary_num_tv);
+		
 //		mWaitDealList = (ListView)findViewById(R.id.index_waitdeallist);
 //		mWaitDealList_None = (TextView)findViewById(R.id.index_waitdeallist_none);
 		

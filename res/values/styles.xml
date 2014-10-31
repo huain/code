@@ -213,6 +213,7 @@
     <color name="ultra_light_blue">#6DBDF2</color>
 
     <color name="txt_white">#ffffff</color>
+    <color name="ultra_white_a80">#80ffffff</color>
     <color name="ultra_gray">#595959</color>
     <color name="ultra_gray2">#eeeeee</color>
     <color name="ultra_gray3">#111111</color>
@@ -220,6 +221,7 @@
     <color name="ultra_gray5">#eeeeee</color>
     <color name="ultra_black">#000000</color>
     <color name="ultra_black2">#50000000</color>
+    <color name="ultra_black_a80">#80000000</color>
     
     <color name="ultra_red">#f05b72</color>
 

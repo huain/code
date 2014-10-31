@@ -1,8 +1,20 @@
 package org.hjin.upoa.busi;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.hjin.upoa.constants.AppConstants;
 import org.hjin.upoa.model.Secretary;
 import org.hjin.upoa.util.net.MyParameters;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +30,9 @@ public class SecretaryBusi extends BaseBusi {
 	
 	/** flag标识：获取各种工单数目*/
 	public static final int GET_TASK_COUNT = 0x0701;
+	
+	/** flag标识：获取工单待办信息*/
+	public static final int GET_ARWAIT = 0x0702;
 
 	public SecretaryBusi(Handler handler){
 		this.mHandler = handler;
@@ -27,14 +42,23 @@ public class SecretaryBusi extends BaseBusi {
 		MyParameters params = new MyParameters();
 		request(GET_TASK_COUNT, AppConstants.sReq_Secretary, params, HTTPMETHOD_POST, this);
 	}
+	
+	/**
+	 * 取得最新待办信息
+	 */
+	public void getArWait(){
+		MyParameters params = new MyParameters();
+		params.add("header_referer", AppConstants.sReq_IndexWaitDealInfo_Referer);
+		request(GET_ARWAIT, AppConstants.sReq_IndexWaitDealInfo, params, HTTPMETHOD_GET, this);
+	}
 
 	@Override
 	public void onComplete(String response, int flag) {
+		Message msg = mHandler.obtainMessage();
 		switch(flag){
 		case GET_TASK_COUNT:{
-			response = "3,5,5,15,5,55,5,5,5,5,5,5,5,5,5,5,115,5,5,2225,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5";
+//			response = "3,5,5,15,5,55,5,5,5,5,5,5,5,5,5,5,115,5,5,2225,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5";
 			Log.d(TAG, "++++++++:"+response);
-			Message msg = mHandler.obtainMessage();
 			Bundle data = new Bundle();
 			msg.what = GET_TASK_COUNT;
 			if(response != null && !"".equals(response)){
@@ -95,6 +119,47 @@ public class SecretaryBusi extends BaseBusi {
 			}
 			msg.setData(data);
 			msg.sendToTarget();
+		}break;
+		case GET_ARWAIT:{
+			msg.what = GET_ARWAIT;
+			Bundle data = new Bundle();
+			Document doc = Jsoup.parse(response);
+			Element e_listcontent_table = doc.select("table[id=caseTable]").first();
+			if (null != e_listcontent_table) {
+				Elements e_listcontent = e_listcontent_table.select("tr");
+				int datasum = 0;
+				GregorianCalendar today = new GregorianCalendar();
+				if (today.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+					datasum = 7;
+				} else {
+					datasum = today.get(Calendar.DAY_OF_WEEK) - 1;
+				}
+				datasum = datasum + 7;
+				if (e_listcontent != null && e_listcontent.size() > 1) {
+					List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+					Map<String, String> waitDealMap = new HashMap<String, String>();
+					int sum = 11;
+					if (e_listcontent.size() < 11) {
+						sum = e_listcontent.size();
+					}
+					for (int i = 1; i < sum; i++) {
+						Element div = e_listcontent.get(i);
+						Elements tds = div.select("td");
+						if (i % 2 == 1) {
+							waitDealMap = new HashMap<String, String>();
+							waitDealMap.put("index", "" + ((i / 2) + 1));
+							waitDealMap.put("dealPerson", tds.get(1).text().trim());
+							waitDealMap.put("dealTime", tds.get(2).text().trim());
+							waitDealMap.put("dealStatus", tds.get(3).text().trim());
+						} else {
+							waitDealMap.put("dealName", tds.get(0).text().trim());
+							result.add(waitDealMap);
+						}
+					}
+					data.putSerializable("result", (Serializable) result);
+					msg.setData(data);
+				}
+			}
 		}break;
 		default:break;
 		}

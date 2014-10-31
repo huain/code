@@ -11,7 +11,11 @@ import org.hjin.upoa.model.Secretary;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -23,11 +27,22 @@ public class SecretaryActivity extends BaseActivity {
 	private ListView mLs;
 	
 	private TextView mNoResult;
+	
+	
+	private List<Map<String,String>> mGroupData;
+	
+	private List<List<Map<String,String>>> mChildData;
+	
+	private List<Map<String,String>> mArwaitData;
+	
+	private LayoutInflater mLayoutInflater;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_secretary);
+		
+		mLayoutInflater = getLayoutInflater();
 		
 		mLs = (ListView)findViewById(R.id.secretaryList);
 		mNoResult = (TextView)findViewById(R.id.secretaryNoResult);
@@ -39,11 +54,11 @@ public class SecretaryActivity extends BaseActivity {
 			mNoResult.setVisibility(View.VISIBLE);
 			Log.d("SecretaryActivity", "*****"+(mSecretary == null?null:mSecretary.getAllCount()));
 		}else{
-			List<Map<String,String>> data = makeListData(mSecretary);
-			if(data != null && data.size()>0){
+			mGroupData = makeListData(mSecretary);
+			if(mGroupData != null && mGroupData.size()>0){
 				String[] from = new String[]{"icon","text","num"};
 				int[] to = new int[]{R.id.secretary_item_icon,R.id.secretary_item_text,R.id.secretary_item_num};
-				mLs.setAdapter(new SimpleAdapter(this, data, R.layout.secretary_list_item, from, to));
+				mLs.setAdapter(new SimpleAdapter(this, mGroupData, R.layout.secretary_list_item, from, to));
 				Log.d("SecretaryActivity", "*****"+mSecretary.getAllCount());
 			}
 		}
@@ -207,6 +222,101 @@ public class SecretaryActivity extends BaseActivity {
 		m.put("text", text);
 		m.put("num", num+"");
 		return m;
+	}
+	
+	
+	private class ExpandableAdapter extends BaseExpandableListAdapter{
+		
+		
+		
+		@Override
+		public int getGroupCount() {
+			return mGroupData.size();
+		}
+
+		@Override
+		public int getChildrenCount(int groupPosition) {
+			if(getGroupText(groupPosition).equals("工单待办")){
+//				int count = Integer.parseInt(m.get("num"));
+				return mArwaitData == null ? 0 :(mArwaitData.size()>5?5:mArwaitData.size());
+			}else{
+				return 0;
+			}
+		}
+
+		@Override
+		public Object getGroup(int groupPosition) {
+			return mGroupData.get(groupPosition);
+		}
+
+		@Override
+		public Object getChild(int groupPosition, int childPosition) {
+			if(getGroupText(groupPosition).equals("工单待办")){
+				return mArwaitData.get(childPosition);
+			}
+			return null;
+		}
+
+		@Override
+		public long getGroupId(int groupPosition) {
+			return groupPosition;
+		}
+
+		@Override
+		public long getChildId(int groupPosition, int childPosition) {
+			return groupPosition<<32+childPosition;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return false;
+		}
+
+		@Override
+		public View getGroupView(int groupPosition, boolean isExpanded,
+				View convertView, ViewGroup parent) {
+			GroupViewHolder gvh;
+			if(convertView != null){
+				gvh = (GroupViewHolder)convertView.getTag();
+			}else{
+				convertView = mLayoutInflater.inflate(R.layout.secretary_list_item, null);
+				gvh = new GroupViewHolder();
+				gvh.title = (TextView)convertView.findViewById(R.id.secretary_item_text);
+				gvh.num = (TextView)convertView.findViewById(R.id.secretary_item_num);
+				gvh.icon = (ImageView)convertView.findViewById(R.id.secretary_item_icon);
+				convertView.setTag(gvh);
+			}
+			Map<String,String> data = mGroupData.get(groupPosition);
+			gvh.title.setText(data.get("text"));
+			gvh.num.setText(data.get("num"));
+			gvh.icon.setImageResource(Integer.parseInt(data.get("icon")));
+			return convertView;
+		}
+
+		@Override
+		public View getChildView(int groupPosition, int childPosition,
+				boolean isLastChild, View convertView, ViewGroup parent) {
+//			if()
+			return null;
+		}
+
+		@Override
+		public boolean isChildSelectable(int groupPosition, int childPosition) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+		
+		private String getGroupText(int groupPosition){
+			Map<String,String> m = mGroupData.get(groupPosition);
+			return m.get("text");
+		}
+		
+		private class GroupViewHolder{
+			public TextView title;
+			public TextView num;
+			public ImageView icon;
+			
+		}
 	}
 
 	
