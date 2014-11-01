@@ -57,7 +57,7 @@ public class SecretaryBusi extends BaseBusi {
 		Message msg = mHandler.obtainMessage();
 		switch(flag){
 		case GET_TASK_COUNT:{
-//			response = "3,5,5,15,5,55,5,5,5,5,5,5,5,5,5,5,115,5,5,2225,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5";
+			response = "3,5,5,15,5,55,5,5,5,5,5,5,5,5,5,5,115,5,5,2225,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5";
 			Log.d(TAG, "++++++++:"+response);
 			Bundle data = new Bundle();
 			msg.what = GET_TASK_COUNT;
@@ -158,6 +158,7 @@ public class SecretaryBusi extends BaseBusi {
 					}
 					data.putSerializable("result", (Serializable) result);
 					msg.setData(data);
+					msg.sendToTarget();
 				}
 			}
 		}break;

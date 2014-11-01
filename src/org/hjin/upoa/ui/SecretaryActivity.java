@@ -6,36 +6,65 @@ import java.util.List;
 import java.util.Map;
 
 import org.hjin.upoa.R;
+import org.hjin.upoa.busi.SecretaryBusi;
 import org.hjin.upoa.constants.AppConstants;
 import org.hjin.upoa.model.Secretary;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class SecretaryActivity extends BaseActivity {
 	
+	private final static String TAG = "SecretaryActivity";
+	
 	private Secretary mSecretary;
 	
-	private ListView mLs;
+	private ExpandableListView mLs;
 	
 	private TextView mNoResult;
+	
+	private BaseExpandableListAdapter mAdapter;
 	
 	
 	private List<Map<String,String>> mGroupData;
 	
 	private List<List<Map<String,String>>> mChildData;
 	
-	private List<Map<String,String>> mArwaitData;
+	private int mArwaitPosition;
+	
+	private List<Map<String,String>> mArwaitData = new ArrayList<Map<String,String>>();
 	
 	private LayoutInflater mLayoutInflater;
+	
+	private Handler mHandler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			switch(msg.what){
+			case SecretaryBusi.GET_ARWAIT:{
+				mChildData.set(mArwaitPosition, (List<Map<String,String>>)data.getSerializable("result"));
+//				mArwaitData = mChildData.get(mArwaitPosition) = (List<Map<String,String>>)data.getSerializable("result");
+				Log.d(TAG, "===handleMessage:"+mArwaitData.size());
+				if(mAdapter != null){
+					mAdapter.notifyDataSetChanged();
+				}
+			}break;
+			}
+		}
+		
+	};
+	
+	private SecretaryBusi mSecretaryBusi = new SecretaryBusi(mHandler);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +73,8 @@ public class SecretaryActivity extends BaseActivity {
 		
 		mLayoutInflater = getLayoutInflater();
 		
-		mLs = (ListView)findViewById(R.id.secretaryList);
+		mLs = (ExpandableListView)findViewById(R.id.secretaryList);
 		mNoResult = (TextView)findViewById(R.id.secretaryNoResult);
-		
 		
 		mSecretary = AppConstants.sSecretary;
 		if(mSecretary == null || mSecretary.getAllCount()<=0){
@@ -54,158 +82,200 @@ public class SecretaryActivity extends BaseActivity {
 			mNoResult.setVisibility(View.VISIBLE);
 			Log.d("SecretaryActivity", "*****"+(mSecretary == null?null:mSecretary.getAllCount()));
 		}else{
-			mGroupData = makeListData(mSecretary);
+			makeListData(mSecretary);
 			if(mGroupData != null && mGroupData.size()>0){
-				String[] from = new String[]{"icon","text","num"};
-				int[] to = new int[]{R.id.secretary_item_icon,R.id.secretary_item_text,R.id.secretary_item_num};
-				mLs.setAdapter(new SimpleAdapter(this, mGroupData, R.layout.secretary_list_item, from, to));
+//				String[] from = new String[]{"icon","text","num"};
+//				int[] to = new int[]{R.id.secretary_item_icon,R.id.secretary_item_text,R.id.secretary_item_num};
+//				mLs.setAdapter(new SimpleAdapter(this, mGroupData, R.layout.secretary_list_item, from, to));
+				BaseExpandableListAdapter mAdapter = new ExpandableAdapter();
+				mLs.setAdapter(mAdapter);
 				Log.d("SecretaryActivity", "*****"+mSecretary.getAllCount());
 			}
 		}
 	}
 	
-	private List<Map<String,String>> makeListData(Secretary secretary){
+	private void makeListData(Secretary secretary){
 		if(secretary == null){
-			return null;
+			return;
 		}
-		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		mGroupData = new ArrayList<Map<String,String>>();
+		mChildData = new ArrayList<List<Map<String,String>>>();
 		if (secretary.getArwait() > 0) {
-			list.add(makeListItemData(R.drawable.about, "工单待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "工单待办",
 					secretary.getArwait()));
+			mArwaitPosition = mGroupData.size()-1;
+			mSecretaryBusi.getArWait();
 		}
 		if (secretary.getCmdbwait() > 0) {
-			list.add(makeListItemData(R.drawable.about, "资产待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "资产待办",
 					secretary.getCmdbwait()));
+			mChildData.add(null);
 		}
 		if (secretary.getLeaveCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "请假待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "请假待办",
 					secretary.getLeaveCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getTravelCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "出差待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "出差待办",
 					secretary.getTravelCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getFinanceCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "新财务报销单",
+			mGroupData.add(makeListItemData(R.drawable.about, "新财务报销单",
 					secretary.getFinanceCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getFinanceReadCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "财务单待阅",
+			mGroupData.add(makeListItemData(R.drawable.about, "财务单待阅",
 					secretary.getFinanceReadCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getYdCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "人员异动待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "人员异动待办",
 					secretary.getYdCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getYd2Count() > 0) {
-			list.add(makeListItemData(R.drawable.about, "人员异动待阅",
+			mGroupData.add(makeListItemData(R.drawable.about, "人员异动待阅",
 					secretary.getYd2Count()));
+			mChildData.add(null);
 		}
 		if (secretary.getAssetCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "资产待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "资产待办",
 					secretary.getAssetCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getPurchaseCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "采购待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "采购待办",
 					secretary.getPurchaseCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getTravelxmCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "新出差待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "新出差待办",
 					secretary.getTravelxmCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getHr1Count() > 0) {
-			list.add(makeListItemData(R.drawable.about, "HR工单（提交单据）待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "HR工单（提交单据）待办",
 					secretary.getHr1Count()));
+			mChildData.add(null);
 		}
 		if (secretary.getHr2Count() > 0) {
-			list.add(makeListItemData(R.drawable.about, "HR工单（填写网上信息）待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "HR工单（填写网上信息）待办",
 					secretary.getHr2Count()));
+			mChildData.add(null);
 		}
 		if (secretary.getHr3Count() > 0) {
-			list.add(makeListItemData(R.drawable.about, "HR工单（修改网上信息）待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "HR工单（修改网上信息）待办",
 					secretary.getHr3Count()));
+			mChildData.add(null);
 		}
 		if (secretary.getHr4Count() > 0) {
-			list.add(makeListItemData(R.drawable.about, "HR工单（提交原件）待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "HR工单（提交原件）待办",
 					secretary.getHr4Count()));
+			mChildData.add(null);
 		}
 		if (secretary.getHr5Count() > 0) {
-			list.add(makeListItemData(R.drawable.about, "HR工单（取回办理证件）待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "HR工单（取回办理证件）待办",
 					secretary.getHr5Count()));
+			mChildData.add(null);
 		}
 		if (secretary.getHr6Count() > 0) {
-			list.add(makeListItemData(R.drawable.about, "HR工单（领取居住证）待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "HR工单（领取居住证）待办",
 					secretary.getHr6Count()));
+			mChildData.add(null);
 		}
 		if (secretary.getMpCount() > 0) {
-			list.add(makeListItemData(R.drawable.about, "名片待办",
+			mGroupData.add(makeListItemData(R.drawable.about, "名片待办",
 					secretary.getMpCount()));
+			mChildData.add(null);
 		}
 		if (secretary.getMp2Count() > 0) {
-			list.add(makeListItemData(R.drawable.about, "名片待阅",
+			mGroupData.add(makeListItemData(R.drawable.about, "名片待阅",
 					secretary.getMp2Count()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt1() > 0) {
-			list.add(makeListItemData(R.drawable.about, "IT工单待评分", secretary.getIt1()));
+			mGroupData.add(makeListItemData(R.drawable.about, "IT工单待评分", secretary.getIt1()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt2() > 0) {
-			list.add(makeListItemData(R.drawable.about, "IT工单待受理", secretary.getIt2()));
+			mGroupData.add(makeListItemData(R.drawable.about, "IT工单待受理", secretary.getIt2()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt3() > 0) {
-			list.add(makeListItemData(R.drawable.about, "虚拟机申请单待受理", secretary.getIt3()));
+			mGroupData.add(makeListItemData(R.drawable.about, "虚拟机申请单待受理", secretary.getIt3()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt4() > 0) {
-			list.add(makeListItemData(R.drawable.about, "虚拟机申请单待评估", secretary.getIt4()));
+			mGroupData.add(makeListItemData(R.drawable.about, "虚拟机申请单待评估", secretary.getIt4()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt5() > 0) {
-			list.add(makeListItemData(R.drawable.about, "邮件组申请单待受理", secretary.getIt5()));
+			mGroupData.add(makeListItemData(R.drawable.about, "邮件组申请单待受理", secretary.getIt5()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt6() > 0) {
-			list.add(makeListItemData(R.drawable.about, "海外邮箱申请单待受理", secretary.getIt6()));
+			mGroupData.add(makeListItemData(R.drawable.about, "海外邮箱申请单待受理", secretary.getIt6()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt7() > 0) {
-			list.add(makeListItemData(R.drawable.about, "SSL VPN申请单待受理", secretary.getIt7()));
+			mGroupData.add(makeListItemData(R.drawable.about, "SSL VPN申请单待受理", secretary.getIt7()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt8() > 0) {
-			list.add(makeListItemData(R.drawable.about, "泰岳邮箱申请单待受理", secretary.getIt8()));
+			mGroupData.add(makeListItemData(R.drawable.about, "泰岳邮箱申请单待受理", secretary.getIt8()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt9() > 0) {
-			list.add(makeListItemData(R.drawable.about, "基金邮箱申请单待受理", secretary.getIt9()));
+			mGroupData.add(makeListItemData(R.drawable.about, "基金邮箱申请单待受理", secretary.getIt9()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt10() > 0) {
-			list.add(makeListItemData(R.drawable.about, "非员工邮箱申请单待受理", secretary.getIt10()));
+			mGroupData.add(makeListItemData(R.drawable.about, "非员工邮箱申请单待受理", secretary.getIt10()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt11() > 0) {
-			list.add(makeListItemData(R.drawable.about, "网络策略申请单待受理", secretary.getIt11()));
+			mGroupData.add(makeListItemData(R.drawable.about, "网络策略申请单待受理", secretary.getIt11()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt12() > 0) {
-			list.add(makeListItemData(R.drawable.about, "虚拟机申请单待审批", secretary.getIt12()));
+			mGroupData.add(makeListItemData(R.drawable.about, "虚拟机申请单待审批", secretary.getIt12()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt13() > 0) {
-			list.add(makeListItemData(R.drawable.about, "邮件组申请单待审批", secretary.getIt13()));
+			mGroupData.add(makeListItemData(R.drawable.about, "邮件组申请单待审批", secretary.getIt13()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt14() > 0) {
-			list.add(makeListItemData(R.drawable.about, "海外邮箱申请单待审批", secretary.getIt14()));
+			mGroupData.add(makeListItemData(R.drawable.about, "海外邮箱申请单待审批", secretary.getIt14()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt15() > 0) {
-			list.add(makeListItemData(R.drawable.about, "SSL VPN申请单待审批", secretary.getIt15()));
+			mGroupData.add(makeListItemData(R.drawable.about, "SSL VPN申请单待审批", secretary.getIt15()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt16() > 0) {
-			list.add(makeListItemData(R.drawable.about, "泰岳邮箱申请单待审批", secretary.getIt16()));
+			mGroupData.add(makeListItemData(R.drawable.about, "泰岳邮箱申请单待审批", secretary.getIt16()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt17() > 0) {
-			list.add(makeListItemData(R.drawable.about, "基金邮箱申请单待审批", secretary.getIt17()));
+			mGroupData.add(makeListItemData(R.drawable.about, "基金邮箱申请单待审批", secretary.getIt17()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt18() > 0) {
-			list.add(makeListItemData(R.drawable.about, "非员工邮箱申请单待审批", secretary.getIt18()));
+			mGroupData.add(makeListItemData(R.drawable.about, "非员工邮箱申请单待审批", secretary.getIt18()));
+			mChildData.add(null);
 		}
 		if (secretary.getIt19() > 0) {
-			list.add(makeListItemData(R.drawable.about, "网络策略申请单待审批", secretary.getIt19()));
+			mGroupData.add(makeListItemData(R.drawable.about, "网络策略申请单待审批", secretary.getIt19()));
+			mChildData.add(null);
 		}
 		if (secretary.getJx() > 0) {
-			list.add(makeListItemData(R.drawable.about, "绩效待办工单待审批", secretary.getJx()));
+			mGroupData.add(makeListItemData(R.drawable.about, "绩效待办工单待审批", secretary.getJx()));
+			mChildData.add(null);
 		}
-		return list;
 
 	}
 	
@@ -227,8 +297,6 @@ public class SecretaryActivity extends BaseActivity {
 	
 	private class ExpandableAdapter extends BaseExpandableListAdapter{
 		
-		
-		
 		@Override
 		public int getGroupCount() {
 			return mGroupData.size();
@@ -236,12 +304,12 @@ public class SecretaryActivity extends BaseActivity {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			if(getGroupText(groupPosition).equals("工单待办")){
-//				int count = Integer.parseInt(m.get("num"));
-				return mArwaitData == null ? 0 :(mArwaitData.size()>5?5:mArwaitData.size());
-			}else{
-				return 0;
-			}
+			Log.d(TAG, "===getChildrenCount:"+(mChildData == null ? 0 :
+				(mChildData.get(groupPosition) == null ? 0 : 
+					(mChildData.get(groupPosition).size()))));
+			return mChildData == null ? 0 :
+				(mChildData.get(groupPosition) == null ? 0 : 
+					(mChildData.get(groupPosition).size()));
 		}
 
 		@Override
@@ -251,10 +319,9 @@ public class SecretaryActivity extends BaseActivity {
 
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			if(getGroupText(groupPosition).equals("工单待办")){
-				return mArwaitData.get(childPosition);
-			}
-			return null;
+			return mChildData == null ? null :
+				(mChildData.get(groupPosition) == null ? null :
+					mChildData.get(groupPosition).get(childPosition));
 		}
 
 		@Override
@@ -296,8 +363,25 @@ public class SecretaryActivity extends BaseActivity {
 		@Override
 		public View getChildView(int groupPosition, int childPosition,
 				boolean isLastChild, View convertView, ViewGroup parent) {
-//			if()
-			return null;
+			ChildViewHolder cvh;
+			if(convertView != null){
+				cvh = (ChildViewHolder)convertView.getTag();
+			}else{
+				convertView = mLayoutInflater.inflate(R.layout.secretary_waitdeallist_item, null);
+				cvh = new ChildViewHolder();
+				cvh.index = (TextView)convertView.findViewById(R.id.secretary_waitdeallist_index);
+				cvh.title = (TextView)convertView.findViewById(R.id.secretary_waitdeallist_title);
+				cvh.time = (TextView)convertView.findViewById(R.id.secretary_waitdeallist_time);
+				cvh.status = (TextView)convertView.findViewById(R.id.secretary_waitdeallist_status);
+				convertView.setTag(cvh);
+			}
+			Map<String,String> data = mChildData.get(groupPosition).get(childPosition);
+			cvh.index.setText(data.get("index"));
+			cvh.title.setText(data.get("dealPerson"));
+			cvh.time.setText(data.get("dealTime"));
+			cvh.status.setText(data.get("dealStatus"));
+			Log.d(TAG,"===getChildView:"+(childPosition+1)+":"+data.get("dealPerson")+":"+data.get("dealTime")+":"+data.get("dealStatus"));
+			return convertView;
 		}
 
 		@Override
@@ -306,15 +390,23 @@ public class SecretaryActivity extends BaseActivity {
 			return false;
 		}
 		
-		private String getGroupText(int groupPosition){
-			Map<String,String> m = mGroupData.get(groupPosition);
-			return m.get("text");
-		}
+//		private String getGroupText(int groupPosition){
+//			Map<String,String> m = mGroupData.get(groupPosition);
+//			return m.get("text");
+//		}
 		
 		private class GroupViewHolder{
 			public TextView title;
 			public TextView num;
 			public ImageView icon;
+			
+		}
+		
+		private class ChildViewHolder{
+			public TextView index;
+			public TextView title;
+			public TextView time;
+			public TextView status;
 			
 		}
 	}
