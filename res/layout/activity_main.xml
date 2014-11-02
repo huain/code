@@ -2,95 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ultra_gray2"
+    android:paddingBottom="10dp" 
+    android:gravity="center_vertical"
+    android:background="@drawable/main"
     android:orientation="vertical" >
-    
+    <LinearLayout android:layout_width="fill_parent" android:gravity="center_horizontal|center_vertical" android:layout_height="0dp" android:layout_weight="1" android:orientation="vertical">
     <LinearLayout android:id="@+id/index_info_area"
         android:orientation="vertical"
-        android:layout_weight="2"
-        android:gravity="bottom"
-        android:background="@drawable/main"
+        
         android:layout_width="match_parent"
-    	android:layout_height="0dp">
-	    <LinearLayout 
-	        android:orientation="horizontal" 
-	        android:padding="5dp"
-	        android:background="@color/ultra_black2"
-	        android:layout_width="match_parent"
-	    	android:layout_height="wrap_content">
-	        <org.hjin.upoa.ui.view.CircleImageView android:id="@+id/index_header" android:contentDescription="" android:src="@drawable/userheadpic_default" android:layout_width="64dp" android:layout_height="64dp"/>
-	        <LinearLayout android:orientation="vertical" android:gravity="top|left" 
-	            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
-	            <LinearLayout android:orientation="horizontal" android:paddingLeft="8dp" android:gravity="left|bottom" android:layout_width="match_parent" android:layout_height="wrap_content" >
+    	android:layout_height="wrap_content">
+    	<FrameLayout android:layout_width="fill_parent" android:layout_height="120dp">
+    	    <LinearLayout android:orientation="vertical"  android:layout_gravity="center_horizontal|bottom"
+	            android:padding="10dp" android:background="@color/ultra_black_a80"
+	            android:layout_width="fill_parent" android:layout_height="wrap_content" >
+	            <LinearLayout  android:orientation="horizontal" android:paddingLeft="8dp" android:gravity="center_horizontal|bottom" android:layout_width="match_parent" android:layout_height="wrap_content" >
 		            <TextView android:id="@+id/index_fullname" style="@style/mylabel1" android:textSize="18sp" android:textColor="@color/txt_white" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 		            <TextView android:id="@+id/index_post" android:paddingLeft="16dp"  android:textColor="@color/txt_white" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 	            </LinearLayout>
-	            <TextView android:id="@+id/index_dep" android:paddingLeft="8dp" android:textColor="@color/txt_white" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+	            <TextView android:id="@+id/index_dep"  android:gravity="center_horizontal" android:paddingLeft="8dp" android:textColor="@color/txt_white" android:layout_width="match_parent" android:layout_height="wrap_content"/>
 	        </LinearLayout>
-	    </LinearLayout>
+	        <org.hjin.upoa.ui.view.CircleImageView android:layout_gravity="top|center_horizontal" android:id="@+id/index_header" android:contentDescription="" android:src="@drawable/userheadpic_default" android:layout_width="64dp" android:layout_height="64dp"></org.hjin.upoa.ui.view.CircleImageView>
+    	</FrameLayout>
+	        
 	</LinearLayout>
-	<LinearLayout android:padding="20dp" android:dividerPadding="10dp" android:orientation="vertical" android:layout_weight="3" android:layout_height="0dp" android:layout_width="match_parent">
-		<LinearLayout  android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
-		    <Button android:id="@+id/index_daily_btn" android:background="@color/ultra_blue"  android:onClick="indexOnClick" android:text="日报" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-		    <Button android:id="@+id/index_smallnote_btn" android:background="@color/ultra_green"  android:onClick="indexOnClick" android:text="小字报" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-		    <Button android:id="@+id/index_info_btn" android:background="@color/ultra_blue"  android:onClick="indexOnClick" android:text="通讯录" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-		    
-		    <FrameLayout  
-                android:layout_width="80dp"  
-                android:layout_height="80dp"  
-                android:layout_weight="1"  
-                android:background="@null" >
-	            
-		        <LinearLayout  
-                    android:layout_width="fill_parent"  
-                    android:layout_height="fill_parent"  
-                    android:gravity="bottom|center" >
-		        	<Button android:id="@+id/index_secretary_btn" android:background="@color/ultra_green" android:onClick="indexOnClick" android:text="小秘书" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-				</LinearLayout>
-				
-		        <LinearLayout  
-                    android:layout_width="fill_parent"  
-                    android:layout_height="fill_parent"  
-                    android:gravity="top|right|center" 
-                    android:padding="10dp" >  
-  
-                    <TextView  
+	
+    <LinearLayout android:padding="10dp" android:dividerPadding="10dp" android:orientation="vertical" android:layout_height="254dp" android:layout_width="match_parent">
+        <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical">
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="145dp" android:orientation="horizontal">
+                <LinearLayout android:gravity="center_vertical|center_horizontal"  android:id="@+id/index_daily_btn" android:onClick="indexOnClick" android:layout_height="fill_parent" android:background="@drawable/index_btn_bg" android:layout_width="0dp" android:layout_marginRight="5dp" android:layout_weight="3" android:orientation="vertical">
+                    <ImageView  android:src="@drawable/ic_main_calenda" android:layout_width="80dp" android:layout_height="80dp"/>
+                    <TextView android:text="考勤" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/txt_white" android:textSize="18sp"/>
+                </LinearLayout>
+                <LinearLayout android:layout_height="fill_parent" android:layout_width="0dp" android:layout_weight="2" android:orientation="vertical">
+                    <LinearLayout android:gravity="center_vertical|center_horizontal" android:onClick="indexOnClick" android:layout_height="70dp" android:id="@+id/index_smallnote_btn" android:background="@drawable/index_btn_bg" android:layout_marginBottom="5dp" android:layout_width="fill_parent" android:orientation="vertical">
+                        <ImageView android:src="@drawable/ic_main_smallnote" android:layout_width="36dp" android:layout_height="36dp"/>
+                        <TextView android:text="小字报" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/txt_white" android:textSize="14sp"/>
+                    </LinearLayout>
+                    <LinearLayout android:gravity="center_vertical|center_horizontal" android:onClick="indexOnClick" android:layout_height="70dp" android:id="@+id/index_info_btn" android:background="@drawable/index_btn_bg"  android:layout_width="fill_parent" android:orientation="vertical">
+                        <ImageView android:src="@drawable/ic_main_info" android:layout_width="36dp" android:layout_height="36dp"/>
+                        <TextView android:text="联系人" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/txt_white" android:textSize="14sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+             <LinearLayout android:layout_width="fill_parent" android:layout_height="80dp" android:orientation="horizontal" android:layout_marginTop="5dp">
+                <LinearLayout android:gravity="center_vertical|center_horizontal" android:onClick="indexOnClick" android:layout_height="fill_parent" android:id="@+id/index_setting_btn" android:background="@drawable/index_btn_bg" android:layout_width="0dp" android:layout_marginRight="5dp" android:layout_weight="2" android:orientation="vertical">
+                    <ImageView android:src="@drawable/ic_main_setting"  android:layout_width="40dp" android:layout_height="36dp"/>
+                    <TextView android:text="设置" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/txt_white" android:textSize="14sp"/>
+                </LinearLayout>
+                <LinearLayout android:gravity="center_vertical|left" android:onClick="indexOnClick" android:layout_height="fill_parent" android:id="@+id/index_secretary_btn"  android:background="@drawable/index_btn_bg" android:layout_width="0dp" android:layout_weight="3" android:orientation="horizontal">
+                	<ImageView android:src="@drawable/ic_main_waitdeal"  android:layout_marginLeft="10dp" android:layout_marginRight="10dp" android:layout_width="48dp" android:layout_height="48dp"/>
+                    <TextView android:text="工作台" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:textColor="@color/txt_white" android:textSize="18sp"/>
+                	<TextView  
                         android:id="@+id/index_secretary_num_tv"  
                         android:layout_width="wrap_content"  
                         android:layout_height="wrap_content"  
                         android:background="@drawable/bg_red"  
-                        android:gravity="center"  
+                        android:gravity="center"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="10dp"  
                         android:text="0"  
-                        android:textColor="@android:color/white"  
-                        android:visibility="invisible" />  
-                </LinearLayout> 
-		        
-		        
-	        </FrameLayout>
-		</LinearLayout>
-		
-		<LinearLayout  android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="match_parent">
-			<Button android:id="@+id/index_setting_btn" android:background="@color/ultra_green" android:onClick="indexOnClick" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-			<Button android:id="@+id/index_default_btn1" android:onClick="indexOnClick"  android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-			<Button android:id="@+id/index_default_btn2" android:onClick="indexOnClick"  android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-			<Button android:id="@+id/index_default_btn3" android:onClick="indexOnClick"  android:visibility="invisible" android:text="设置" android:layout_width="80dp" android:layout_height="80dp" android:layout_weight="1"/>
-		</LinearLayout>
-	</LinearLayout>
-   
-	<LinearLayout android:background="@color/ultra_blue2" android:layout_width="match_parent" android:layout_height="10dp" />
-	<LinearLayout android:orientation="horizontal" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingBottom="10dp" android:gravity="center" android:layout_height="64dp" android:layout_width="match_parent">
-		<Button android:id="@+id/index_refresh_btn" android:background="@drawable/ic_action_reply" android:onClick="indexOnClick" android:layout_width="48dp" android:layout_height="48dp" android:layout_weight="0"/>
-		<TextView android:textColor="@color/ultra_gray" android:layout_width="0dp"  android:layout_height="48dp" android:gravity="right|center_vertical"  android:layout_weight="1" android:text="当前在线：1024人"/>
-	</LinearLayout>
-   
-   
+                        android:textColor="@android:color/white" 
+                        android:visibility="invisible" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+    <TextView android:textColor="@color/txt_white" android:layout_gravity="center_horizontal" android:background="@drawable/online_bg" android:layout_width="wrap_content"  android:layout_height="30dp" android:gravity="center_horizontal" android:text="102"/>
+    <!-- <LinearLayout android:orientation="horizontal" android:background="@color/ultra_black_a80" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingBottom="10dp" android:gravity="center" android:layout_height="64dp" android:layout_width="match_parent">
+		<Button android:id="@+id/index_refresh_btn" android:background="@drawable/ic_main_setting_white" android:onClick="indexOnClick" android:layout_width="48dp" android:layout_height="48dp" android:layout_weight="0"/>
+		<TextView android:textColor="@color/txt_white" android:layout_width="0dp"  android:layout_height="48dp" android:gravity="right|center_vertical"  android:layout_weight="1" android:text="当前在线：1024人"/>
+	</LinearLayout> -->
     
-   <!--  <TextView style="@style/mylabel1" android:paddingTop="16dp" android:text="最新待办" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    
-    <LinearLayout android:orientation="vertical" android:padding="5dp" android:layout_width="match_parent" android:layout_height="wrap_content">
-    <ListView android:id="@+id/index_waitdeallist" android:layout_width="match_parent" android:layout_height="wrap_content"></ListView>
-    <TextView android:id="@+id/index_waitdeallist_none" android:visibility="gone" android:text="当前没有待办！" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    
-    </LinearLayout> -->
 
 </LinearLayout>

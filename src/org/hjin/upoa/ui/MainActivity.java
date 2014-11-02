@@ -112,9 +112,6 @@ public class MainActivity extends BaseActivity {
 		
 		
 		mSecretaryBusi = new SecretaryBusi(mHandler);
-//		mIndexBusi.getWaitDealSum();
-//		mIndexBusi.getDailyInfo();
-//		mIndexBusi.getWaitDealInfo();
 		mSecretaryBusi.getTaskCount();
     }
     
