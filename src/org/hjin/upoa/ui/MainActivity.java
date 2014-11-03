@@ -11,10 +11,13 @@ import org.hjin.upoa.model.Secretary;
 import org.hjin.upoa.service.OnLineService;
 import org.hjin.upoa.util.Utility;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -39,6 +42,8 @@ public class MainActivity extends BaseActivity {
 	private TextView mDep;
 	
 	private TextView mSecretaryNum;
+	
+	private TextView mOnLineNum;
 	
 //	private ListView mWaitDealList;
 //	
@@ -76,6 +81,9 @@ public class MainActivity extends BaseActivity {
 	    			}
 	    		}
 	    	}break;
+	    	case MainBusi.GETONLINESUM:{
+	    		mOnLineNum.setText(""+msg.arg1);
+	    	}break;
 			}
     	};
     };
@@ -84,8 +92,21 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Intent intent = new Intent();
-//        intent.setClass(getApplicationContext(), OnLineService.class);
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), OnLineService.class);
+        
+        bindService(intent, new ServiceConnection() {
+			@Override
+			public void onServiceDisconnected(ComponentName arg0) {
+				
+			}
+			
+			@Override
+			public void onServiceConnected(ComponentName arg0, IBinder binder) {
+				OnLineService.OnLineBinder localBinder = (OnLineService.OnLineBinder)binder;
+				localBinder.getOnLineService().setmHandler(mHandler);
+			}
+		}, 1);
 //        startService(intent);
         
 //        getActionBar().setDisplayHomeAsUpEnabled(false);
@@ -97,6 +118,7 @@ public class MainActivity extends BaseActivity {
 		mDep = (TextView)findViewById(R.id.index_dep);
 		
 		mSecretaryNum = (TextView)findViewById(R.id.index_secretary_num_tv);
+		mOnLineNum = (TextView)findViewById(R.id.index_online_num_tv);
 		
 //		mWaitDealList = (ListView)findViewById(R.id.index_waitdeallist);
 //		mWaitDealList_None = (TextView)findViewById(R.id.index_waitdeallist_none);

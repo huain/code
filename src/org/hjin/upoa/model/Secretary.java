@@ -48,6 +48,12 @@ public class Secretary implements Serializable {
 	private int it18;
 	private int it19;
 	private int jx;
+	private int zjb;
+	private int kqdtj;
+	private int kqdsp;
+	private int bz;
+	private int zzcg;
+	
 	
 	/** 获取工单总数*/
 	public int getAllCount() {
@@ -57,7 +63,7 @@ public class Secretary implements Serializable {
 				+ hr3Count + hr4Count + hr5Count + hr6Count + mpCount
 				+ mp2Count + it1 + it2 + it3 + it4 + it5 + it6 + it7 + it8
 				+ it9 + it10 + it11 + it12 + it13 + it14 + it15 + it16 + it17
-				+ it18 + it19 + jx;
+				+ it18 + it19 + jx + zjb + kqdtj + kqdsp + bz + zzcg;
 	}
 	
 	
@@ -295,6 +301,66 @@ public class Secretary implements Serializable {
 	}
 	public void setJx(int jx) {
 		this.jx = jx;
+	}
+
+
+
+	public int getZjb() {
+		return zjb;
+	}
+
+
+
+	public void setZjb(int zjb) {
+		this.zjb = zjb;
+	}
+
+
+
+	public int getKqdtj() {
+		return kqdtj;
+	}
+
+
+
+	public void setKqdtj(int kqdtj) {
+		this.kqdtj = kqdtj;
+	}
+
+
+
+	public int getKqdsp() {
+		return kqdsp;
+	}
+
+
+
+	public void setKqdsp(int kqdsp) {
+		this.kqdsp = kqdsp;
+	}
+
+
+
+	public int getBz() {
+		return bz;
+	}
+
+
+
+	public void setBz(int bz) {
+		this.bz = bz;
+	}
+
+
+
+	public int getZzcg() {
+		return zzcg;
+	}
+
+
+
+	public void setZzcg(int zzcg) {
+		this.zzcg = zzcg;
 	}
 	
 	

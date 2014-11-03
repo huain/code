@@ -57,13 +57,13 @@ public class SecretaryBusi extends BaseBusi {
 		Message msg = mHandler.obtainMessage();
 		switch(flag){
 		case GET_TASK_COUNT:{
-			response = "3,5,5,15,5,55,5,5,5,5,5,5,5,5,5,5,115,5,5,2225,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5";
+//			response = "3,3,2,3,5,0,0,5,5,6,5,5,102,5,0,6,6,0,7,8,2,2,1,4,2,1,6,6,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
 			Log.d(TAG, "++++++++:"+response);
 			Bundle data = new Bundle();
 			msg.what = GET_TASK_COUNT;
 			if(response != null && !"".equals(response)){
 				String[] countData = response.split(",");
-				if(countData != null && countData.length == 41){
+				if(countData != null && countData.length == 45){
 					Secretary s = new Secretary();
 					s.setArwait(Integer.parseInt(countData[0]));
 					s.setCmdbwait(Integer.parseInt(countData[2]));
@@ -104,6 +104,12 @@ public class SecretaryBusi extends BaseBusi {
 					s.setIt18(Integer.parseInt(countData[37]));
 					s.setIt19(Integer.parseInt(countData[38]));
 					s.setJx(Integer.parseInt(countData[39]));
+					
+					s.setZjb(Integer.parseInt(countData[40]));
+					s.setKqdtj(Integer.parseInt(countData[41]));
+					s.setKqdsp(Integer.parseInt(countData[42]));
+					s.setBz(Integer.parseInt(countData[43]));
+					s.setZzcg(Integer.parseInt(countData[44]));
 					msg.arg1 = 1;
 					data.putSerializable("data", s);
 					Log.d(TAG, "hahah");
