@@ -74,6 +74,7 @@ public class SecretaryActivity extends BaseActivity {
 		mLayoutInflater = getLayoutInflater();
 		
 		mLs = (ExpandableListView)findViewById(R.id.secretaryList);
+		mLs.setGroupIndicator(null);
 		mNoResult = (TextView)findViewById(R.id.secretaryNoResult);
 		
 		mSecretary = AppConstants.sSecretary;
@@ -104,6 +105,7 @@ public class SecretaryActivity extends BaseActivity {
 			mGroupData.add(makeListItemData(R.drawable.about, "工单待办",
 					secretary.getArwait()));
 			mArwaitPosition = mGroupData.size()-1;
+			mChildData.add(mArwaitData);
 			mSecretaryBusi.getArWait();
 		}
 		if (secretary.getCmdbwait() > 0) {
@@ -276,7 +278,22 @@ public class SecretaryActivity extends BaseActivity {
 			mGroupData.add(makeListItemData(R.drawable.about, "绩效待办工单待审批", secretary.getJx()));
 			mChildData.add(null);
 		}
-
+		
+		if (secretary.getKqdtj() > 0) {
+			mGroupData.add(makeListItemData(R.drawable.about, "考勤单待提交", secretary.getKqdtj()));
+			mChildData.add(null);
+		}
+		
+		if (secretary.getKqdsp() > 0) {
+			mGroupData.add(makeListItemData(R.drawable.about, "考勤单待审批", secretary.getKqdsp()));
+			mChildData.add(null);
+		}
+		
+		if (secretary.getZzcg() > 0) {
+			mGroupData.add(makeListItemData(R.drawable.about, "新媒转正草稿待处理", secretary.getZzcg()));
+			mChildData.add(null);
+		}
+		
 	}
 	
 	/**
@@ -305,10 +322,10 @@ public class SecretaryActivity extends BaseActivity {
 		@Override
 		public int getChildrenCount(int groupPosition) {
 			Log.d(TAG, "===getChildrenCount:"+(mChildData == null ? 0 :
-				(mChildData.get(groupPosition) == null ? 0 : 
+				((mChildData.size()==0 || mChildData.get(groupPosition) == null) ? 0 : 
 					(mChildData.get(groupPosition).size()))));
 			return mChildData == null ? 0 :
-				(mChildData.get(groupPosition) == null ? 0 : 
+				((mChildData.size()==0 || mChildData.get(groupPosition) == null) ? 0 : 
 					(mChildData.get(groupPosition).size()));
 		}
 
@@ -351,12 +368,23 @@ public class SecretaryActivity extends BaseActivity {
 				gvh.title = (TextView)convertView.findViewById(R.id.secretary_item_text);
 				gvh.num = (TextView)convertView.findViewById(R.id.secretary_item_num);
 				gvh.icon = (ImageView)convertView.findViewById(R.id.secretary_item_icon);
+				gvh.indiator = (ImageView)convertView.findViewById(R.id.secretary_item_indicator);
 				convertView.setTag(gvh);
+			}
+			if(groupPosition == mArwaitPosition){
+				gvh.indiator.setVisibility(View.VISIBLE);
+			}else{
+				gvh.indiator.setVisibility(View.INVISIBLE);
 			}
 			Map<String,String> data = mGroupData.get(groupPosition);
 			gvh.title.setText(data.get("text"));
 			gvh.num.setText(data.get("num"));
 			gvh.icon.setImageResource(Integer.parseInt(data.get("icon")));
+			if(isExpanded){
+				gvh.indiator.setImageResource(R.drawable.ic_action_expand);
+			}else{
+				gvh.indiator.setImageResource(R.drawable.ic_action_collapse);
+			}
 			return convertView;
 		}
 
@@ -399,6 +427,7 @@ public class SecretaryActivity extends BaseActivity {
 			public TextView title;
 			public TextView num;
 			public ImageView icon;
+			public ImageView indiator;
 			
 		}
 		
