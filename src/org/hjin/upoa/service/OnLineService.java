@@ -101,9 +101,10 @@ public class OnLineService extends Service {
 					
 				}
 				msg.arg1 = sum;
+				AppConstants.onlinesum = sum;
 				msg.sendToTarget();
 			}
-//			AppConstants.onlinesum = response;
+			
 		}
 
 		@Override

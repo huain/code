@@ -119,6 +119,7 @@ public class MainActivity extends BaseActivity {
 		
 		mSecretaryNum = (TextView)findViewById(R.id.index_secretary_num_tv);
 		mOnLineNum = (TextView)findViewById(R.id.index_online_num_tv);
+		mOnLineNum.setText(""+AppConstants.onlinesum);
 		
 //		mWaitDealList = (ListView)findViewById(R.id.index_waitdeallist);
 //		mWaitDealList_None = (TextView)findViewById(R.id.index_waitdeallist_none);
