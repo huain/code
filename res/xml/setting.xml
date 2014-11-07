@@ -2,8 +2,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
     <PreferenceCategory android:title="@string/setting_category_login" android:key="setting_category_login" >
-        <CheckBoxPreference android:title="@string/setting_item_saveauto" android:key="setting_item_saveauto" android:summary="@string/setting_item_saveauto_desc"/>
-        <CheckBoxPreference android:title="@string/setting_item_loginauto" android:key="setting_item_loginauto" android:summary="@string/setting_item_loginauto_desc"/>
+        <CheckBoxPreference android:title="@string/setting_item_usernamesaveauto" android:key="setting_item_usernamesaveauto" android:summary="@string/setting_item_usernamesaveauto_desc"/>
+        <CheckBoxPreference android:title="@string/setting_item_passwordsaveauto" android:key="setting_item_passwordsaveauto" android:summary="@string/setting_item_passwordsaveauto_desc"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_category_daily" android:key="setting_category_daily">
 	    <CheckBoxPreference android:title="@string/setting_item_begintimedefault" android:key="setting_item_begintimedefault" android:summary="@string/setting_item_begintimedefault_desc"/>

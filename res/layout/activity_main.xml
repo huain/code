@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="10dp" 
-    android:background="@color/ultra_gray2"
-    android:gravity="top|center_horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/main"
     android:orientation="vertical" >
-    <LinearLayout android:background="@drawable/main" android:layout_width="fill_parent" android:gravity="bottom" android:layout_height="0dp" android:layout_weight="2" android:orientation="vertical">
+    <LinearLayout android:layout_width="fill_parent" android:gravity="center_horizontal|center_vertical" android:layout_height="0dp" android:layout_weight="1" android:orientation="vertical">
     <LinearLayout android:id="@+id/index_info_area"
         android:orientation="vertical"
+        
         android:layout_width="match_parent"
     	android:layout_height="wrap_content">
     	<FrameLayout android:layout_width="fill_parent" android:layout_height="120dp">
@@ -23,10 +24,9 @@
 	        </LinearLayout>
 	        <org.hjin.upoa.ui.view.CircleImageView android:layout_gravity="top|center_horizontal" android:id="@+id/index_header" android:contentDescription="" android:src="@drawable/userheadpic_default" android:layout_width="64dp" android:layout_height="64dp"></org.hjin.upoa.ui.view.CircleImageView>
     	</FrameLayout>
-	</LinearLayout>
+	        
 	</LinearLayout>
 	
-    <LinearLayout android:layout_width="fill_parent" android:gravity="top|center_horizontal" android:layout_height="0dp" android:layout_weight="3" android:orientation="vertical">
     <LinearLayout android:padding="10dp" android:dividerPadding="10dp" android:orientation="vertical" android:layout_height="254dp" android:layout_width="match_parent">
         <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical">
             <LinearLayout android:layout_width="fill_parent" android:layout_height="145dp" android:orientation="horizontal">
@@ -68,11 +68,12 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-   </LinearLayout>
-   <TextView android:textColor="@color/txt_white" android:layout_gravity="center_horizontal|bottom" android:background="@drawable/online_bg" android:layout_width="wrap_content"  android:layout_height="30dp" android:gravity="center_horizontal" android:text="102"/>
+    </LinearLayout>
+    <TextView android:id="@+id/index_online_num_tv" android:textColor="@color/txt_white" android:layout_gravity="center_horizontal" android:background="@drawable/online_bg" android:layout_width="wrap_content"  android:layout_height="30dp" android:gravity="center_horizontal" android:text="1" android:paddingLeft="30dp" android:paddingRight="8dp"/>
     <!-- <LinearLayout android:orientation="horizontal" android:background="@color/ultra_black_a80" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingBottom="10dp" android:gravity="center" android:layout_height="64dp" android:layout_width="match_parent">
 		<Button android:id="@+id/index_refresh_btn" android:background="@drawable/ic_main_setting_white" android:onClick="indexOnClick" android:layout_width="48dp" android:layout_height="48dp" android:layout_weight="0"/>
 		<TextView android:textColor="@color/txt_white" android:layout_width="0dp"  android:layout_height="48dp" android:gravity="right|center_vertical"  android:layout_weight="1" android:text="当前在线：1024人"/>
 	</LinearLayout> -->
+    
 
 </LinearLayout>

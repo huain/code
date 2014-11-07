@@ -8,7 +8,7 @@ public class AppConstants {
 	
 	public static String appname = "UltraOA";
 	
-	public static String onlinesum = "0";
+	public static int onlinesum = 1;
 	
 	public static String loginname = "";
 	
