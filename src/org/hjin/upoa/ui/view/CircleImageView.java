@@ -39,26 +39,18 @@ public class CircleImageView extends ImageView {
 	protected void onDraw(Canvas canvas) {
 	 
 	    Drawable drawable = getDrawable();
-	 
 	    if (drawable == null) {
 	        return;
 	    }
-	 
 	    if (getWidth() == 0 || getHeight() == 0) {
 	        return; 
 	    }
-	     
 	    Bitmap b =  ((BitmapDrawable)drawable).getBitmap();
-	     
-	    if(null == b)
-	    {
+	    if(null == b){
 	        return;
 	    }
-	     
 	    Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
-	 
-	    int w = getWidth(), h = getHeight();
-	 
+	    int w = getWidth();
 	 
 	    Bitmap roundBitmap =  getCroppedBitmap(bitmap, w);
 	    canvas.drawBitmap(roundBitmap, 0,0, null);
@@ -71,11 +63,9 @@ public class CircleImageView extends ImageView {
 	        sbmp = Bitmap.createScaledBitmap(bmp, radius, radius, false);
 	    else
 	        sbmp = bmp;
-	    Bitmap output = Bitmap.createBitmap(sbmp.getWidth(),
-	            sbmp.getHeight(), Config.ARGB_8888);
+	    Bitmap output = Bitmap.createBitmap(sbmp.getWidth(),sbmp.getHeight(), Config.ARGB_8888);
 	    Canvas canvas = new Canvas(output);
 	 
-	    final int color = 0xffa19774;
 	    final Paint paint = new Paint();
 	    final Rect rect = new Rect(0, 0, sbmp.getWidth(), sbmp.getHeight());
 	 
@@ -84,13 +74,14 @@ public class CircleImageView extends ImageView {
 	    paint.setDither(true);
 	    canvas.drawARGB(0, 0, 0, 0);
 	    paint.setColor(Color.parseColor("#BAB399"));
+	    // 绘制背景图层（圆形）
 	    canvas.drawCircle(sbmp.getWidth() / 2+0.7f, sbmp.getHeight() / 2+0.7f,
 	            sbmp.getWidth() / 2+0.1f, paint);
+	    // 设置和背景图层的叠加模式（相交）
 	    paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 	    canvas.drawBitmap(sbmp, rect, rect, paint);
 	 
-	 
-	            return output;
+	    return output;
 	}
 }
 

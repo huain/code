@@ -22,6 +22,7 @@ import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class LoginActivity extends BaseActivity {
@@ -31,6 +32,8 @@ public class LoginActivity extends BaseActivity {
 	private String mUsername;
 	
 	private String mPassword;
+	
+	private LinearLayout mLoginLinearLayout;
 	
 	private DialogFragment mPdf;
 	
@@ -83,18 +86,24 @@ public class LoginActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-//		getActionBar().hide();
+		
+		mLoginLinearLayout = (LinearLayout)findViewById(R.id.login_linearlayout);
 		
 		EditText et_username = (EditText)findViewById(R.id.set_login_username);
 		EditText et_password = (EditText)findViewById(R.id.set_login_password);
 		
+		
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean issaveUsername = sp.getBoolean("setting_item_usernamesaveauto", false);
-		boolean issavePassword = sp.getBoolean("setting_item_passwordsaveauto", false);
-		if(issaveUsername){
-			et_username.setText(sp.getString("login_username", ""));
+		boolean issave = sp.getBoolean("setting_item_saveauto", false);
+		boolean islogin = sp.getBoolean("setting_item_loginauto", false);
+		if(islogin){
+			mLoginLinearLayout.setVisibility(View.INVISIBLE);
+			login();
+		}else{
+			mLoginLinearLayout.setVisibility(View.VISIBLE);
 		}
-		if(issavePassword){
+		if(issave){
+			et_username.setText(sp.getString("login_username", ""));
 			et_password.setText(sp.getString("login_password", ""));
 		}
 	}
@@ -106,6 +115,10 @@ public class LoginActivity extends BaseActivity {
 	public void LoginBtnOnClick(View view){
 		mPdf = ProgressDialogFragment.newInstance("ÕýÔÚµÇÂ¼£¬ÇëÉÔºó¡­¡­");
 	    showDialog(mPdf, "validate");
+	    login();
+	}
+	
+	private void login(){
 		EditText et_username = (EditText)findViewById(R.id.set_login_username);
 		EditText et_password = (EditText)findViewById(R.id.set_login_password);
 		mUsername = et_username.getText().toString();

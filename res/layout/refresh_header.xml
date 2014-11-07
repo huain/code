@@ -21,10 +21,9 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:paddingBottom="15dip"
-    android:paddingTop="10dip" >
+     >
 
-    <ProgressBar
+<!--     <ProgressBar
         android:id="@+id/pull_to_refresh_progress"
         style="?android:attr/progressBarStyleSmall"
         android:layout_width="wrap_content"
@@ -33,7 +32,18 @@
         android:layout_marginRight="20dip"
         android:layout_marginTop="10dip"
         android:indeterminate="true"
-        android:visibility="gone" />
+        android:visibility="gone" /> -->
+    
+    <org.hjin.upoa.ui.view.ProgressBarCircularIndetermininate
+	    android:id="@+id/pull_to_refresh_progress"
+	    android:layout_marginTop="16dp"
+	    android:layout_width="32dp"
+	    android:background="#009688"
+	    android:layout_height="32dp"
+	    android:layout_marginLeft="30dp"
+        android:layout_marginRight="20dp"
+        android:indeterminate="true"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/pull_to_refresh_image"

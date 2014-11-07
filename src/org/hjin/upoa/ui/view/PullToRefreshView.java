@@ -87,7 +87,8 @@ public class PullToRefreshView extends LinearLayout {
 	/**
 	 * header progress bar
 	 */
-	private ProgressBar mHeaderProgressBar;
+//	private ProgressBar mHeaderProgressBar;
+	private ProgressBarCircularIndetermininate mHeaderProgressBar;
 	/**
 	 * footer progress bar
 	 */
@@ -176,7 +177,7 @@ public class PullToRefreshView extends LinearLayout {
 				.findViewById(R.id.pull_to_refresh_text);
 		mHeaderUpdateTextView = (TextView) mHeaderView
 				.findViewById(R.id.pull_to_refresh_updated_at);
-		mHeaderProgressBar = (ProgressBar) mHeaderView
+		mHeaderProgressBar = (ProgressBarCircularIndetermininate) mHeaderView
 				.findViewById(R.id.pull_to_refresh_progress);
 		// header layout
 		measureView(mHeaderView);
