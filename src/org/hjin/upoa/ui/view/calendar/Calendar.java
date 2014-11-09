@@ -12,6 +12,8 @@ import org.hjin.upoa.util.DateUtil;
  */
 public class Calendar {
 	
+	public static MyDate mShowDate;//自定义的日期  包括year month day
+	
 	/** 当前所要展示的日期数据 （6*7） */
 	private MyDate[] mDates = new MyDate[42]; 
 	

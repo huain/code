@@ -1,8 +1,11 @@
 package org.hjin.upoa.ui.view.calendar;
 
 import org.hjin.upoa.R;
+import org.hjin.upoa.ui.DailyActivity;
 
+import android.content.Context;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
 import android.widget.TextView;
 
 public class CalendarViewPagerLisenter implements OnPageChangeListener {
@@ -15,16 +18,16 @@ public class CalendarViewPagerLisenter implements OnPageChangeListener {
 	int mCurrIndex = 498;
 	private CalendarView[] mShowViews;
 
-	public CalendarViewPagerLisenter(CalendarPagerView view,CustomViewPagerAdapter<CalendarView> viewAdapter) {
+	public CalendarViewPagerLisenter(View view,CustomViewPagerAdapter<CalendarView> viewAdapter) {
 		super();
 		this.mShowViews = viewAdapter.getAllItems();
 		mYearView = (TextView)view.findViewById(R.id.tv_year);
 		mMonthView = (TextView)view.findViewById(R.id.tv_month);
-		mYearView.setText(CalendarPagerView.mShowDate.getmYear()+"定");
-		mMonthView.setText(CalendarPagerView.mShowDate.getmMonth()+"");
+		mYearView.setText(Calendar.mShowDate.getmYear()+"定");
+		mMonthView.setText(Calendar.mShowDate.getmMonth()+"");
 		mShowViews[mCurrIndex % mShowViews.length].initDate();
 	}
-
+	
 	@Override
 	public void onPageSelected(int arg0) {
 		measureDirection(arg0);
@@ -37,8 +40,8 @@ public class CalendarViewPagerLisenter implements OnPageChangeListener {
 		}else if(mDirection == SildeDirection.LEFT){
 			mShowViews[arg0 % mShowViews.length].leftSilde();
 		}
-		mYearView.setText(CalendarPagerView.mShowDate.getmYear()+"定");
-		mMonthView.setText(CalendarPagerView.mShowDate.getmMonth()+"");
+		mYearView.setText(Calendar.mShowDate.getmYear()+"定");
+		mMonthView.setText(Calendar.mShowDate.getmMonth()+"");
 		mDirection = SildeDirection.NO_SILDE;
 	}
 

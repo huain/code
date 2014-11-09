@@ -4,9 +4,152 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <org.hjin.upoa.ui.view.calendar.CalendarPagerView android:id="@+id/ca"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<!--     <org.hjin.upoa.ui.view.calendar.CalendarPagerView android:id="@+id/ca"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/> -->
+        
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:id="@+id/daily_calendar"
+	    android:paddingLeft="5dp"
+	    android:paddingRight="5dp" >
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+	        
+	        <TextView
+	            android:id="@+id/tv_year"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            style="@style/mylabel1"
+	            android:textSize="16sp" />
+	        
+	        <TextView
+	            android:id="@+id/tv_month"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            style="@style/mylabel1"
+	            android:textSize="18sp" />
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="月"
+	            style="@style/mylabel1"
+	            android:textSize="16sp" />
+	    </LinearLayout>
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="30dip"
+	        android:paddingLeft="1dp"
+	        android:paddingRight="1dp"
+	        android:background="@color/ultra_green"
+	        android:orientation="horizontal" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text="日"
+	            android:textColor="#FF6600"
+	            android:textSize="16sp" />
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text="一"
+	            android:textColor="@color/txt_white"
+	            android:textSize="16sp" />
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text="二"
+	            android:textColor="@color/txt_white"
+	            android:textSize="16sp" />
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text="三"
+	            android:textColor="@color/txt_white"
+	            android:textSize="16sp" />
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text="四"
+	            android:textColor="@color/txt_white"
+	            android:textSize="16sp" />
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text="五"
+	            android:textColor="@color/txt_white"
+	            android:textSize="16sp" />
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:text="六"
+	            android:textColor="#FF6600"
+	            android:textSize="16sp" />
+	    </LinearLayout>
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/common_card_background"
+	        android:orientation="vertical" >
+	
+	        <!-- <View
+	            android:layout_width="0.5dp"
+	            android:layout_height=""
+	            android:background="#E4E4E4" /> -->
+	        
+	        <org.hjin.upoa.ui.view.calendar.CalendarViewPager
+		        android:id="@+id/calendar_viewpager"
+		       	android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+		        android:layout_gravity="center"
+		        android:background="#F7F7F7" >
+		    </org.hjin.upoa.ui.view.calendar.CalendarViewPager>
+	    </LinearLayout>
+	    
+	    <TextView android:id="@+id/calendar_date_show" style="@style/mylabel1"  android:layout_width="match_parent" android:layout_height="wrap_content"></TextView>
+	    
+	    <LinearLayout android:id="@+id/calendar_info"  android:background="@drawable/common_card_background"  android:orientation="vertical" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content">
+		   <LinearLayout android:id="@+id/calendar_dailyinfo"   android:gravity="left|center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+		       <ImageView android:src="@drawable/daily" android:layout_height="48dp" android:layout_width="48dp" android:layout_weight="0"/>
+		       <TextView android:id="@+id/calendar_dailyinfotv" android:textSize="16sp" android:text="日志已填写" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"/>
+		   </LinearLayout>
+		   <ImageView android:src="@drawable/common_divider" android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="0"/>
+		   <LinearLayout android:id="@+id/calendar_signinfo"  android:gravity="left|center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+		       <ImageView android:src="@drawable/daily" android:layout_height="48dp" android:layout_width="48dp" android:layout_weight="0"/>
+		       <TextView android:id="@+id/calendar_signinfotv" android:textSize="16sp" android:text="迟到五分钟" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"/>
+		   </LinearLayout>
+		   
+		</LinearLayout>
+		<Button android:id="@+id/calendar_write" style="@style/myButton1" android:layout_marginTop="5dp" android:visibility="gone" android:text="填写日报" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+	</LinearLayout>
     
-    <!-- <include android:id="@+id/daily_calendar_include" layout="@layout/calendar"/> -->
     
 </LinearLayout>

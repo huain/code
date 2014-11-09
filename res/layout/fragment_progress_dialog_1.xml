@@ -1,17 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
-    android:padding="12dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="72dp"
+        android:padding="12dp"
         android:layout_gravity="center"
         android:orientation="horizontal" >
+        
+	    <LinearLayout android:orientation="horizontal" android:layout_width="64dp" android:layout_height="48dp" android:gravity="center">
+	        <LinearLayout android:orientation="vertical" android:gravity="center|right" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1">
+	            <ImageView android:src="@drawable/circle_blue" android:id="@+id/loading1_image_blue" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+	        </LinearLayout>
+	        <LinearLayout android:orientation="vertical" android:gravity="center|left" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1">
+	            <ImageView android:src="@drawable/circle_green" android:id="@+id/loading1_image_green" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+	        </LinearLayout>
+	    </LinearLayout>
 
-        <FrameLayout
+       <!--  <FrameLayout
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:gravity="center" >
@@ -29,7 +38,7 @@
                 android:layout_height="48dp"
                 android:gravity="center"
                 android:src="@drawable/loading1_circle" />
-        </FrameLayout>
+        </FrameLayout> -->
 
         <TextView
             android:id="@+id/progressDialogFragment1_title"
@@ -37,6 +46,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="10dp"
             android:gravity="center"
+            android:textColor="@color/ultra_gray"
             android:textAlignment="center" >
         </TextView>
     </LinearLayout>

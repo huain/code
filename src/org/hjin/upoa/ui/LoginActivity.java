@@ -15,6 +15,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class LoginActivity extends BaseActivity {
@@ -32,14 +34,18 @@ public class LoginActivity extends BaseActivity {
 	
 	private String mPassword;
 	
-	private DialogFragment mPdf;
+	private EditText mUsernameEt;
+	
+	private EditText mPasswordEt;
+	
+	private LinearLayout mLoginInfoContainer;
 	
 	private Handler mHandler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch(msg.what){
-			case 0:{
+			case LoginBusi.SHOWMESSAGE:{
 				Bundle data = msg.getData();
 				if(null != data && !Utility.isBlank(data.getString("message"))){
 					String message = data.getString("message");
@@ -83,33 +89,51 @@ public class LoginActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-//		getActionBar().hide();
 		
-		EditText et_username = (EditText)findViewById(R.id.set_login_username);
-		EditText et_password = (EditText)findViewById(R.id.set_login_password);
+		mUsernameEt = (EditText)findViewById(R.id.set_login_username);
+		mPasswordEt = (EditText)findViewById(R.id.set_login_password);
 		
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean issaveUsername = sp.getBoolean("setting_item_usernamesaveauto", false);
-		boolean issavePassword = sp.getBoolean("setting_item_passwordsaveauto", false);
-		if(issaveUsername){
-			et_username.setText(sp.getString("login_username", ""));
+		// 根据背景图版本信息获取背景图
+		int version = sp.getInt("LoginPicVersion", 0);
+		if(version != 0){
+			Drawable d = Utility.getDrawableFromSD("login_v"+version+".jpg");
+			if(d != null){
+				LinearLayout ll = (LinearLayout)findViewById(R.id.login_ll);
+				ll.setBackgroundDrawable(d);
+			}
 		}
-		if(issavePassword){
-			et_password.setText(sp.getString("login_password", ""));
+		
+		// 自动登录
+		mLoginInfoContainer = (LinearLayout)findViewById(R.id.login_info_ll);
+		boolean islogin = sp.getBoolean("setting_item_loginauto", false);
+		if(islogin){
+			mLoginInfoContainer.setVisibility(View.INVISIBLE);
+			mUsernameEt.setText(sp.getString("login_username", ""));
+			mPasswordEt.setText(sp.getString("login_password", ""));
+			login();
+			return;
+		}
+		// 设置自动显示用户名和密码信息
+		boolean isloginsave = sp.getBoolean("setting_item_loginsaveauto", false);
+		if(isloginsave){
+			mUsernameEt.setText(sp.getString("login_username", ""));
+			mPasswordEt.setText(sp.getString("login_password", ""));
 		}
 	}
-	
-	
-	
-
 
 	public void LoginBtnOnClick(View view){
 		mPdf = ProgressDialogFragment.newInstance("正在登录，请稍后……");
 	    showDialog(mPdf, "validate");
-		EditText et_username = (EditText)findViewById(R.id.set_login_username);
-		EditText et_password = (EditText)findViewById(R.id.set_login_password);
-		mUsername = et_username.getText().toString();
-		mPassword = et_password.getText().toString();
+		login();
+	}
+
+	/**
+	 * 登录
+	 */
+	private void login() {
+		mUsername = mUsernameEt.getText().toString();
+		mPassword = mPasswordEt.getText().toString();
 		
 		mUsername = "huangjin";
 		mPassword = "hj1025";
@@ -127,36 +151,6 @@ public class LoginActivity extends BaseActivity {
 	}
 	
 	
-	/**
-	 * 根据tag，移除dialog
-	 * @param tag
-	 */
-	private void removeDialogByTag(String tag){
-	    FragmentTransaction ft = getFragmentManager().beginTransaction();
-	    Fragment prev = getFragmentManager().findFragmentByTag(tag);
-	    if (prev != null) {
-	    	DialogFragment vdf = (DialogFragment)prev;
-	 	    vdf.dismiss();
-	        ft.remove(prev);
-	    }
-	    
-	}
-	
-	/**
-	 * 显示dialog
-	 * @param df
-	 * @param tag
-	 */
-	private void showDialog(DialogFragment df,String tag){
-	    FragmentTransaction ft = getFragmentManager().beginTransaction();
-	    Fragment prev = getFragmentManager().findFragmentByTag(tag);
-	    if (prev != null) {
-	    	ft.remove(prev);
-	    }
-	    ft.addToBackStack(null);
-	    df.setCancelable(false);
-	    df.show(ft, tag);
-	}
 	
 	@Override  
 	public boolean onKeyDown(int keyCode, KeyEvent event) {  

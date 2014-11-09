@@ -70,10 +70,10 @@
     
     <!-- 设置页面相关 -->
     <string name="setting_category_login">登录</string>
-    <string name="setting_item_usernamesaveauto">保存用户名</string>
-    <string name="setting_item_usernamesaveauto_desc">设置自动保存用户名</string>
-    <string name="setting_item_passwordsaveauto">保存密码</string>
-    <string name="setting_item_passwordsaveauto_desc">设置自动保存密码</string>
+    <string name="setting_item_loginsaveauto">保存信息</string>
+    <string name="setting_item_loginsaveauto_desc">设置是否保存用户名和密码</string>
+    <string name="setting_item_loginauto">自动登录</string>
+    <string name="setting_item_loginauto_desc">设置是否自动登录</string>
     
     <string name="setting_category_daily">日志填写</string>
     <string name="setting_item_begintimedefault">默认开始时间</string>

@@ -38,11 +38,12 @@ public class SmallNoteBusi extends BaseBusi {
 	}
 	
 	/**
-	 * 获取新闻列表，第二页，第三页……
+	 * 获取小字报列表，第二页，第三页……
 	 * @param currentpage 当前获取的页数
 	 * @param totalpages 总页数
 	 */
 	public void getSmallNoteList(int currentpage,int totalpages){
+		//mHandler.obtainMessage(SHOWPROGRESS).sendToTarget();
 		MyParameters params = new MyParameters();
 		if(currentpage > 1 && totalpages >0 && currentpage <= totalpages){
 			params.add("var_currentpage", ""+currentpage);

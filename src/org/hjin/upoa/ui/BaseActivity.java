@@ -3,6 +3,9 @@ package org.hjin.upoa.ui;
 import org.hjin.upoa.R;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -11,6 +14,8 @@ public class BaseActivity extends Activity {
 	protected boolean mDebugable = true;
 	
 	private final String apikey = "qyyG21wLBThXuQ7iEGrSzGwL";
+	
+	protected DialogFragment mPdf;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,37 @@ public class BaseActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_base, menu);
 		return true;
+	}
+	
+	/**
+	 * ¸ù¾Ýtag£¬ÒÆ³ýdialog
+	 * @param tag
+	 */
+	protected void removeDialogByTag(String tag){
+	    FragmentTransaction ft = getFragmentManager().beginTransaction();
+	    Fragment prev = getFragmentManager().findFragmentByTag(tag);
+	    if (prev != null) {
+	    	DialogFragment vdf = (DialogFragment)prev;
+	 	    vdf.dismiss();
+	        ft.remove(prev);
+	    }
+	    
+	}
+	
+	/**
+	 * ÏÔÊ¾dialog
+	 * @param df
+	 * @param tag
+	 */
+	protected void showDialog(DialogFragment df,String tag){
+	    FragmentTransaction ft = getFragmentManager().beginTransaction();
+	    Fragment prev = getFragmentManager().findFragmentByTag(tag);
+	    if (prev != null) {
+	    	ft.remove(prev);
+	    }
+	    ft.addToBackStack(null);
+	    df.setCancelable(false);
+	    df.show(ft, tag);
 	}
 
 }

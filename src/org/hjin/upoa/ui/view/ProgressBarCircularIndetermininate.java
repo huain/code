@@ -31,29 +31,29 @@ public class ProgressBarCircularIndetermininate extends RelativeLayout {
 	}
 	
 	// Set atributtes of XML to View
-		protected void setAttributes(AttributeSet attrs){
-			
-			setMinimumHeight(Utils.dpToPx(32, getResources()));
-			setMinimumWidth(Utils.dpToPx(32, getResources()));
-			
-			//Set background Color
-			// Color by resource
-			int bacgroundColor = attrs.getAttributeResourceValue(ANDROIDXML,"background",-1);
-			if(bacgroundColor != -1){
-				setBackgroundColor(getResources().getColor(bacgroundColor));
-			}else{
-				// Color by hexadecimal
-				String background = attrs.getAttributeValue(ANDROIDXML,"background");
-				if(background != null)
-					setBackgroundColor(Color.parseColor(background));
-				else
-					setBackgroundColor(Color.parseColor("#1E88E5"));
-			}
-			
-			setMinimumHeight(Utils.dpToPx(3, getResources()));
-			
-						
+	protected void setAttributes(AttributeSet attrs){
+		
+		setMinimumHeight(Utils.dpToPx(32, getResources()));
+		setMinimumWidth(Utils.dpToPx(32, getResources()));
+		
+		//Set background Color
+		// Color by resource
+		int bacgroundColor = attrs.getAttributeResourceValue(ANDROIDXML,"background",-1);
+		if(bacgroundColor != -1){
+			setBackgroundColor(getResources().getColor(bacgroundColor));
+		}else{
+			// Color by hexadecimal
+			String background = attrs.getAttributeValue(ANDROIDXML,"background");
+			if(background != null)
+				setBackgroundColor(Color.parseColor(background));
+			else
+				setBackgroundColor(Color.parseColor("#1E88E5"));
 		}
+		
+		setMinimumHeight(Utils.dpToPx(3, getResources()));
+		
+					
+	}
 	
 	/**
 	 * Make a dark color to ripple effect

@@ -5,6 +5,7 @@ package org.hjin.upoa.ui.view.calendar;
 
 import org.hjin.upoa.R;
 import org.hjin.upoa.busi.CalendarBusi;
+import org.hjin.upoa.ui.view.calendar.CalendarAdapter.IDateOnClickListener;
 import org.hjin.upoa.util.DateUtil;
 
 import android.content.Context;
@@ -36,7 +37,9 @@ public class CalendarView extends LinearLayout {
 	
 	private CalendarBusi mCb;
 	
-	private CalendarPagerView mPagerView;
+	private IDateOnClickListener mDateOnClickListener;
+	
+	private ICalendarDataLoadListener mCalendarDataLoadListener;
 	
 	private Handler mHandler = new Handler(){
 		@Override
@@ -49,6 +52,10 @@ public class CalendarView extends LinearLayout {
 				if(mCalendarGridView != null){
 					mCalendarGridView.performItemClick(mCalendarGridView.getChildAt(pos), pos, mCalendarAdapter.getItemId(pos));
 				}
+				mCalendarDataLoadListener.onFinishDataLoad();
+			}break;
+			case CalendarBusi.SHOWPROGRESS:{
+				mCalendarDataLoadListener.onPreDataLoad();
 			}break;
 			default:break;
 			}
@@ -61,11 +68,12 @@ public class CalendarView extends LinearLayout {
 		init(context);
 	}
 	
-	public CalendarView(Context context,CalendarPagerView pagerView){
+	
+	public CalendarView(Context context,IDateOnClickListener dateOnClickListener,ICalendarDataLoadListener calendarDataLoadListener){
 		super(context);
-		mPagerView = pagerView;
+		mDateOnClickListener = dateOnClickListener;
+		mCalendarDataLoadListener = calendarDataLoadListener;
 		init(context);
-		
 	}
 
 	private void init(Context context){
@@ -85,7 +93,7 @@ public class CalendarView extends LinearLayout {
 					mCalendarGridViewLastSelectedView.setBackgroundColor(0x0000);
 				}
 				mCalendarGridViewLastSelectedView = view;
-				mPagerView.dateOnClick(date);
+				mDateOnClickListener.dateOnClick(date);
 			}
 		});
 		
@@ -111,28 +119,34 @@ public class CalendarView extends LinearLayout {
 	
 	//向右滑动
 	public void rightSilde() {
-		int month = CalendarPagerView.mShowDate.getmMonth();
-		int year = CalendarPagerView.mShowDate.getmYear();
+		int month = Calendar.mShowDate.getmMonth();
+		int year = Calendar.mShowDate.getmYear();
 		if (month == 12) {
-			CalendarPagerView.mShowDate.setmMonth(1);
-			CalendarPagerView.mShowDate.setmYear(year+1);
+			Calendar.mShowDate.setmMonth(1);
+			Calendar.mShowDate.setmYear(year+1);
 		} else {
-			CalendarPagerView.mShowDate.setmMonth(month+1);
+			Calendar.mShowDate.setmMonth(month+1);
 		}
-		setDate(CalendarPagerView.mShowDate.getmYear(),CalendarPagerView.mShowDate.getmMonth());
+		setDate(Calendar.mShowDate.getmYear(),Calendar.mShowDate.getmMonth());
 	}
 	
 	//向左滑动
 	public void leftSilde() {
-		int month = CalendarPagerView.mShowDate.getmMonth();
-		int year = CalendarPagerView.mShowDate.getmYear();
+		int month = Calendar.mShowDate.getmMonth();
+		int year = Calendar.mShowDate.getmYear();
 		if (month == 1) {
-			CalendarPagerView.mShowDate.setmMonth(12);
-			CalendarPagerView.mShowDate.setmYear(year-1);
+			Calendar.mShowDate.setmMonth(12);
+			Calendar.mShowDate.setmYear(year-1);
 		} else {
-			CalendarPagerView.mShowDate.setmMonth(month-1);
+			Calendar.mShowDate.setmMonth(month-1);
 		}
-		setDate(CalendarPagerView.mShowDate.getmYear(),CalendarPagerView.mShowDate.getmMonth());
+		setDate(Calendar.mShowDate.getmYear(),Calendar.mShowDate.getmMonth());
+	}
+	
+	public interface ICalendarDataLoadListener{
+		public void onPreDataLoad();
+		
+		public void onFinishDataLoad();
 	}
 	
 }

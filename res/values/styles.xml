@@ -18,6 +18,11 @@
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
     
+    
+     <style name="MyDialogLoading" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@drawable/loading_bg</item>
+    </style>
+    
     <!-- general styles for the action bar -->
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <!-- <item name="android:titleTextStyle">@style/TitleTextStyle</item>-->

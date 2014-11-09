@@ -48,6 +48,7 @@ public class CalendarBusi extends BaseBusi {
 	 * @param dateJson
 	 */
 	public void getCalendarInfo(){
+		mHandler.obtainMessage(SHOWPROGRESS).sendToTarget();
 		/*
 		 * {"prev":{"y":2014,"m":5,"s":26,"e":31},
 		 * "current":{"y":2014,"m":6,"s":1,"e":30},

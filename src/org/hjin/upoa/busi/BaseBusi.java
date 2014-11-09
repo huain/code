@@ -4,13 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.hjin.upoa.constants.AppConstants;
-import org.hjin.upoa.ui.BaseActivity;
 import org.hjin.upoa.util.net.AsyncRunner;
 import org.hjin.upoa.util.net.MyHttpException;
 import org.hjin.upoa.util.net.MyParameters;
 import org.hjin.upoa.util.net.RequestListener;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +23,11 @@ public class BaseBusi implements RequestListener{
 	
 	protected final String TAG = "BaseBusi";
 	
-	public final static int SHOWMESSAGE = 0;
+	public final static int SHOWMESSAGE = 0x0000;
+	
+	public final static int SHOWPROGRESS = 0x0001;
+	
+	public final static int HIDDENPROGRESS = 0x0002;
 	
 	/**
 	 * post«Î«Û∑Ω Ω

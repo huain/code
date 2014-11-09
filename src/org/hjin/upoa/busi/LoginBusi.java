@@ -44,6 +44,10 @@ public class LoginBusi extends BaseBusi {
 	private final int GET_USERINFO = 0x0104;
 	
 	private final int GET_USERHEADERINFO = 0x0105;
+	/** flag：获取login界面的背景图片信息*/
+	private final int GET_LOGINPIC_INFO = 0x0106;
+	/** flag：获取login界面的背景图片*/
+	private final int GET_LOGINPIC = 0x0107;
 	
 	/**msgcode:业务错误*/
 	public final static int ERROR = 400;
@@ -51,6 +55,10 @@ public class LoginBusi extends BaseBusi {
 	public final static int SYSERROR = 500;
 	/**msgcode:登录成功*/
 	public final static int SUCCESS = 200;
+	
+	
+	private int mLoginPicVersionTemp;
+	private String mLoginPicLinkTemp;
 	
 	
 	
@@ -86,6 +94,7 @@ public class LoginBusi extends BaseBusi {
 	 * 登录后初始化操作
 	 */
 	private void init(){
+		getLoginPicInfo();
 		getUserHeaderInfo();
 		getUserInfo();
 	}
@@ -93,6 +102,14 @@ public class LoginBusi extends BaseBusi {
 	private void getCookieStore(){
 		MyParameters params = new MyParameters();
 		request(GET_COOKIESTORE, AppConstants.sReq_IndexOnLineSum, params, HTTPMETHOD_GET, this);
+	}
+	
+	private void getLoginPicInfo(){
+		request(GET_LOGINPIC_INFO, AppConstants.sUrl_Login_Pic_Info, null, HTTPMETHOD_GET, this);
+	}
+	
+	private void getLoginPic(String url){
+		request4Binary(GET_LOGINPIC, url, null, HTTPMETHOD_GET, this);
 	}
 	
 	/**
@@ -189,6 +206,31 @@ public class LoginBusi extends BaseBusi {
 			}
 			
 		}break;
+		case GET_LOGINPIC_INFO:{
+			JSONObject jo = null;
+			try {
+				jo = new JSONObject(response);
+				if(null != jo){
+					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+					int version = sp.getInt("LoginPicVersion", 0);
+					Log.d(TAG, "============"+version);
+					if(jo.getInt("version") == version){
+						
+					}else{
+						String link = jo.getString("link");
+						if(link != null && !"".equals(link)){
+							mLoginPicVersionTemp = jo.getInt("version");
+							getLoginPic(link);
+							Log.d(TAG, "============"+link);
+						}
+					}
+					
+				}
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} 
+		}break;
 		default:break;
 		}
 		
@@ -203,6 +245,16 @@ public class LoginBusi extends BaseBusi {
 		case GET_USERHEADERINFO:{
 			Utility.saveFile(AppConstants.sReq_IndexUserHeaderInfo+AppConstants.loginname+"_head_160.jpg", 
 					responseOS.toByteArray());
+		}break;
+		case GET_LOGINPIC:{
+			Utility.saveFile("login_v"+mLoginPicVersionTemp+".jpg", 
+					responseOS.toByteArray());
+			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+			Editor e = sp.edit();
+			e.putInt("LoginPicVersion", mLoginPicVersionTemp);
+			e.putString("mLoginPicLinkTemp", mLoginPicLinkTemp);
+			e.commit();
+			Log.d(TAG, "==================================================mLoginPicLinkTemp");
 		}break;
 		default:break;
 		}

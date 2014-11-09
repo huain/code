@@ -10,6 +10,7 @@ import org.hjin.upoa.R;
 import org.hjin.upoa.busi.SmallNoteBusi;
 import org.hjin.upoa.constants.AppConstants;
 import org.hjin.upoa.model.SmallNote;
+import org.hjin.upoa.ui.view.ProgressDialogFragment;
 import org.hjin.upoa.ui.view.PullToRefreshView;
 import org.hjin.upoa.ui.view.SmallNoteListAdapter;
 import org.hjin.upoa.ui.view.SmallNoteReplyDialogFragment;
@@ -67,9 +68,10 @@ public class SmallNoteActivity extends BaseActivity implements OnHeaderRefreshLi
 						mPullToRefreshView.onHeaderRefreshComplete();
 						mPullToRefreshView.onFooterRefreshComplete();
 					}
-					if(findViewById(R.id.smallnotelist_load).getVisibility() == View.VISIBLE){
-						findViewById(R.id.smallnotelist_load).setVisibility(View.GONE);
-					}
+					removeDialogByTag("loading");
+//					if(mPdf !=null){
+//						findViewById(R.id.smallnotelist_load).setVisibility(View.GONE);
+//					}
 				}break;
 				default:break;
 				}
@@ -100,6 +102,9 @@ public class SmallNoteActivity extends BaseActivity implements OnHeaderRefreshLi
 		
         mPullToRefreshView.setOnHeaderRefreshListener(this);
         mPullToRefreshView.setOnFooterRefreshListener(this);
+        
+        mPdf = ProgressDialogFragment.newInstance("ÕýÔÚ¼ÓÔØ¡­¡­");
+	    showDialog(mPdf, "loading");
         
 	}
 	

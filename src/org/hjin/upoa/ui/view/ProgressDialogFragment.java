@@ -27,7 +27,7 @@ public class ProgressDialogFragment extends DialogFragment {
      */
     public static ProgressDialogFragment newInstance(String tips) {
     	ProgressDialogFragment f = new ProgressDialogFragment();
-    	f.setStyle(STYLE_NO_TITLE,0);
+    	f.setStyle(STYLE_NO_TITLE,R.style.MyDialogLoading);
         Bundle args = new Bundle();
         args.putString("tips", tips);
         f.setArguments(args);
@@ -38,11 +38,16 @@ public class ProgressDialogFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_progress_dialog_1, container, false);
-		ImageView iv = (ImageView)v.findViewById(R.id.progressDialogFragment1_image);
-        Animation LoadingAnimation_1 = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.animator.loading);
+		ImageView iv_blue = (ImageView)v.findViewById(R.id.loading1_image_blue);
+		ImageView iv_green = (ImageView)v.findViewById(R.id.loading1_image_green);
+		
+        Animation LoadingAnimation_s2b = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.animator.circle_small2big_l);
+        Animation LoadingAnimation_b2s = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.animator.circle_big2small_r);
         LinearInterpolator lin = new LinearInterpolator();
-        LoadingAnimation_1.setInterpolator(lin);
-        iv.startAnimation(LoadingAnimation_1);
+        LoadingAnimation_s2b.setInterpolator(lin);
+        LoadingAnimation_b2s.setInterpolator(lin);
+        iv_blue.startAnimation(LoadingAnimation_s2b);
+        iv_green.startAnimation(LoadingAnimation_b2s);
 		
 		
 		String tips = getArguments().getString("tips");
