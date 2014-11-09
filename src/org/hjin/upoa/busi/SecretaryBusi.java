@@ -57,7 +57,7 @@ public class SecretaryBusi extends BaseBusi {
 		Message msg = mHandler.obtainMessage();
 		switch(flag){
 		case GET_TASK_COUNT:{
-//			response = "3,3,2,3,5,0,0,5,5,6,5,5,102,5,0,6,6,0,7,8,2,2,1,4,2,1,6,6,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
+			response = "3,3,2,3,5,2,2,5,5,6,5,5,102,5,2,6,6,2,7,8,2,2,1,4,2,1,6,6,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2";
 			Log.d(TAG, "++++++++:"+response);
 			Bundle data = new Bundle();
 			msg.what = GET_TASK_COUNT;

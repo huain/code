@@ -48,13 +48,13 @@ public class CalendarBusi extends BaseBusi {
 	 * @param dateJson
 	 */
 	public void getCalendarInfo(){
-		mHandler.obtainMessage(SHOWPROGRESS).sendToTarget();
 		/*
 		 * {"prev":{"y":2014,"m":5,"s":26,"e":31},
 		 * "current":{"y":2014,"m":6,"s":1,"e":30},
 		 * "next":{"y":2014,"m":7,"s":1,"e":6}}
 		 */
 		if(mDates.length>0){
+			mHandler.obtainMessage(SHOWPROGRESS).sendToTarget();
 			MyParameters params = new MyParameters();
 			params.add("dateJson", date2Json(mDates));
 			Log.d(TAG, "===获取日历信息：初始条件JSON："+ params.getValue("dateJson"));

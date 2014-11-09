@@ -3,7 +3,7 @@
 
     <item android:id="@+id/action_dailylist"
           android:title="历史日报"
-          android:icon="@drawable/ic_action_person"
+          android:icon="@drawable/ic_dailylist"
           android:showAsAction="always|collapseActionView"
          />
 

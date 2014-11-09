@@ -137,14 +137,14 @@
 	    <TextView android:id="@+id/calendar_date_show" style="@style/mylabel1"  android:layout_width="match_parent" android:layout_height="wrap_content"></TextView>
 	    
 	    <LinearLayout android:id="@+id/calendar_info"  android:background="@drawable/common_card_background"  android:orientation="vertical" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content">
-		   <LinearLayout android:id="@+id/calendar_dailyinfo"   android:gravity="left|center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
-		       <ImageView android:src="@drawable/daily" android:layout_height="48dp" android:layout_width="48dp" android:layout_weight="0"/>
-		       <TextView android:id="@+id/calendar_dailyinfotv" android:textSize="16sp" android:text="日志已填写" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"/>
+		   <LinearLayout android:id="@+id/calendar_dailyinfo" android:paddingLeft="8dp"   android:gravity="left|center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp">
+		       <ImageView android:src="@drawable/ic_daily" android:background="@color/ultra_blue" android:layout_height="32dp" android:layout_width="32dp" android:layout_weight="0"/>
+		       <TextView android:id="@+id/calendar_dailyinfotv" android:textColor="@color/ultra_gray" android:paddingLeft="8dp" android:textSize="16sp" android:text="日志已填写" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"/>
 		   </LinearLayout>
 		   <ImageView android:src="@drawable/common_divider" android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="0"/>
-		   <LinearLayout android:id="@+id/calendar_signinfo"  android:gravity="left|center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
-		       <ImageView android:src="@drawable/daily" android:layout_height="48dp" android:layout_width="48dp" android:layout_weight="0"/>
-		       <TextView android:id="@+id/calendar_signinfotv" android:textSize="16sp" android:text="迟到五分钟" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"/>
+		   <LinearLayout android:id="@+id/calendar_signinfo" android:paddingLeft="8dp"  android:gravity="left|center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="48dp">
+		       <ImageView android:src="@drawable/ic_sign" android:background="@color/ultra_green" android:layout_height="32dp" android:layout_width="32dp" android:layout_weight="0"/>
+		       <TextView android:id="@+id/calendar_signinfotv" android:textColor="@color/ultra_gray" android:paddingLeft="8dp" android:textSize="16sp" android:text="迟到五分钟" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"/>
 		   </LinearLayout>
 		   
 		</LinearLayout>
