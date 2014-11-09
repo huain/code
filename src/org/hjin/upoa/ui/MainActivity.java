@@ -11,10 +11,14 @@ import org.hjin.upoa.model.Secretary;
 import org.hjin.upoa.service.OnLineService;
 import org.hjin.upoa.util.Utility;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Interpolator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -23,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +88,9 @@ public class MainActivity extends BaseActivity {
 	    	}break;
 	    	case MainBusi.GETONLINESUM:{
 	    		mOnLineNum.setText(""+msg.arg1);
+	    		if(msg.arg2 == 1){
+	    			shake(mOnLineNum);
+	    		}
 	    	}break;
 			}
     	};
@@ -173,6 +181,27 @@ public class MainActivity extends BaseActivity {
     	}break;
     	}
     }
+    
+    private void shake(View view){
+    	int numOfShakes = 24;
+    	long duration = 360;
+    	float shakeDistance = 8f;
+    	TimeInterpolator interpolator = new AccelerateDecelerateInterpolator();
+    	long singleShakeDuration = duration / numOfShakes / 2;
+		if (singleShakeDuration == 0)
+			singleShakeDuration = 1;
+		final AnimatorSet shakeAnim = new AnimatorSet();
+		shakeAnim
+				.playSequentially(ObjectAnimator.ofFloat(view,
+						View.TRANSLATION_X, shakeDistance), ObjectAnimator
+						.ofFloat(view, View.TRANSLATION_X, -shakeDistance),
+						ObjectAnimator.ofFloat(view, View.TRANSLATION_X,
+								shakeDistance), ObjectAnimator.ofFloat(view,
+								View.TRANSLATION_X, 0));
+		shakeAnim.setInterpolator(interpolator);
+		shakeAnim.setDuration(singleShakeDuration);
+		shakeAnim.start();
+    }
 
 
     @Override  
@@ -182,7 +211,6 @@ public class MainActivity extends BaseActivity {
 	    }  
 	    return false;  
 	}
-    
     
 	private static Boolean isExit = false;  
 	

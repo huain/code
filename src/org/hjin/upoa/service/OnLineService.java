@@ -100,6 +100,12 @@ public class OnLineService extends Service {
 				} catch (NumberFormatException e) {
 					
 				}
+				// 设置是否人数变化，人数变化震动
+				if(sum == AppConstants.onlinesum){
+					msg.arg2 = 0;
+				}else{
+					msg.arg2 = 1;
+				}
 				msg.arg1 = sum;
 				AppConstants.onlinesum = sum;
 				msg.sendToTarget();
