@@ -22,6 +22,8 @@ public class AppConstants {
 	
 	public static String sUrl_Login_Pic_Info = "http://hjin1987.duapp.com/system/upoa/getLoginPicVersionInfo";
 	
+	public static String sUrl_Login_Info = "http://hjin1987.duapp.com/system/upoa/getVersionInfo";
+	
 	/**登录验证地址1 */
 	public static String sUrl_login1 = "http://60.247.77.186/ucas/login";
 	/**登录验证地址2 */

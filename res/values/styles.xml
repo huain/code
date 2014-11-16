@@ -229,5 +229,5 @@
     <color name="ultra_black_a80">#80000000</color>
     
     <color name="ultra_red">#f05b72</color>
-
+	<color name="ultra_red2">#fd643c</color>
 </resources>

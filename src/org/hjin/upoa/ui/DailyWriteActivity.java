@@ -111,6 +111,8 @@ public class DailyWriteActivity extends BaseActivity {
 		setContentView(R.layout.fragment_daily);
 		mDailyBusi = new DailyBusi(mHandler);
 		
+		getActionBar().setTitle("写日报");
+		
 		// 取得intent中设置的默认日期
 		Intent intent = getIntent();
 		int[] date = intent.getIntArrayExtra("date");

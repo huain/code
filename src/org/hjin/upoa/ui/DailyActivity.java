@@ -59,6 +59,7 @@ public class DailyActivity extends BaseActivity  implements IDateOnClickListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_daily);
+		getActionBar().setTitle("¿¼ÇÚ");
 		init();
 	}
 	

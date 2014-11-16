@@ -185,7 +185,7 @@ public class SmallNoteBusi extends BaseBusi {
 				Log.d(TAG, "===:小字报保存成功");
 				msg.arg1 = 1;//发送成功
 			}else{
-				msg.arg1 = 1;//发送失败
+				msg.arg1 = 0;//发送失败
 			}
 		}break;
 		default:break;

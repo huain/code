@@ -16,6 +16,8 @@ public class SettingActivity extends PreferenceActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		getActionBar().setTitle("…Ë÷√");
 		addPreferencesFromResource(R.xml.setting);
 		
 		final ListPreference typePreference = (ListPreference)findPreference("setting_item_typedefault");

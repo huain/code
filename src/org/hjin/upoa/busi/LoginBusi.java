@@ -14,6 +14,8 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -45,9 +47,11 @@ public class LoginBusi extends BaseBusi {
 	
 	private final int GET_USERHEADERINFO = 0x0105;
 	/** flag：获取login界面的背景图片信息*/
-	private final int GET_LOGINPIC_INFO = 0x0106;
+	public final static int GET_LOGINPIC_INFO = 0x0106;
 	/** flag：获取login界面的背景图片*/
-	private final int GET_LOGINPIC = 0x0107;
+	public final static int GET_LOGINPIC = 0x0107;
+	
+	public final static int GET_VERSION_INFO = 0x0108;
 	
 	/**msgcode:业务错误*/
 	public final static int ERROR = 400;
@@ -60,10 +64,16 @@ public class LoginBusi extends BaseBusi {
 	private int mLoginPicVersionTemp;
 	private String mLoginPicLinkTemp;
 	
+	/**传到主页面，标志是否有更新，0：代表无更新，1：代表有更新*/
+	private int mIsHasUpdate;
+	
+	SharedPreferences sp;
+	
 	
 	
 	public LoginBusi(Context context, Handler handler) {
 		super(context,handler);
+		sp = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
 	}
 
 	public void login(String username, String password){
@@ -94,6 +104,9 @@ public class LoginBusi extends BaseBusi {
 	 * 登录后初始化操作
 	 */
 	private void init(){
+		if(sp.getInt("version", 0) == 0){
+			getVersionInfo();
+		}
 		getLoginPicInfo();
 		getUserHeaderInfo();
 		getUserInfo();
@@ -106,6 +119,10 @@ public class LoginBusi extends BaseBusi {
 	
 	private void getLoginPicInfo(){
 		request(GET_LOGINPIC_INFO, AppConstants.sUrl_Login_Pic_Info, null, HTTPMETHOD_GET, this);
+	}
+	
+	public void getVersionInfo(){
+		request(GET_VERSION_INFO, AppConstants.sUrl_Login_Info, null, HTTPMETHOD_GET, this);
 	}
 	
 	private void getLoginPic(String url){
@@ -189,7 +206,6 @@ public class LoginBusi extends BaseBusi {
 					jo = js.getJSONObject(0);
 				}
 				if(null != jo){
-					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
 					Editor e = sp.edit();
 					e.putString("fullname", jo.getString("F_USERNAME"));
 					e.putString("userdep", jo.getString("F_DEPTNAME"));
@@ -202,6 +218,7 @@ public class LoginBusi extends BaseBusi {
 			} finally{
 				Message msg = mHandler.obtainMessage();
 				msg.what = SUCCESS;
+				msg.arg1 = mIsHasUpdate;
 				msg.sendToTarget();
 			}
 			
@@ -211,7 +228,6 @@ public class LoginBusi extends BaseBusi {
 			try {
 				jo = new JSONObject(response);
 				if(null != jo){
-					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
 					int version = sp.getInt("LoginPicVersion", 0);
 					Log.d(TAG, "============"+version);
 					if(jo.getInt("version") == version){
@@ -225,6 +241,42 @@ public class LoginBusi extends BaseBusi {
 						}
 					}
 					
+				}
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} 
+		}break;
+		case GET_VERSION_INFO:{
+			JSONObject jo = null;
+			try {
+				jo = new JSONObject(response);
+				Log.d(TAG, "==="+response);
+				if(null != jo){
+					Log.d(TAG, "===success");
+					Message msg = mHandler.obtainMessage();
+					msg.what = GET_VERSION_INFO;
+					PackageInfo packInfo;
+					int version = 0;
+					try {
+						packInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
+						version = packInfo.versionCode;
+					} catch (NameNotFoundException e) {
+					}
+					Log.d(TAG, "============"+version);
+					if(jo.getInt("version") == version){
+						msg.arg1 =0;
+					}else{
+						SharedPreferences.Editor editor = sp.edit();
+						editor.putInt("isHasUpdate", 1);
+						editor.putInt("version", jo.getInt("version"));
+						editor.putString("versionName", jo.getString("versionName"));
+						editor.putString("link", jo.getString("link"));
+						editor.putString("updateDesc", jo.getString("updateDesc"));
+						editor.commit();
+						msg.arg1 = 1;
+					}
+					msg.sendToTarget();
 				}
 				
 			} catch (JSONException e) {
@@ -249,7 +301,6 @@ public class LoginBusi extends BaseBusi {
 		case GET_LOGINPIC:{
 			Utility.saveFile("login_v"+mLoginPicVersionTemp+".jpg", 
 					responseOS.toByteArray());
-			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
 			Editor e = sp.edit();
 			e.putInt("LoginPicVersion", mLoginPicVersionTemp);
 			e.putString("mLoginPicLinkTemp", mLoginPicLinkTemp);

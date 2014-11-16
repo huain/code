@@ -71,7 +71,7 @@ public class DailyListActivity extends BaseActivity implements OnHeaderRefreshLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dailylist);
 		
-		
+		getActionBar().setTitle("日报列表");
 		AppConstants.sDaily_Page_Current = 0;
 		AppConstants.sDaily_Page_Sum=0;
 		AppConstants.sDaily_Sum=0;

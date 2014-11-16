@@ -11,8 +11,8 @@
     	<ListPreference android:title="@string/setting_item_typedefault" android:key="setting_item_typedefault" android:summary="@string/setting_item_typedefault_desc" android:entries="@array/daily_type_array" android:entryValues="@array/daily_type_array" />
     	<ListPreference android:title="@string/setting_item_positiondefault" android:key="setting_item_positiondefault" android:summary="@string/setting_item_positiondefault_desc" android:entries="@array/daily_position_array" android:entryValues="@array/daily_position_array"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/setting_category_mode" android:key="setting_category_mode">
+    <!-- <PreferenceCategory android:title="@string/setting_category_mode" android:key="setting_category_mode">
         <SwitchPreference android:title="@string/setting_item_nonepic" android:key="setting_item_nonepic" android:summary="@string/setting_item_nonepic_desc"/>
-    </PreferenceCategory>
+    </PreferenceCategory> -->
     
 </PreferenceScreen>

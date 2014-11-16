@@ -4,8 +4,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.hjin.upoa.R;
+import org.hjin.upoa.busi.LoginBusi;
 import org.hjin.upoa.busi.MainBusi;
 import org.hjin.upoa.busi.SecretaryBusi;
+import org.hjin.upoa.busi.SmallNoteBusi;
 import org.hjin.upoa.constants.AppConstants;
 import org.hjin.upoa.model.Secretary;
 import org.hjin.upoa.service.OnLineService;
@@ -14,11 +16,16 @@ import org.hjin.upoa.util.Utility;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.graphics.Interpolator;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -38,6 +45,8 @@ public class MainActivity extends BaseActivity {
 	
 	private SecretaryBusi mSecretaryBusi;
 	
+	private LoginBusi mLoginBusi;
+	
 	private ImageView mHeader;
 	
 	private TextView mFullname;
@@ -50,9 +59,13 @@ public class MainActivity extends BaseActivity {
 	
 	private TextView mOnLineNum;
 	
+	private View mUpdateRed;
+	
 //	private ListView mWaitDealList;
 //	
 //	private TextView mWaitDealList_None;
+	
+	private SharedPreferences sp ;
 
     private Handler mHandler = new BaseHandler(this){
     	public void handleMessage(Message msg) {
@@ -92,6 +105,21 @@ public class MainActivity extends BaseActivity {
 	    			shake(mOnLineNum);
 	    		}
 	    	}break;
+	    	case LoginBusi.GET_VERSION_INFO:{
+	    		if(msg.arg1 == 1){
+	    			mUpdateRed.setVisibility(View.VISIBLE);
+	    			showUpdate();
+	    		}else{
+	    			Toast.makeText(getApplicationContext(), "当前已经是最新版本！", Toast.LENGTH_SHORT).show();
+	    		}
+	    	}break;
+	    	case SmallNoteBusi.SAVESMALLNOTE:{
+	    		if(msg.arg1 == 1){
+	    			Toast.makeText(getApplicationContext(), "分享成功，谢谢您的分享！", Toast.LENGTH_SHORT).show();
+	    		}else{
+	    			Toast.makeText(getApplicationContext(), "很遗憾，分享失败了，恩，过一会儿再试一次！", Toast.LENGTH_SHORT).show();
+	    		}
+	    	}break;
 			}
     	};
     };
@@ -100,6 +128,26 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sp =  PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        
+        mHeader = (ImageView)findViewById(R.id.index_header);
+		mFullname = (TextView)findViewById(R.id.index_fullname);
+		mPost = (TextView)findViewById(R.id.index_post);
+		mDep = (TextView)findViewById(R.id.index_dep);
+		
+		mUpdateRed = findViewById(R.id.index_update_red);
+		
+		mSecretaryNum = (TextView)findViewById(R.id.index_secretary_num_tv);
+		mOnLineNum = (TextView)findViewById(R.id.index_online_num_tv);
+		mOnLineNum.setText(""+AppConstants.onlinesum);
+        
+        // 标志应用是否有更新 
+        int isHasUpdate = sp.getInt("isHasUpdate", 0);
+        if(isHasUpdate != 0){
+        	mUpdateRed.setVisibility(View.VISIBLE);
+        }
+        
+        // 启动在线人数统计service
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(), OnLineService.class);
         
@@ -115,35 +163,22 @@ public class MainActivity extends BaseActivity {
 				localBinder.getOnLineService().setmHandler(mHandler);
 			}
 		}, 1);
-//        startService(intent);
         
-//        getActionBar().setDisplayHomeAsUpEnabled(false);
-//        getActionBar().setTitle("111");
-        
-        mHeader = (ImageView)findViewById(R.id.index_header);
-		mFullname = (TextView)findViewById(R.id.index_fullname);
-		mPost = (TextView)findViewById(R.id.index_post);
-		mDep = (TextView)findViewById(R.id.index_dep);
-		
-		mSecretaryNum = (TextView)findViewById(R.id.index_secretary_num_tv);
-		mOnLineNum = (TextView)findViewById(R.id.index_online_num_tv);
-		mOnLineNum.setText(""+AppConstants.onlinesum);
-		
-//		mWaitDealList = (ListView)findViewById(R.id.index_waitdeallist);
-//		mWaitDealList_None = (TextView)findViewById(R.id.index_waitdeallist_none);
-		
+		// 显示用户个人信息
 		mHeader.setImageDrawable(Utility.getDrawableFromSD(
 				AppConstants.sReq_IndexUserHeaderInfo+AppConstants.loginname+"_head_160.jpg"));
 		
-		SharedPreferences sp =  PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		
 		mFullname.setText(sp.getString("fullname", "未知姓名"));
 		mPost.setText(sp.getString("userpost", ""));
 		mDep.setText(sp.getString("userdep", ""));
 		
 		
-		
+		// 获取待办数目
 		mSecretaryBusi = new SecretaryBusi(mHandler);
 		mSecretaryBusi.getTaskCount();
+		
+		mLoginBusi = new LoginBusi(getApplicationContext(), mHandler);
     }
     
     
@@ -179,9 +214,67 @@ public class MainActivity extends BaseActivity {
     		intent.setClass(getApplicationContext(), SettingActivity.class);
     		startActivity(intent);
     	}break;
+    	case R.id.index_update_btn:{
+    		int version = sp.getInt("version", 0);
+    		int version_packInfo = 0;
+			PackageInfo packInfo;
+			try {
+				packInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				version_packInfo = packInfo.versionCode;
+			} catch (NameNotFoundException e) {
+			}
+			if(version != version_packInfo){
+				mLoginBusi.getVersionInfo();
+			}else{
+				Toast.makeText(getApplicationContext(), "当前已经是最新版本！", Toast.LENGTH_SHORT).show();
+			}
+    	}break;
+    	case R.id.index_share_btn:{
+    		share();
+    	}break;
     	}
     }
     
+    private void showUpdate(){
+    	String versionName = sp.getString("versionName", "");
+    	final String link = sp.getString("link", "");
+    	String updateDesc = sp.getString("updateDesc", "暂无描述");
+    	new AlertDialog.Builder(this).setTitle("UOA 版本"+versionName+"更新")
+		.setMessage(updateDesc)
+		.setPositiveButton("点击下载", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link)); 
+				startActivity(intent);
+			}
+		})
+		.setNegativeButton("暂不更新", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				SharedPreferences.Editor editor = sp.edit();
+				editor.putInt("isHasUpdate", 0);
+				editor.commit();
+				mUpdateRed.setVisibility(View.GONE);
+			}
+		})
+		.show();
+    }
+    
+    private void share(){
+    	final String content = "我正在使用UOA（泰岳OA）V2.0Beta，你也来试试吧~!下载链接：http://pan.baidu.com/s/1kTv9S9p";
+    	new AlertDialog.Builder(this).setTitle("分享到小字报")
+		.setMessage(content)
+		.setPositiveButton("确定", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				SmallNoteBusi sb = new SmallNoteBusi(mHandler);
+				sb.saveSmallNote("我正在使用UOA发小字报，你也来试试吧~", content);
+			}
+		})
+		.show();
+    }
+    
+    // 在线人数变化时震动
     private void shake(View view){
     	int numOfShakes = 24;
     	long duration = 360;

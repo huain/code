@@ -51,6 +51,7 @@ public class LoginActivity extends BaseActivity {
 					String message = data.getString("message");
 					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 				}
+				mLoginInfoContainer.setVisibility(View.VISIBLE);
 			}break;
 			case LoginBusi.ERROR:{
 				if(mPdf != null){
@@ -61,6 +62,7 @@ public class LoginActivity extends BaseActivity {
 					String message = data.getString("message");
 					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 				}
+				mLoginInfoContainer.setVisibility(View.VISIBLE);
 			}break;
 			case LoginBusi.SYSERROR:{
 				if(mPdf != null){
@@ -71,6 +73,7 @@ public class LoginActivity extends BaseActivity {
 					String message = data.getString("message");
 					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 				}
+				mLoginInfoContainer.setVisibility(View.VISIBLE);
 			}break;
 			case LoginBusi.SUCCESS:{
 				if(mPdf != null){
@@ -134,9 +137,6 @@ public class LoginActivity extends BaseActivity {
 	private void login() {
 		mUsername = mUsernameEt.getText().toString();
 		mPassword = mPasswordEt.getText().toString();
-		
-		mUsername = "huangjin";
-		mPassword = "hj1025";
 		
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 		Editor e = sp.edit();

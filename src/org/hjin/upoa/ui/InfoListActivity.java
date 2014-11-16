@@ -48,7 +48,7 @@ public class InfoListActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_infolist);
-		
+		getActionBar().setTitle("ÁªÏµÈË");
 		mAdapter = new InfoListAdapter(this,new ArrayList<Info>());
 		mInfoList = (ListView)findViewById(R.id.infoList);
 		mInfoList.setAdapter(mAdapter);

@@ -71,6 +71,8 @@ public class SecretaryActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_secretary);
 		
+		getActionBar().setTitle("¹¤×÷Ì¨");
+		
 		mLayoutInflater = getLayoutInflater();
 		
 		mLs = (ExpandableListView)findViewById(R.id.secretaryList);
