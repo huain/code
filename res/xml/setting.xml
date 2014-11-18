@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
     <PreferenceCategory android:title="@string/setting_category_login" android:key="setting_category_login" >
-        <CheckBoxPreference android:title="@string/setting_item_loginsaveauto" android:key="setting_item_loginsaveauto" android:summary="@string/setting_item_loginsaveauto_desc"/>
+        <CheckBoxPreference android:title="@string/setting_item_loginsaveauto"  android:key="setting_item_loginsaveauto" android:summary="@string/setting_item_loginsaveauto_desc"/>
         <CheckBoxPreference android:title="@string/setting_item_loginauto" android:key="setting_item_loginauto" android:summary="@string/setting_item_loginauto_desc"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_category_daily" android:key="setting_category_daily">

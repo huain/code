@@ -5,6 +5,7 @@ import org.hjin.upoa.R;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class SettingActivity extends PreferenceActivity {
 		
 		final ListPreference typePreference = (ListPreference)findPreference("setting_item_typedefault");
 		final ListPreference positionPreference = (ListPreference)findPreference("setting_item_positiondefault");
+		final CheckBoxPreference loginsaveautoPreference = (CheckBoxPreference)findPreference("setting_item_loginsaveauto");
 //		final SwitchPreference nonepicPreference = (SwitchPreference)findPreference("setting_item_nonepic");
 		
 		SharedPreferences setting = getPreferenceManager().getSharedPreferences();
@@ -37,6 +39,10 @@ public class SettingActivity extends PreferenceActivity {
 					typePreference.setSummary(sharedPreferences.getString(key, getResources().getString(R.string.setting_item_typedefault_desc)));
 				}else if(key.equals("setting_item_positiondefault")){
 					positionPreference.setSummary(sharedPreferences.getString(key, getResources().getString(R.string.setting_item_positiondefault_desc)));
+				}else if(key.equals("setting_item_loginauto")){
+					if(!loginsaveautoPreference.isChecked()){
+						loginsaveautoPreference.setChecked(true);
+					}
 				}
 			}
 		});
