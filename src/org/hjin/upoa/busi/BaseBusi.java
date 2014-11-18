@@ -108,6 +108,7 @@ public class BaseBusi implements RequestListener{
 	public void onIOException(IOException e, int flag) {
 		Log.d(TAG, "***onIOException");
 		Message msg = mHandler.obtainMessage();
+		msg.what = SHOWMESSAGE;
 		msg.getData().putString("message", "网络连接异常，请检查您的网络！");
 		msg.sendToTarget();
 		e.printStackTrace();
@@ -117,6 +118,7 @@ public class BaseBusi implements RequestListener{
 	public void onError(MyHttpException e, int flag) {
 		Log.d(TAG, "***onError");
 		Message msg = mHandler.obtainMessage();
+		msg.what = SHOWMESSAGE;
 		msg.getData().putString("message", "请求失败，失败代码："+ e.getStatusCode()+"!");
 		msg.sendToTarget();
 		e.printStackTrace();

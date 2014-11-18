@@ -46,6 +46,9 @@ public class LoginActivity extends BaseActivity {
 			super.handleMessage(msg);
 			switch(msg.what){
 			case LoginBusi.SHOWMESSAGE:{
+				if(mPdf != null){
+					removeDialogByTag("validate");
+				}
 				Bundle data = msg.getData();
 				if(null != data && !Utility.isBlank(data.getString("message"))){
 					String message = data.getString("message");
