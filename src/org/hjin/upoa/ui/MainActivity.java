@@ -1,5 +1,6 @@
 package org.hjin.upoa.ui;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,6 +47,8 @@ public class MainActivity extends BaseActivity {
 	private SecretaryBusi mSecretaryBusi;
 	
 	private LoginBusi mLoginBusi;
+	
+	private View mTop;
 	
 	private ImageView mHeader;
 	
@@ -129,6 +132,9 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sp =  PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        
+        mTop = (View)findViewById(R.id.index_top);
+//        mTop.setBackgroundResource();
         
         mHeader = (ImageView)findViewById(R.id.index_header);
 		mFullname = (TextView)findViewById(R.id.index_fullname);
@@ -261,7 +267,7 @@ public class MainActivity extends BaseActivity {
     }
     
     private void share(){
-    	final String content = "我正在使用UOA（泰岳OA）V2.0Beta，你也来试试吧~!下载链接：http://pan.baidu.com/s/1kTv9S9p";
+    	final String content = "我正在使用UOA（泰岳OA）V2.0Beta，你也来试试吧~!下载链接：http://yun.baidu.com/pcloud/album/info?query_uk=2734734655&album_id=447846834993321205";
     	new AlertDialog.Builder(this).setTitle("分享到小字报")
 		.setMessage(content)
 		.setPositiveButton("确定", new OnClickListener() {

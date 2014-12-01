@@ -35,6 +35,9 @@ public class DailyActivity extends BaseActivity  implements IDateOnClickListener
 	
 	private final String TAG = "DailyActivity";
 	
+	
+	public final int REQ_CODE = 1;
+	
 //	private CalendarView mCalendarView;
 	
 	
@@ -110,7 +113,8 @@ public class DailyActivity extends BaseActivity  implements IDateOnClickListener
 					date[1] = mydate.getmMonth();
 					date[2] = mydate.getmDay();
 					intent.putExtra("date", date);
-					startActivity(intent);
+//					startActivity(intent);
+					startActivityForResult(intent, REQ_CODE);
 				}
 			});
 		}else{
@@ -120,6 +124,15 @@ public class DailyActivity extends BaseActivity  implements IDateOnClickListener
 	
 	
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == REQ_CODE && resultCode == RESULT_OK){
+//			init();
+		}
+		
+	}
+
 	@Override
 	public void onPreDataLoad() {
 		mPdf = ProgressDialogFragment.newInstance("º”‘ÿ÷–°≠°≠");

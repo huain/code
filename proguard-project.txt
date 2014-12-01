@@ -22,3 +22,5 @@
 -dontwarn com.baidu.**
 -keep class com.baidu.** { *;}
 -keep class org.jsoup.** { *;}
+-keep class com.alibaba.fastjson.** { *;}
+-keep class com.ultrapower.android.ca2.** { *;}

@@ -24,6 +24,7 @@ public class SettingActivity extends PreferenceActivity {
 		final ListPreference typePreference = (ListPreference)findPreference("setting_item_typedefault");
 		final ListPreference positionPreference = (ListPreference)findPreference("setting_item_positiondefault");
 		final CheckBoxPreference loginsaveautoPreference = (CheckBoxPreference)findPreference("setting_item_loginsaveauto");
+		final CheckBoxPreference loginautoPreference = (CheckBoxPreference)findPreference("setting_item_loginauto");
 //		final SwitchPreference nonepicPreference = (SwitchPreference)findPreference("setting_item_nonepic");
 		
 		SharedPreferences setting = getPreferenceManager().getSharedPreferences();
@@ -40,8 +41,12 @@ public class SettingActivity extends PreferenceActivity {
 				}else if(key.equals("setting_item_positiondefault")){
 					positionPreference.setSummary(sharedPreferences.getString(key, getResources().getString(R.string.setting_item_positiondefault_desc)));
 				}else if(key.equals("setting_item_loginauto")){
-					if(!loginsaveautoPreference.isChecked()){
+					if(loginautoPreference.isChecked()){
 						loginsaveautoPreference.setChecked(true);
+					}
+				}else if(key.equals("setting_item_loginsaveauto")){
+					if(!loginsaveautoPreference.isChecked()){
+						loginautoPreference.setChecked(false);
 					}
 				}
 			}

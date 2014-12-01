@@ -86,6 +86,7 @@ public class DailyWriteActivity extends BaseActivity {
 					if(null != data && !Utility.isBlank(data.getString("message"))){
 						String message = data.getString("message");
 						Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+						setResult(RESULT_OK);
 						finish();
 						//mActivity.getFragmentManager().beginTransaction().replace(containerViewId, fragment)
 //						FragmentManager fragmentManager = getFragmentManager();
